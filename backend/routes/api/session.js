@@ -24,14 +24,11 @@ const validateLogin = [
 
 // Log in
 router.post('/', async (req, res, next) => {
-    const { credential, password } = req.body;
+    const { email, password } = req.body;
     console.log(credential, password, "************")
     const user = await User.unscoped().findOne({
         where: {
-            [Op.or]: {
-                username: credential,
-                email: credential
-            }
+            email
         }
     });
 
@@ -57,7 +54,7 @@ router.post('/', async (req, res, next) => {
 });
 
 // Log out
-router.delete('/',(_req, res) => {
+router.delete('/', (_req, res) => {
     res.clearCookie('token');
     return res.json({ message: 'success' });
 });

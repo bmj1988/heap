@@ -15,10 +15,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
+      firstName: {
         type: Sequelize.STRING(30),
         allowNull: false,
-        unique: true
+      },
+      lastName: {
+        type: Sequelize.STRING(30),
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING(256),
@@ -33,6 +36,14 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false,
         defaultValue: ""
+      },
+      agent: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      owner: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
