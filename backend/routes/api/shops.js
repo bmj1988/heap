@@ -1,10 +1,10 @@
 const express = require('express')
 const { Shop, User, ShopReview, Owner, Listing, sequelize } = require('../../db/models')
-const { requireAuth, authShop } = require('../../utils/auth')
+const { requireAuth, authShop, authOwner } = require('../../utils/auth')
 
 const router = express.Router()
 
-router.get('/home', requireAuth, async (req, res) => {
+router.get('/home', [requireAuth, authOwner], async (req, res) => {
     const owner = req.owner
     const shops = await owner.getShops({
         include: [

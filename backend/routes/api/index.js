@@ -4,6 +4,7 @@ const { User } = require('../../db/models');
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const shopsRouter = require('./shops.js')
+const listingRouter = require('./listings.js')
 
 
 //You can use requireAuth as middleware for routes that require sign in
@@ -17,7 +18,8 @@ router.use(restoreUser);
 
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
-router.use('/shops', shopsRouter)
+router.use('/shops', shopsRouter);
+router.use('/listings', listingRouter)
 
 
 // Restore user

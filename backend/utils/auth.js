@@ -85,6 +85,26 @@ const requireAuth = function (req, _res, next) {
     return next(err);
 }
 
+const authOwner = (req, rest, next) => {
+    if (req.owner) return next();
+
+    const err = new Error('User is not an owner');
+    err.title = 'Authentication required';
+    err.errors = { message: 'Authentication required' };
+    err.status = 401;
+    return next(err);
+}
+
+const authAgent = (req, rest, next) => {
+    if (req.agent) return next();
+
+    const err = new Error('User is not an agent');
+    err.title = 'Authentication required';
+    err.errors = { message: 'Authentication required' };
+    err.status = 401;
+    return next(err);
+}
+
 /// SHOP AUTH
 
 
@@ -122,4 +142,4 @@ const authShop = async (req, res, next) => {
     }
 }
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, authShop };
+module.exports = { setTokenCookie, restoreUser, requireAuth, authShop, authAgent, authOwner};
