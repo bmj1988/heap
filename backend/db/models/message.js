@@ -29,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
     bidId: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    seen: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     sequelize,

@@ -10,20 +10,20 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Bid.belongsTo(models.Agent, {foreignKey: 'agentId'})
+      Bid.belongsTo(models.Agent, { foreignKey: 'agentId' })
 
-      Bid.belongsTo(models.Listing, {foreignKey: 'listingId'})
+      Bid.belongsTo(models.Listing, { foreignKey: 'listingId' })
 
-      Bid.hasMany(models.Message, {foreignKey: 'bidId'})
+      Bid.hasMany(models.Message, { foreignKey: 'bidId' })
     }
   }
   Bid.init({
     offer: {
-      type:DataTypes.STRING,
-      allowNull: {args: false, msg: "Must include an offer!"}
+      type: DataTypes.STRING,
+      allowNull: { args: false, msg: "Must include an offer!" }
     },
     agentId: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     listingId: {
@@ -31,9 +31,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     accepted: {
-      type:DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false}
+      defaultValue: false
+    },
+    seen: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    }
   }, {
     sequelize,
     modelName: 'Bid',
