@@ -1,4 +1,11 @@
 'use strict';
+
+let options = {};
+options.tableName = 'Bids';
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -15,11 +22,21 @@ module.exports = {
       },
       agentId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Agents',
+          key: 'id',
+          schema: options.schema
+        }
       },
       listingId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Listings',
+          key: 'id',
+          schema: options.schema
+        }
       },
       accepted: {
         type: Sequelize.BOOLEAN,
@@ -33,15 +50,17 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
+    }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Bids');
+    await queryInterface.dropTable(options);
   }
 };

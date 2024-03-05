@@ -30,7 +30,7 @@ module.exports = {
         phone: "1-112-112-1112"
       },
       {
-        ownerId: 3,
+        ownerId: 2,
         name: "AJ's Brake Service",
         address: '678 Nice Pl',
         city: "Philadelphia",

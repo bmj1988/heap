@@ -1,3 +1,97 @@
 .profile-dropdown {
     position: absolute;
+    background: white;
+    right: -1px;
+    width: 150px;
+    border-radius: 12px 0px 0px 12px;
+    padding: 5px 10px 0px 10px;
+    border: 1px solid #7F6A93;
+    box-sizing: border-box;
+}
+
+.textmark {
+    font-family: 'Roboto Slab', serif;
+}
+
+.heapPurple {
+    color: #741cb8
+}
+
+.heapRed {
+    color: #bd0f0f
+}
+
+.heapBlue {
+    color: #0f55bd
+}
+
+.heapGreen {
+    color: #1ab027
+}
+.heapYellow {
+    color: #fce303
+}
+
+.logoStyling {
+    font-size: 30px;
+    font-family: 'Roboto Slab', serif;
+    font-weight: 500;
+}
+
+.cursor-pointer {
+    cursor: pointer
+}
+
+.logo {
+    font-size: 30px;
+}
+
+.logoDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+nav.main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1920px;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #7F6A93;
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    cursor: text;
+    background-color: #EEEEEE;
+    padding: 4px;
+    height: 48px;
+    border-radius: 500px;
+    box-sizing: border-box;
+    color: black;
+    white-space: nowrap;
+    max-width: 600px;
+    min-width: 400px;
+  }
+
+.searchIcon {
+    margin: 10px;
+}
+
+.noStyle {
+    border: none;
+    line-height: inherit;
+    background-color: inherit;
+    font-family: inherit;
+    color: inherit;
+    font-size: inherit;
+}
+
+.noStyle:focus {
+    border: none;
+    outline: none;
 }

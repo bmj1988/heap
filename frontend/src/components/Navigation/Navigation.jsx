@@ -2,18 +2,18 @@ import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import { useSelector } from "react-redux";
+import { LogoDiv } from "./LogoDiv";
+import SearchBar from "./SearchBar";
 
 function Navigation() {
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-
-      <li>
+    <div>
+      <nav className="main">
+        <LogoDiv />
+        <SearchBar/>
         <ProfileButton />
-      </li>
-    </ul>
+      </nav>
+    </div>
   );
 }
 

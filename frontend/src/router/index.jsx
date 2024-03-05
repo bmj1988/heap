@@ -1,26 +1,21 @@
 import { createBrowserRouter } from 'react-router-dom';
-import LoginFormPage from '../components/LoginFormPage';
-import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
-import Splash from '../components/Splash';
+import MainPage from '../components/Main/MainPage';
+import Page404 from '../components/Page404';
 
 export const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <Layout/>,
     children: [
       {
-        path: "/",
-        element: <Splash />,
-      },
-      {
-        path: "login",
-        element: <LoginFormPage />,
-      },
-      {
-        path: "signup",
-        element: <SignupFormPage />,
-      },
+        path: '/',
+        element: <MainPage/>
+      }
     ],
   },
+  {
+    path: '*',
+    element: <Page404/>
+  }
 
 ]);

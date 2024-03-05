@@ -1,0 +1,49 @@
+.noUserMain {
+    display: flex;
+    max-width: 1920px;
+    height: 800px;
+    box-sizing: border-box;
+    margin: 20px;
+    gap: 5px;
+}
+
+.purpleOutlineDiv {
+    border: 3px solid #741cb8;
+    color: black
+}
+.purpleOutlineDiv:hover {
+    background-color: #EEEEEE;
+}
+
+.colorDiv {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 10px;
+    align-items: center;
+    font-size: 40px;
+    font-family: 'Roboto Slab', serif;
+    text-align: center;
+}
+
+.firstDiv {
+    border-radius: 12px 0px 0px 12px;
+}
+
+.lastDiv {
+    border-radius: 0px 12px 12px 0px;
+}
+.cube {
+    font-size: 40px;
+}
+
+.divBorderBottom {
+    width: 100px;
+    border-bottom: 1px solid black;
+}
+
+p.smallText {
+    font-size: 18px;
+}

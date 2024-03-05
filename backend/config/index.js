@@ -6,7 +6,8 @@ module.exports = {
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
         host: process.env.DB_HOST,
-        schema: process.env.SCHEMA
+        schema: process.env.SCHEMA,
+        database_url: process.env.DATABASE_URL
     },
     jwtConfig: {
         secret: process.env.JWT_SECRET,
