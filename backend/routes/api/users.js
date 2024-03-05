@@ -8,17 +8,17 @@ const router = express.Router();
 // Sign up
 router.post('/', async (req, res) => {
 
-    const { email, password, firstName, lastName, owner, agent } = req.body;
+    const { email, password, firstName, lastName, owner, agent, city, state, license } = req.body;
 
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({ email, hashedPassword, firstName, lastName });
 
     if (owner) {
-        owner = await Owner.create({userId: user.id})
+        await Owner.create({userId: user.id})
         await user.update({owner: true})
     }
     else if (agent) {
-        agent = await Agent.create({userId: user.id, city: '', state: ''})
+        await Agent.create({userId: user.id, city, state, license})
         await user.update({agent: true})
     }
 

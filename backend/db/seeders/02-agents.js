@@ -16,12 +16,14 @@ module.exports = {
       {
         userId: 2,
         license: '1',
-        locality: 'LA'
+        city: 'LA',
+        state: 'CA'
       },
       {
         userId: 4,
         license: '2',
-        locality: 'PA'
+        city: 'Philadelphia',
+        state: 'PA'
       }
     ], { validate: true })
   },
