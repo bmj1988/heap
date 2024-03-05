@@ -31,7 +31,11 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      locality: {
+      city: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      state: {
         type: Sequelize.STRING,
         allowNull: false
       },

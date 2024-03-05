@@ -22,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: { args: true, msg: "This user already has an Agent account!" },
-    },
-    locality: {
-      type: DataTypes.STRING,
-      allowNull: { args: false, msg: "Must list a location" },
     }
   }, {
     sequelize,

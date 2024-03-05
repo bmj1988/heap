@@ -32,9 +32,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {args: true, msg: "This Agent license number belongs to another user"}
     },
-    locality: {
+    city: {
       type: DataTypes.STRING,
-      allowNull: {args: false, msg: "Must list a location"},
+      allowNull: {args: false, msg: "Must specify a city"},
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: {args: false, msg: "Must specify a state"}
     }
   }, {
     sequelize,

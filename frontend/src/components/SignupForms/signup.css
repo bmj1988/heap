@@ -1,0 +1,45 @@
+div .signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 5px;
+
+}
+
+input.signup {
+    width: 300px;
+    line-height: 24px;
+}
+
+fieldset {
+    border-radius: 12px;
+    border-color: #741cb8
+}
+
+.accountType {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.signupSubmit {
+    border: none;
+    margin: 10px;
+    font-size: 20px;
+    background-color: #741cb8;
+    color: white;
+    border-radius: 12px;
+    width: 250px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.explainerText {
+    font-size: 12px;
+}
+
+.errors {
+    color: red
+}

@@ -26,10 +26,6 @@ module.exports = {
           schema: options.schema
         }
       },
-      locality: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
