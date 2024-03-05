@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       offer: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       agentId: {
@@ -47,6 +47,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
+      },
+      message: {
+        type: Sequelize.TEXT,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,

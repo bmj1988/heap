@@ -1,8 +1,14 @@
 const express = require('express')
 const { Listing } = require('../../db/models');
 const { authAgent, authOwner } = require('../../utils/auth');
+const { listingAuth } = require('../../utils/listingMiddleware')
 
 const router = express.Router();
+
+/// AGENTS LISTINGS ROUTES
+agentListings = Listing.scope('defaultScope', 'agentView')
+
+/// AGENTS LISTING FEED
 
 router.get('/feed', authAgent, async (req, res) => {
     const query = {};
@@ -10,13 +16,34 @@ router.get('/feed', authAgent, async (req, res) => {
     query.limit = req.query.size || 20
     query.size = req.query.size * (req.query.page - 1) || 20
 
-    const listings = await Listing.findAll({ where: { open: true } })
+    const listings = await agentListings.findAll()
 
     res.json(listings)
 })
 
+/// AGENTS GET LISTING INFO
 
-/// Retrieves all a users past listings
+router.get('/:listingId', [authAgent, listingAuth], async (req, res) => {
+    const listing = await agentListings.findByPk(req.params.listingId)
+
+    res.json(listing)
+})
+
+/// AGENTS POST A BID TO A LISTING
+
+router.post('/:listingId/bids', [authAgent, listingAuth], async (req, res) => {
+    const listing = req.listing
+    const agent = req.agent
+    const newBid = await agent.createBid(req.body, { validate: true })
+    const currentHigest = listing.highest
+    const incomingOffer = newBid.offer
+    if (incomingOffer > currentHigest) {
+        await listing.update({ highest: incomingOffer })
+    }
+    res.json({ msg: `Your bid of $${newBid.offer} has been placed.` })
+})
+
+/// OWNERS LISTINGS ROUTES
 
 router.get('/history', authOwner, async (req, res) => {
     const owner = req.owner;
@@ -35,6 +62,8 @@ router.get('/history', authOwner, async (req, res) => {
     res.json({ History: history })
 })
 
+
+///GET INFO FOR A LISTING - OWNER
 router.get('/:listingId/bids', authOwner, async (req, res) => {
     const listingId = req.params;
     const listingWithBids = await Listing.findByPk(listingId, {
@@ -44,6 +73,7 @@ router.get('/:listingId/bids', authOwner, async (req, res) => {
             }
         ]
     })
+    res.json(listingWithBids)
 })
 
 

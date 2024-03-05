@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Bid.init({
     offer: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: { args: false, msg: "Must include an offer!" }
     },
     agentId: {
@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false
     },
+    message: {
+      type: DataTypes.TEXT,
+      defaultValue: null
+    },
+
     seen: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

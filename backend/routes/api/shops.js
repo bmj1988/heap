@@ -42,10 +42,16 @@ router.put('/:shopId', authShop, async (req, res, next) => {
     res.json(shop)
 })
 
+router.post('/new', authOwner, async (req, res) => {
+    const owner = req.owner;
+    const newShop = await owner.createShop(req.body)
+    res.json(newShop)
+})
+
 router.delete('/:shopId', authShop, async (req, res) => {
     const shop = req.shop
     await shop.destroy()
-    res.json({message: "Successfully deleted."})
+    res.json({ message: "Successfully deleted." })
 })
 
 

@@ -40,6 +40,14 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false
       },
+      seen: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
+      highest: {
+        type: Sequelize.INTEGER,
+        defaultValue: null
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

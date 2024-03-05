@@ -56,12 +56,13 @@ const restoreUser = (req, res, next) => {
                 })
             }
             else if (req.user.agent) {
-                req.owner = await Agent.findOne({
+                req.agent = await Agent.findOne({
                     where: {
                         userId: req.user.id
                     }
                 })
             }
+            console.log(req.agent.dataValues)
 
         } catch (e) {
             res.clearCookie('token');
@@ -128,18 +129,19 @@ const authShop = async (req, res, next) => {
         group: ['Shop.id', "Listings.id", "ShopReviews.id"]
     })
     if (!shop) return res.status(404).json({ message: "Shop not found" })
-    else if (req.owner.id === shop.ownerId) {
-        req.shop = shop
-        return next()
-    }
-
-    else {
+    else if (!req.owner || req.owner.id === shop.ownerId) {
         const err = new Error('Authorization required');
         err.title = 'Authorization required';
         err.errors = { message: 'You are not authorized to access this resource.' };
         err.status = 401;
         return next(err);
     }
+    else {
+        req.shop = shop
+        return next()
+    }
+
+
 }
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, authShop, authAgent, authOwner};
+module.exports = { setTokenCookie, restoreUser, requireAuth, authShop, authAgent, authOwner };

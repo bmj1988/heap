@@ -36,6 +36,15 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: true,
       allowNull: false
     },
+    seen: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false
+    },
+    highest: {
+      type: DataTypes.INTEGER,
+      defaultValue: null
+    }
   }, {
     sequelize,
     modelName: 'Listing',
@@ -45,6 +54,11 @@ module.exports = (sequelize, DataTypes) => {
     scopes: {
       history: {
         where: { open: false }
+      },
+      agentView: {
+        attributes: {
+          exclude: ['highest', 'seen', 'shopId']
+        }
       }
     }
   });
