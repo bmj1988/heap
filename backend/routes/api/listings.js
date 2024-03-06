@@ -1,5 +1,5 @@
 const express = require('express')
-const { Listing } = require('../../db/models');
+const { Listing, sequelize } = require('../../db/models');
 const { authAgent, authOwner } = require('../../utils/auth');
 const { listingAuth } = require('../../utils/listingMiddleware')
 
@@ -38,12 +38,38 @@ router.post('/:listingId/bids', [authAgent, listingAuth], async (req, res) => {
     const currentHigest = listing.highest
     const incomingOffer = newBid.offer
     if (incomingOffer > currentHigest) {
-        await listing.update({ highest: incomingOffer })
+        await listing.update({ highest: incomingOffer, seen: false })
     }
     res.json({ msg: `Your bid of $${newBid.offer} has been placed.` })
 })
 
 /// OWNERS LISTINGS ROUTES
+
+router.post('/new', authOwner, async (req, res, next) => {
+    const owner = req.owner
+    const { shopId } = req.body
+    if (shopId) {
+        const newListing = await Listing.create(req.body)
+        return res.json(newListing)
+    }
+    else {
+        const tsx = sequelize.transaction();
+        try {
+
+            const { address, city, state, image, price, description } = req.body
+            const newShop = await Shop.create({ address, city, state, ownerId: owner.id }, { transaction: tsx })
+            const newListing = await newShop.createListing({ image, price, description }, { transaction: tsx })
+
+            await tsx.commit()
+
+            res.json(newListing)
+        }
+        catch (e) {
+            await tsx.rollback()
+            return next(e)
+        }
+    }
+})
 
 router.get('/history', authOwner, async (req, res) => {
     const owner = req.owner;

@@ -32,7 +32,7 @@ export const thunkLogin = (credentials) => async dispatch => {
     const {email, password} = credentials
     const response = await csrfFetch("/api/session", {
         method: "POST",
-        body: JSON.stringify({credential: email, password})
+        body: JSON.stringify({email, password})
     });
 
     if (response.ok) {

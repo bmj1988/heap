@@ -95,3 +95,11 @@ nav.main {
     border: none;
     outline: none;
 }
+
+div.spinner {
+    display: flex;
+    height: 700px;
+    margin: 0px;
+    justify-content: center;
+    align-items: center;
+}

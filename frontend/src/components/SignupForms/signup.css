@@ -43,3 +43,11 @@ fieldset {
 .errors {
     color: red
 }
+
+input[type=radio] {
+    accent-color: #741cb8;
+}
+
+.state {
+    height: 30px;
+}

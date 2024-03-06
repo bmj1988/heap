@@ -48,6 +48,7 @@ const restoreUser = (req, res, next) => {
                     include: ['email', 'createdAt', 'updatedAt', 'owner', 'agent']
                 }
             });
+            console.log(req.user, '!!!!!!!!!!!!!!!!!!!!')
             if (req.user.owner) {
                 req.owner = await Owner.findOne({
                     where: {
@@ -62,7 +63,6 @@ const restoreUser = (req, res, next) => {
                     }
                 })
             }
-            console.log(req.agent.dataValues)
 
         } catch (e) {
             res.clearCookie('token');
@@ -87,6 +87,7 @@ const requireAuth = function (req, _res, next) {
 }
 
 const authOwner = (req, rest, next) => {
+    console.log(req.user, '!!!!!!!!!!!!!!!!!!!!')
     if (req.owner) return next();
 
     const err = new Error('User is not an owner');

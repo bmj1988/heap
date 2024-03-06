@@ -28,6 +28,28 @@ function LoginFormModal() {
     }
   };
 
+  const loginDemoOwner = async () => {
+    await dispatch(
+      thunkLogin({
+        email: 'demo@user.io',
+        password: 'password'
+      })
+    )
+
+    closeModal();
+  }
+
+  const loginDemoAgent = async () => {
+    await dispatch(
+      thunkLogin({
+        email: 'user1@user.io',
+        password: 'password'
+      })
+    )
+
+    closeModal();
+  }
+
   return (
     <>
       <h1>Log In</h1>
@@ -53,7 +75,10 @@ function LoginFormModal() {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
+
       </form>
+      <button onClick={() => loginDemoOwner()}>Log In Demo User: Owner</button>
+      <button onClick={() => loginDemoAgent()}>Log In Demo User: Agent</button>
     </>
   );
 }

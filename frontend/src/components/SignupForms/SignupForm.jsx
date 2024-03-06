@@ -15,6 +15,9 @@ const SignupForm = () => {
     const [img, setImg] = useState('')
     const [type, setType] = useState('owner')
     const [confirmPassword, setConfirmPassword] = useState(null)
+    const [city, setCity] = useState(null)
+    const [state, setState] = useState('MD')
+    const [license, setLicense] = useState(null)
 
     const submit = () => {
         const newUser = {
@@ -28,7 +31,13 @@ const SignupForm = () => {
             agent: null
         }
         if (type === 'owner') newUser.owner = true
-        else if (type === 'agent') newUser.agent = true
+        else if (type === 'agent') {
+            newUser.agent = true
+            newUser['city'] = city
+            newUser['state'] = state
+            newUser['license'] = license
+        }
+
         dispatch(thunkSignup(newUser))
         navigate('/')
     }
@@ -43,11 +52,11 @@ const SignupForm = () => {
                     <label>Last name</label>
                     <input type="text" className="signup" onChange={(e) => setLastName(e.target.value)} />
                     <label>Email address</label>
-                    <input type="text" className="signup" onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" className="signup" onChange={(e) => setEmail(e.target.value)} />
                     <label>Password</label>
-                    <input type="text" className="signup" onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" className="signup" onChange={(e) => setPassword(e.target.value)} />
                     <label>Confirm password</label>
-                    <input type="text" className="signup" onChange={(e) => setConfirmPassword(e.target.value)} />
+                    <input type="password" className="signup" onChange={(e) => setConfirmPassword(e.target.value)} />
                     {password !== confirmPassword && <p className="errors">The passwords you entered do not match.</p>}
                     <label>Cell number</label>
                     <input type="text" className="signup" onChange={(e) => setPhone(e.target.value)} />
@@ -57,21 +66,37 @@ const SignupForm = () => {
                 <fieldset className="accountType">
                     <legend>Account type</legend>
                     <div className="radio">
-                        <label>Vendor</label>
-                        <input type="radio" value="owner" checked={type === 'owner'} onChange={() => setType('owner')} />
+                        <label htmlFor="ownerChoice">Vendor</label>
+                        <input type="radio" value="owner" id="ownerChoice" checked={type === 'owner'} onChange={() => setType('owner')} />
                         <div>
                             <p className="explainerText">Vendor accounts allow you to post listings to Heap and are completely free.</p></div>
                     </div>
 
                     <div className="radio">
-                        <label>Agent</label>
-                        <input type="radio" value="agent" checked={type === 'agent'} onChange={() => setType('agent')} />
+                        <label htmlFor="agentChoice">Agent</label>
+                        <input type="radio" value="agent" id="agentChoice" checked={type === 'agent'} onChange={() => setType('agent')} />
                         <div>
                             <p className="explainerText">Agent accounts allow you to see all the listings posted to Heap and require a subscription payment and licensure depending on the state.</p>
                         </div>
                     </div>
 
                 </fieldset>
+
+                {type === 'agent' && <fieldset>
+                    <legend>Agent info</legend>
+                    <label>City</label>
+                    <input type='text' className="signup" onChange={(e) => setCity(e.target.value)} />
+                    <label>State</label>
+                    <div>
+                        <select className="state" value={state} onChange={(e) => setState(e.target.value)}>
+                            <option value='MD'>MD</option>
+                            <option value='DC'>DC</option>
+                            <option value='VA'>VA</option>
+                        </select>
+                    </div>
+                    <label>Junk Agent #</label>
+                    <input type='text' className="signup" onChange={(e) => setLicense(e.target.value)} />
+                </fieldset>}
                 <button type="submit" className="signupSubmit textmark" disabled={password !== confirmPassword}>Sign up</button>
             </form>
         </div>

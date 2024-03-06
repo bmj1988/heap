@@ -1,8 +1,7 @@
 const express = require('express');
-const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
@@ -26,14 +25,16 @@ router.post('/', async (req, res, next) => {
 
     const safeUser = {
         id: user.id,
-        email
+        email,
+        owner: user.owner,
+        agent: user.agent
     };
 
     await setTokenCookie(res, safeUser);
 
-    return res.json({
-        user: safeUser
-    });
+    return res.json(
+        safeUser
+    );
 });
 
 // Log out
