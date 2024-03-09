@@ -48,7 +48,7 @@ const restoreUser = (req, res, next) => {
                     include: ['email', 'createdAt', 'updatedAt', 'owner', 'agent']
                 }
             });
-            console.log(req.user, '!!!!!!!!!!!!!!!!!!!!')
+
             if (req.user.owner) {
                 req.owner = await Owner.findOne({
                     where: {
@@ -86,8 +86,7 @@ const requireAuth = function (req, _res, next) {
     return next(err);
 }
 
-const authOwner = (req, rest, next) => {
-    console.log(req.user, '!!!!!!!!!!!!!!!!!!!!')
+const authOwner = (req, res, next) => {
     if (req.owner) return next();
 
     const err = new Error('User is not an owner');
@@ -97,7 +96,7 @@ const authOwner = (req, rest, next) => {
     return next(err);
 }
 
-const authAgent = (req, rest, next) => {
+const authAgent = (req, res, next) => {
     if (req.agent) return next();
 
     const err = new Error('User is not an agent');
@@ -130,7 +129,7 @@ const authShop = async (req, res, next) => {
         group: ['Shop.id', "Listings.id", "ShopReviews.id"]
     })
     if (!shop) return res.status(404).json({ message: "Shop not found" })
-    else if (!req.owner || req.owner.id === shop.ownerId) {
+    else if (!req.owner || req.owner.id !== shop.ownerId) {
         const err = new Error('Authorization required');
         err.title = 'Authorization required';
         err.errors = { message: 'You are not authorized to access this resource.' };

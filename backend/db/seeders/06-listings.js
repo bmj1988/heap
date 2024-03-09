@@ -16,12 +16,15 @@ module.exports = {
     await Listing.bulkCreate([
       {
         shopId: 1,
+        ownerId: 1,
       },
       {
         shopId: 2,
+        ownerId: 1,
       },
       {
         shopId: 1,
+        ownerId: 1,
         open: false
       }
     ])

@@ -1,0 +1,80 @@
+.slpMain {
+    display: flex;
+    flex-direction: column;
+    max-height: 800px;
+    width: 500px;
+    margin: auto;
+    align-items: center;
+    box-shadow: -2px 2px 5px 5px #EEEEEE;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.slpMain img {
+    max-height: 300px;
+    max-width: 300px;
+}
+
+.defaultImg {
+    height: 200px;
+    width: 200px;
+}
+
+.sbMain {
+    max-height: 300px;
+    display: flex;
+    gap: 20px;
+    border: 1px solid black;
+    padding: 10px;
+    text-overflow: ellipsis;
+}
+
+.slpDetail {
+    display: flex;
+    gap: 10px;
+}
+
+.slpDetail p {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.bd {
+    background-color: #EEEEEE;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+.sbMain p {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.sbMain span {
+    font-weight: bold;
+}
+
+.sbDetails {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.sbButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.messageIcon {
+    color: #741cb8
+}
+
+.sbButtonGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

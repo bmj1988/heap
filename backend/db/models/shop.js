@@ -7,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
   class Shop extends Model {
 
     static associate(models) {
-      Shop.belongsTo(models.Owner, { foreignKey: 'ownerId' })
+      Shop.belongsTo(models.Owner, { foreignKey: 'ownerId' , onDelete: 'CASCADE'  })
 
-      Shop.hasMany(models.Listing, { foreignKey: 'shopId' })
+      Shop.hasMany(models.Listing, { foreignKey: 'shopId', onDelete: 'CASCADE' })
 
       Shop.hasMany(models.ShopReview, { foreignKey: 'shopId' })
     }
@@ -39,12 +39,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Shop',
-    indexes: [
-      {
-        unique: true,
-        fields: ['ownerId']
-      }
-    ],
     defaultScope: {
       attributes: {
         exclude: ["createdAt", "updatedAt"]

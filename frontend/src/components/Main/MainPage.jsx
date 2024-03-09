@@ -8,7 +8,7 @@ const AgentMain = React.lazy(() => import("./Agent/AgentMain"))
 
 const MainPage = () => {
     const user = useSelector((state) => state.session.user)
-    console.log(user)
+
     return (
         <Suspense fallback={<Spinner />}>
             {user === null ? <MainNoUser /> : null}

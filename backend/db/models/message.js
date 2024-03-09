@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Message.belongsTo(models.User, { foreignKey: 'fromId', as: 'Sender' })
+      Message.belongsTo(models.User, { foreignKey: 'fromId', as: 'Sender', onDelete: 'CASCADE' })
 
-      Message.belongsTo(models.User, { foreignKey: 'toId', as: 'Recipient' })
+      Message.belongsTo(models.User, { foreignKey: 'toId', as: 'Recipient', onDelete: 'CASCADE' })
 
-      Message.belongsTo(models.Bid, { foreignKey: 'bidId' })
+      Message.belongsTo(models.Bid, { foreignKey: 'bidId', onDelete: 'CASCADE' })
     }
   }
   Message.init({
@@ -34,6 +34,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    replyId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false
     }
   }, {
     sequelize,

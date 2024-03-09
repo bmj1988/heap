@@ -4,9 +4,8 @@
     right: -1px;
     width: 150px;
     border-radius: 12px 0px 0px 12px;
-    padding: 5px 10px 0px 10px;
-    border: 1px solid #7F6A93;
     box-sizing: border-box;
+    box-shadow: -2px 2px 5px 5px #EEEEEE;
 }
 
 .textmark {
@@ -28,6 +27,7 @@
 .heapGreen {
     color: #1ab027
 }
+
 .heapYellow {
     color: #fce303
 }
@@ -76,7 +76,7 @@ nav.main {
     white-space: nowrap;
     max-width: 600px;
     min-width: 400px;
-  }
+}
 
 .searchIcon {
     margin: 10px;
@@ -102,4 +102,26 @@ div.spinner {
     margin: 0px;
     justify-content: center;
     align-items: center;
+}
+
+.profileOptions {
+    display: flex;
+    height: 30px;
+    width: 200px;
+    font-size: 18px;
+    overflow: hidden;
+    padding: 5px 0px 0px 7px;
+    cursor: pointer;
+}
+
+.profileOptions:hover {
+    background-color: #EEEEEE;
+}
+
+.topOption {
+    border-radius: 12px 0px 0px 0px;
+}
+
+.bottomOption {
+    border-radius: 0px 0px 0px 12px;
 }

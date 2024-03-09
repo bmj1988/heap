@@ -25,9 +25,19 @@ module.exports = {
           schema: options.schema
         }
       },
+      ownerId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Owners",
+          id: 'id',
+          schema: options.schema
+        }
+      },
       description: {
         type: Sequelize.TEXT,
         allowNull: false,
+        defaultValue: "Scrap for sale"
       },
       price: {
         type: Sequelize.STRING,
@@ -38,11 +48,13 @@ module.exports = {
       },
       open: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: true
       },
       seen: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: true
       },
       highest: {
         type: Sequelize.INTEGER,

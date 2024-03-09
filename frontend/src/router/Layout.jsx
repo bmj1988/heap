@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ModalProvider, Modal } from "../context/Modal";
+import { Modal } from "../context/Modal";
 import { thunkAuthenticate } from "../redux/session";
 import Navigation from "../components/Navigation/Navigation";
 import Spinner from "../components/Spinner";
@@ -16,10 +16,10 @@ export default function Layout() {
   if (!isLoaded) return (<Spinner/>)
 
   return (
-    <>
+    <div className="rootDiv">
       <Navigation />
       {isLoaded && <Outlet />}
       <Modal />
-    </>
+    </div>
   );
 }

@@ -12,7 +12,6 @@ const SignupForm = () => {
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
     const [phone, setPhone] = useState(null)
-    const [img, setImg] = useState('')
     const [type, setType] = useState('owner')
     const [confirmPassword, setConfirmPassword] = useState(null)
     const [city, setCity] = useState(null)
@@ -26,7 +25,7 @@ const SignupForm = () => {
             email,
             password,
             phone,
-            profileImg: img,
+            profileImg: '',
             owner: null,
             agent: null
         }

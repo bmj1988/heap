@@ -7,10 +7,14 @@ import {
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import { vendorReducer } from "./owner";
+import { listingsReducer } from "./listing";
+import { messageReducer } from "./message";
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     vendor: vendorReducer,
+    listings: listingsReducer,
+    message: messageReducer,
 });
 
 let enhancer;

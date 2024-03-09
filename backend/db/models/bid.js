@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Bid.belongsTo(models.Agent, { foreignKey: 'agentId' })
+      Bid.belongsTo(models.Agent, { foreignKey: 'agentId', onDelete: 'CASCADE' })
 
-      Bid.belongsTo(models.Listing, { foreignKey: 'listingId' })
+      Bid.belongsTo(models.Listing, { foreignKey: 'listingId', onDelete: 'CASCADE' })
 
       Bid.hasMany(models.Message, { foreignKey: 'bidId' })
     }

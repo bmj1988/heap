@@ -1,10 +1,10 @@
 import ShopDiv from "./SingleShop"
 
-const ShopsWidget = (shops) => {
+const ShopsWidget = ({shops}) => {
     return (
         <div>
             {shops.map((shop) => {
-                return (<ShopDiv shop={shop} />)
+                return (<ShopDiv shop={shop} key={shop.id}/>)
             })}
         </div>
     )

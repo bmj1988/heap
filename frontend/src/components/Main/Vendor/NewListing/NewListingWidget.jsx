@@ -38,7 +38,7 @@ const NewListingWidget = () => {
                 image,
             }
         }
-        console.log(newListing)
+
         const response = await csrfFetch('/api/listings/new', {
             method: 'POST',
             headers: {
@@ -48,7 +48,7 @@ const NewListingWidget = () => {
         })
         if (response.ok) {
             const listingToAdd = await response.json()
-            console.log(listingToAdd)
+
             await dispatch(addListing(listingToAdd))
             document.getElementById('newListingWidget').reset()
         }
@@ -67,7 +67,7 @@ const NewListingWidget = () => {
                     {shops.map((shop) => {
                         return (<option value={shop.id} key={shop.id}>{shop.name || shop.address}</option>)
                     })}
-                    <option value={0}>Pick a new location</option>
+                    <option value={0}>Set a new location</option>
                 </select>
                 {shopId == 0 && <div>
                     <WidgetLabel labelText="Address:" labelFor="address" inputFunc={setAddress} />

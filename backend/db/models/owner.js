@@ -12,9 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Owner.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'CASCADE' })
 
-      Owner.hasMany(models.Shop, { foreignKey: 'ownerId', onDelete: 'CASCADE' })
+      Owner.hasMany(models.Shop, { foreignKey: 'ownerId'})
 
-      Owner.hasMany(models.AgentReview, { foreignKey: 'ownerId', onDelete: 'CASCADE' })
+      Owner.hasMany(models.AgentReview, { foreignKey: 'ownerId'})
+
+      Owner.hasMany(models.Listing, {foreignKey: 'ownerId'})
     }
   }
   Owner.init({

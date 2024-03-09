@@ -7,6 +7,7 @@ const shopsRouter = require('./shops.js')
 const listingRouter = require('./listings.js')
 const messageRouter = require('./messages.js')
 const bidsRouter = require('./bids.js')
+const vendorsRouter = require('./vendor.js')
 
 
 //You can use requireAuth as middleware for routes that require sign in
@@ -24,6 +25,7 @@ router.use('/shops', shopsRouter);
 router.use('/listings', listingRouter)
 router.use('/messages', messageRouter)
 router.use('/bids', bidsRouter)
+router.use('/vendor', vendorsRouter)
 
 
 // Restore user

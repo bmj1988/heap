@@ -5,9 +5,11 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { FaBars } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function ProfileButton() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
@@ -33,6 +35,18 @@ function ProfileButton() {
 
   const closeMenu = () => setShowMenu(false);
 
+  const toListingHub = (e) => {
+    e.preventDefault();
+    navigate('/my-listings')
+    closeMenu();
+  }
+
+  const toShopHub = (e) => {
+    e.preventDefault();
+    navigate('/my-shops')
+    closeMenu();
+  }
+
   const logout = (e) => {
     e.preventDefault();
     dispatch(thunkLogout());
@@ -48,15 +62,17 @@ function ProfileButton() {
         {showMenu && (
           <div className={"profile-dropdown"} ref={ulRef}>
             {user ? (
-              <>
-                <p className="cursor-pointer">{user.firstName}</p>
-                <p className="cursor-pointer">{user.email}</p>
-                <li>
-                  <button onClick={logout}>Log Out</button>
-                </li>
-              </>
+              <div>
+                <div className="profileOptions topOption">
+                  {user.firstName}
+                </div>
+                <div className="profileOptions">{user.email}</div>
+                {user.owner ? <div className="profileOptions" onClick={toListingHub}>Manage Listings</div> : null}
+                {user.owner ? <div className="profileOptions" onClick={toShopHub}>Manage Shops</div> : null}
+                <div className="profileOptions bottomOption" onClick={logout}>Log Out</div>
+              </div>
             ) : (
-              <>
+              <div>
                 <OpenModalMenuItem
                   itemText="Log In"
                   onItemClick={closeMenu}
@@ -67,7 +83,7 @@ function ProfileButton() {
                   onItemClick={closeMenu}
                   modalComponent={<SignupFormModal />}
                 />
-              </>
+              </div>
             )}
           </div>
         )}

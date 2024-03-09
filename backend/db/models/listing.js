@@ -10,13 +10,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Listing.belongsTo(models.Shop, { foreignKey: 'shopId' })
+      Listing.belongsTo(models.Shop, { foreignKey: 'shopId', onDelete: 'CASCADE' })
 
-      Listing.hasMany(models.Bid, { foreignKey: 'listingId' })
+      Listing.belongsTo(models.Owner, {foreignKey: 'ownerId', onDelete: 'CASCADE'})
+
+      Listing.hasMany(models.Bid, { foreignKey: 'listingId', onDelete: 'CASCADE'  })
     }
   }
   Listing.init({
     shopId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

@@ -3,24 +3,45 @@ import Layout from './Layout';
 import MainPage from '../components/Main/MainPage';
 import Page404 from '../components/Page404';
 import SignupForm from '../components/SignupForms/SignupForm';
+import ListingHub from '../components/Main/Vendor/Listings/ListingHub';
+import ListingPage from '../components/ListingPage/ListingPage';
+import ShopHub from '../components/Main/Vendor/Shops/ShopHub/ShopHub';
+import { csrfFetch } from '../redux/csrf';
 
 export const router = createBrowserRouter([
   {
-    element: <Layout/>,
+    element: <Layout />,
     children: [
       {
         path: '/',
-        element: <MainPage/>
+        element: <MainPage />
       },
       {
         path: '/signup',
-        element: <SignupForm/>
+        element: <SignupForm />
+      },
+      {
+        path: '/my-listings',
+        element: <ListingHub />
+      },
+      {
+        path: '/listings',
+        children: [
+          {
+            path: ':id',
+            element: <ListingPage />
+          }
+        ]
+      },
+      {
+        path: '/my-shops',
+        element: <ShopHub/>,
       }
     ],
   },
   {
     path: '*',
-    element: <Page404/>
+    element: <Page404 />
   }
 
 ]);

@@ -11,6 +11,7 @@
     border: 3px solid #741cb8;
     color: black
 }
+
 .purpleOutlineDiv:hover {
     background-color: #EEEEEE;
 }
@@ -35,6 +36,7 @@
 .lastDiv {
     border-radius: 0px 12px 12px 0px;
 }
+
 .cube {
     font-size: 40px;
 }
@@ -77,10 +79,17 @@ p.smallText {
     max-width: 320px;
     height: 100px;
     box-sizing: border-box;
-    border: 1px solid black;
     flex-direction: column;
+}
+
+.listingDiv fieldset {
+    margin: 0px;
+    padding: 0px;
     background-color: white;
     cursor: pointer;
+}
+.listingDiv legend {
+    font-size: 14px;
 }
 
 .listingDiv .listingSection {
@@ -101,7 +110,7 @@ p.smallText {
     max-width: 250px;
     text-overflow: ellipsis;
     font-size: 14px;
-    margin: 1px 20px;
+    margin: 1px 5px;
 }
 
 .boldFont {
@@ -132,4 +141,259 @@ p.smallText {
     display: flex;
     flex-direction: column;
     align-items: start;
+}
+
+h4 {
+    margin-bottom: 5px;
+}
+
+select {
+    height: 30px;
+    font-size: 20px;
+    font-family: 'Roboto Slab', serif;
+}
+
+
+.expandedListingDiv {
+    display: flex;
+    gap: 10px;
+}
+
+.eldMain {
+    width: 500px;
+    height: 300px;
+    border: 2px solid #741cb8;
+    margin: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.eldImg {
+    width: 220px;
+    height: 150px;
+    border-radius: 12px;
+    margin: 5px;
+}
+
+.eldButtonGroup {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+    width: 100%
+}
+
+.eldEdit {
+    color: #741cb8;
+    font-size: 30px;
+}
+
+.eldDelete {
+    color: red;
+    font-size: 30px;
+}
+
+.eldAccept {
+    color: rgb(108, 223, 108);
+    font-size: 30px;
+}
+
+.grayedIcon {
+    color: gray
+}
+
+.noMargin {
+    margin: 0px;
+}
+
+.eldDetails {
+    margin-top: 25px;
+}
+
+.eldButtonText {
+    font-weight: bold;
+}
+
+.eldSeparateButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.linkDupeSpan {
+    text-decoration: underline;
+    color: #741cb8;
+}
+
+/* CONFIRM ACCEPT MODAL */
+.camMain {
+    width: 400px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black
+}
+
+.camMain header {
+    background-color: #741cb8;
+    font-size: 40px;
+}
+
+.camMain p {
+    font-size: 14px;
+    padding: 10px;
+}
+
+.camMain button {
+    width: 200px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.camMain .red {
+    background-color: red;
+}
+
+.camMain .green {
+    background-color: greenyellow;
+}
+
+/* NO BID MODAL */
+
+.nbmMain {
+    width: 350px;
+    height: 250px;
+}
+
+.nbmMain .ok {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.ok button {
+    font-size: 30px;
+}
+
+/* EDIT LISTING MODAL */
+
+.elmMain {
+    height: 570px;
+    width: 400px;
+    gap: 5px;
+}
+
+.elmPic {
+    display: flex;
+    justify-content: center;
+}
+
+.elmDesc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shpMain {
+    display: flex;
+    max-width: 1280px;
+    flex-wrap: wrap;
+    margin: auto;
+    gap: 20px;
+}
+
+.sscMain {
+    max-width: 300px;
+    box-sizing: border-box;
+
+}
+
+.sscMain h1 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    width: 300px;
+}
+
+.sccDetails {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 280px;
+}
+.sccDetails p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    max-width: 250px;
+}
+
+.sccIcon {
+    display: inline-block;
+    font-size: 30px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.sscMain section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.shopMenu-dropdown {
+    position: fixed;
+    background: white;
+    width: fit-content;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: -2px 2px 5px 5px #EEEEEE;
+}
+
+.sscMenuContainer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.esmMain {
+    width: 350px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #741cb8;
+}
+
+.esmButtonGroup {
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+.esmButton {
+    font-size: 30px;
+    box-shadow: -2px 2px 5px 5px #EEEEEE;
+    padding: 10px;
+    margin: 5px 10px;
+    cursor: pointer;
+
+}
+
+
+.cancel {
+    color: red;
+}
+
+.accept {
+    color: rgb(150, 204, 69);
 }
