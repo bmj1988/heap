@@ -19,6 +19,7 @@ module.exports = {
       shopId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'Shops',
           key: 'id',
@@ -28,6 +29,7 @@ module.exports = {
       ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: "Owners",
           id: 'id',

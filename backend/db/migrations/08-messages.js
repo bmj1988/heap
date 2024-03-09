@@ -19,6 +19,7 @@ module.exports = {
       toId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id',
@@ -28,6 +29,7 @@ module.exports = {
       fromId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id',
@@ -37,6 +39,7 @@ module.exports = {
       bidId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'Bids',
           key: 'id',
