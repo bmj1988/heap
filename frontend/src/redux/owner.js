@@ -84,6 +84,25 @@ export const thunkVendorHome = () => async (dispatch) => {
     }
 }
 
+export const thunkAddListing = (listing) => async (dispatch) => {
+    const response = await csrfFetch('/api/listings/new', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(listing)
+    })
+    if (response.ok) {
+        const listingToAdd = await response.json()
+        await dispatch(addListing(listingToAdd))
+        return listingToAdd
+    }
+    else {
+        const error = await response.json()
+        return error
+    }
+}
+
 
 
 export const thunkLoadListings = () => async (dispatch) => {
@@ -160,6 +179,20 @@ export const thunkShopHub = () => async (dispatch) => {
     }
 }
 
+export const thunkLoadShops = () => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/shops/ownerAll`)
+        if (response.ok) {
+            const allShops = await response.json()
+            dispatch(loadShopHub(allShops))
+        }
+    }
+
+    catch (e) {
+        return e
+    }
+}
+
 export const thunkShopUpdate = (shopDetails) => async (dispatch) => {
     try {
         const response = await csrfFetch(`/api/shops/${shopDetails.id}`, {
@@ -179,7 +212,26 @@ export const thunkShopUpdate = (shopDetails) => async (dispatch) => {
     }
 }
 
-export const thunkShopDelete = (shopId) => async(dispatch) => {
+export const thunkShopCreate = (shopDetails) => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/shops/new`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(shopDetails)
+        })
+        if (response.ok) {
+            const newShop = await response.json()
+            dispatch(updateShop(newShop))
+        }
+    }
+    catch (e) {
+        return e
+    }
+}
+
+export const thunkShopDelete = (shopId) => async (dispatch) => {
     try {
         const response = await csrfFetch(`/api/shops/${shopId}`, {
             method: 'DELETE'
@@ -202,6 +254,11 @@ export const listingsArray = createSelector((state) => state.vendor, (vendorStat
 
 export const shopsArray = createSelector((state) => state.vendor, (vendorState) => {
     if (vendorState.shops) return Object.values(vendorState.shops)
+    else return []
+})
+
+export const messagesArray = createSelector((state) => state.vendor, (vendorState) => {
+    if (vendorState.messages) return Object.values(vendorState.messages)
     else return []
 })
 

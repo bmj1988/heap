@@ -1,11 +1,11 @@
 .profile-dropdown {
     position: absolute;
     background: white;
-    right: -1px;
-    width: 150px;
+    right: -3px;
+    width: 160px;
     border-radius: 12px 0px 0px 12px;
-    box-sizing: border-box;
     box-shadow: -2px 2px 5px 5px #EEEEEE;
+    border: 3px solid #741cb8;
 }
 
 .textmark {

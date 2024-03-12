@@ -37,7 +37,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     message: {
       type: DataTypes.TEXT,
-      defaultValue: null
+      defaultValue: null,
+      validate: {
+        ifNotNull(value) {
+          if (value && value.length > 500) {
+            throw new Error('Limit messages to 500 characters.')
+          }
+        }
+      }
     },
 
     seen: {
@@ -48,6 +55,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Bid',
+    indexes: [
+      {
+        unique: { args: true, msg: "You can only place one bid on a listing. If you wish to edit your bid, do so through your open bids panel." },
+        fields: ['listingId', 'agentId']
+      }
+    ]
   });
   return Bid;
 };

@@ -1,4 +1,4 @@
-const PurpleOutlineDiv = ({ boldText, smallText, logo, css, clicker, widget }) => {
+const PurpleOutlineDiv = ({ boldText, smallText, logo, css, clicker, widget, topClick }) => {
     return (
         <div className={css} >
             <div style={{ cursor: "pointer" }} onClick={clicker ? () => clicker() : () => console.log('click')}>

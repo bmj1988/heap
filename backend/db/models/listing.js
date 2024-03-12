@@ -29,7 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
-      defaultValue: "Scrap for sale"
+      defaultValue: "Scrap for sale",
+      validate: {
+        len: {args: [0, 800], msg: "Keep it brief! Descriptions should be no longer than 750 characters."}
+      }
     },
     price: {
       type: DataTypes.STRING,

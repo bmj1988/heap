@@ -30,16 +30,25 @@ module.exports = (sequelize, DataTypes) => {
     license: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: {args: true, msg: "This Agent license number belongs to another user"}
+      unique: {args: true, msg: "This Agent license number belongs to another user"},
+      validate: {
+        notEmpty: {args: true, msg: "Must provide a license #"}
+      }
     },
     city: {
       type: DataTypes.STRING,
       allowNull: {args: false, msg: "Must specify a city"},
+      validate: {
+        notEmpty: {args: true, msg: "Must provide a city"}
+      }
     },
     state: {
       type: DataTypes.STRING,
-      allowNull: {args: false, msg: "Must specify a state"}
-    }
+      allowNull: {args: false, msg: "Must specify a state"},
+      validate: {
+        notEmpty: {args: true, msg: "Must provide a state"}
+      }
+    },
   }, {
     sequelize,
     modelName: 'Agent',

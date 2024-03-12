@@ -3,6 +3,7 @@ import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { FaAngleDoubleRight } from "react-icons/fa";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ function LoginFormModal() {
     );
 
     if (serverResponse) {
-      setErrors(serverResponse);
+      setErrors(serverResponse.errors);
     } else {
       closeModal();
     }
@@ -51,9 +52,10 @@ function LoginFormModal() {
   }
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className="lfmMain textmark" >
+      <h1>Log in</h1>
       <form onSubmit={handleSubmit}>
+        {errors.credential && <p className="errors">{errors.credential}</p>}
         <label>
           Email
           <input
@@ -63,7 +65,6 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
         <label>
           Password
           <input
@@ -73,13 +74,13 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
-
+        <div className="lfmButtonDiv">
+        <button type="submit" className="loginButton"><FaAngleDoubleRight className="clpSubmit"/></button>
+        </div>
       </form>
       <button onClick={() => loginDemoOwner()}>Log In Demo User: Owner</button>
       <button onClick={() => loginDemoAgent()}>Log In Demo User: Agent</button>
-    </>
+    </div >
   );
 }
 

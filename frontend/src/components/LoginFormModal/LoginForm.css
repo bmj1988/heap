@@ -1,0 +1,58 @@
+.lfmMain {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #741cb8;
+    padding: 0px 10px 10px 10px;
+}
+
+.errors {
+    color: red;
+    font-size: 12px;
+
+}
+
+.lfmMain form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.lfmMain input {
+    margin-left: 5px;
+}
+
+.lfmMain .loginButton {
+    border: none;
+    width: 50%;
+    box-shadow: -2px 2px 2px 2px #EEEEEE;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.loginButton:hover {
+    background-color: #EEEEEE;
+}
+
+.clpSubmit {
+    font-size: 30px;
+    color: rgb(108, 223, 108);
+
+}
+
+.lfmButtonDiv {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px;
+}
+
+.clpTextarea {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.grayedOut {
+    color: gray;
+    cursor: not-allowed;
+}

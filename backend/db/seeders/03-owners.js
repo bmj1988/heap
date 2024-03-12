@@ -19,6 +19,14 @@ module.exports = {
       {
         userId: 3,
         locality: 'PA'
+      },
+      {
+        userId: 5,
+        locality: 'NY'
+      },
+      {
+        userId: 6,
+        locality: 'DC'
       }
     ], { validate: true })
   },
@@ -26,7 +34,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      userId: { [Op.in]: [1, 3] }
+      userId: { [Op.in]: [1, 3, 5, 6] }
     }, {})
   }
 };

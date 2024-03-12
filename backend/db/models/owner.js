@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: { args: true, msg: "This user already has an Agent account!" },
+      unique: { args: true, msg: "This user already has a Vendor account" },
     }
   }, {
     sequelize,

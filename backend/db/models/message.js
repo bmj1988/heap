@@ -42,7 +42,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     content: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: {args: [1, 1000], msg: "Messages cannot be blank and must be limited to 1000 characters."}
+      }
     }
   }, {
     sequelize,

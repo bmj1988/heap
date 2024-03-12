@@ -5,8 +5,10 @@ import ConfirmAcceptModal from "./Modals/ConfirmAcceptModal";
 import NoBidsModal from "./Modals/NoBidsModal";
 import ConfirmDeleteModal from "./Modals/ConfirmDeleteModal";
 import EditListingModal from "./Modals/EditListingModal";
+import { useNavigate } from "react-router-dom";
 const ExpandedListingDiv = ({ listing, func }) => {
     const { closeModal, setModalContent } = useModal();
+    const navigate = useNavigate();
     const dateString = new Date(listing.createdAt).toLocaleDateString()
     const bids = listing.Bids
 
@@ -26,7 +28,7 @@ const ExpandedListingDiv = ({ listing, func }) => {
 
     return (
         <div className="eldMain textmark">
-            <div className="expandedListingDiv">
+            <div className="expandedListingDiv cursor-pointer" onClick={() => navigate(`/listings/${listing.id}`)}>
                 <div>
                     {listing.img ? <img className="eldImg" src={listing.image} alt="Picture for listing" /> : <FaImage className="eldImg" />}
                 </div>

@@ -24,18 +24,20 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: {args: false, msg: "Must provide a first name"},
       validate: {
-        len: [1, 30],
-        isAlpha: true
+        len: {args: [1, 30], msg: "Name must be between 1 and 30 characters long"},
+        isAlpha: {args: true, msg: "Name must be in alphabetic characters"},
+        notEmpty: {args: true, msg: "Must provide a first name"}
       }
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [1, 30],
-        isAlpha: true
+        len: {args: [1, 30], msg: "Name must be between 1 and 30 characters long"},
+        isAlpha: {args: true, msg: "Name must be in alphabetic characters"},
+        notEmpty: {args: true, msg: "Must provide a first name"}
       }
     },
     email: {
@@ -43,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {args: true, msg: "This email address belongs to another user!"},
       validate: {
-        len: [3, 256],
+        len: {args: [3, 256], msg: "Email must be between 3 and 256 characters long."},
         isEmail: {args: true, msg: "Must provide a valid email address"}
       }
     },
@@ -51,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING.BINARY,
       allowNull: false,
       validate: {
-        len: [60, 60]
+        len: {args: [60, 60], msg: "Hashed password must be 60 characters long."}
       }
     },
     profileImg: {
@@ -62,15 +64,30 @@ module.exports = (sequelize, DataTypes) => {
     agent: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notAgent(value) {
+          if (this.owner === true && value === true) {
+            throw new Error("Accounts cannot be both agents and vendors.")
+          }
+        }
+      }
     },
     owner: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notAgent(value) {
+          if (this.agent === true && value === true) {
+            throw new Error("Accounts cannot be both agents and vendors.")
+          }
+        }
+      },
     },
     phone: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      unique: {args: true, msg: "Another user with this phone number already exists!"}
     }
   }, {
     sequelize,

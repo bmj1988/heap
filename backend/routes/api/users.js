@@ -9,6 +9,13 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
 
     const { email, password, firstName, lastName, owner, agent, city, state, license } = req.body;
+    const errors = {}
+    if (!password || password.length < 6 || password.length > 40) {
+        errors.password = "Must provide a password at least 6-40 characters long."
+        const err = new Error("Invalid password")
+        err.errors = errors
+        throw err
+    }
 
     const hashedPassword = bcrypt.hashSync(password);
     const tsx = await sequelize.transaction();
@@ -30,6 +37,7 @@ router.post('/', async (req, res, next) => {
 
         const safeUser = {
             id: user.id,
+            firstName: user.firstName,
             email: user.email,
             agent: user.agent,
             owner: user.owner

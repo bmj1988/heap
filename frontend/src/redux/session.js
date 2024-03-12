@@ -17,50 +17,55 @@ const removeUser = () => ({
 
 
 export const thunkAuthenticate = () => async (dispatch) => {
-    try{
+    try {
         const response = await csrfFetch("/api/restore-user");
         if (response.ok) {
             const data = await response.json();
             dispatch(setUser(data));
         }
-    } catch (e){
-        return e
+    } catch (e) {
+        const error = await response.json();
+        return error
     }
 };
 
 export const thunkLogin = (credentials) => async dispatch => {
-    const {email, password} = credentials
-    const response = await csrfFetch("/api/session", {
-        method: "POST",
-        body: JSON.stringify({email, password})
-    });
+    const { email, password } = credentials
+    try {
+        const response = await csrfFetch("/api/session", {
+            method: "POST",
+            body: JSON.stringify({ email, password })
+        });
 
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(setUser(data));
-    } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        return errorMessages
-    } else {
-        return { server: "Something went wrong. Please try again" }
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(setUser(data));
+        }
     }
+    catch (e) {
+        const error = await e.json();
+        return error
+    }
+
 };
 
 export const thunkSignup = (user) => async (dispatch) => {
-    const response = await csrfFetch("/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user)
-    });
+    try {
+        const response = await csrfFetch("/api/users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user)
+        });
 
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(setUser(data));
-    } else if (response.status < 500) {
-        const errorMessages = await response.json();
-        return errorMessages
-    } else {
-        return { server: "Something went wrong. Please try again" }
+        if (response.ok) {
+            const data = await response.json();
+            dispatch(setUser(data));
+        }
+    }
+    catch (e) {
+        console.log(e)
+        const errors = await e.json();
+        return errors
     }
 };
 

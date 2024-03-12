@@ -40,12 +40,13 @@ const ShopCube = ({ shop, storeUpdateFunc }) => {
 
     return (
         <div className="sscMain textmark">
-            <h1>{shop.name ? shop.name : shop.address}</h1>
+            <h2>{shop.name ? shop.name : shop.address}</h2>
             <section>
                 <div className="sccDetails">
-                    <p className="listingP noMargin"><span className="boldFont">Address:</span>{`${shop.address}, ${shop.city}, ${shop.state}`}</p>
-                    <p className="listingP noMargin"><span className="boldFont">Phone #:</span>{shop.phone ? shop.phone : "No number listed."}</p>
-                    <p className="listingP noMargin"><span className="boldFont">Current Listings:</span>{shop.Listings?.length}</p>
+                    <p className="listingP noMargin"><span className="boldFont">Address: </span>{`${shop.address}, ${shop.city}, ${shop.state}`}</p>
+                    <p className="listingP noMargin"><span className="boldFont">Phone #: </span>{shop.phone ? shop.phone : "No number listed."}</p>
+                    <p className="listingP noMargin"><span className="boldFont">Rating: </span>{shop.avgRating || 'NEW'}</p>
+                    <p className="listingP noMargin"><span className="boldFont">Current Listings: </span>{shop.Listings?.length}</p>
                 </div>
                 <FaEllipsisV className='sccIcon' onClick={toggleMenu} />
             </section>

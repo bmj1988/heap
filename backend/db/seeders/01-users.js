@@ -48,7 +48,40 @@ module.exports = {
         agent: true,
         hashedPassword: bcrypt.hashSync('password'),
         profileImg: ''
+      },
+      {
+        email: 'vendor1@user.io',
+        firstName: 'Jim',
+        lastName: 'Vendor',
+        owner: true,
+        hashedPassword: bcrypt.hashSync('password'),
+        profileImg: ''
+      },
+      {
+        email: 'vendor2@user.io',
+        firstName: 'Bob',
+        lastName: 'Vendor',
+        owner: true,
+        hashedPassword: bcrypt.hashSync('password'),
+        profileImg: ''
+      },
+      {
+        email: 'agent1@user.io',
+        firstName: 'Adam',
+        lastName: 'Agent',
+        agent: true,
+        hashedPassword: bcrypt.hashSync('password'),
+        profileImg: ''
+      },
+      {
+        email: 'agent2@user.io',
+        firstName: 'Alan',
+        lastName: 'Agent',
+        agent: true,
+        hashedPassword: bcrypt.hashSync('password'),
+        profileImg: ''
       }
+
     ], { validate: true })
   },
 
@@ -58,7 +91,7 @@ module.exports = {
     options.tableName = "Users";
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      email: { [Op.in]: ['demo@user.io', 'user1@user.io', 'user2@user.io', 'user3@user.io'] }
+      email: { [Op.in]: ['demo@user.io', 'user1@user.io', 'user2@user.io', 'user3@user.io', 'vendor1@user.io', 'vendor2@user.io', 'agent1@user.io', 'agent2@user.io'] }
     })
   }
 }

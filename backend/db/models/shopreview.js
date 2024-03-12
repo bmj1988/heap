@@ -25,11 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     message: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      validate: {
+        len: {args: [0,500], msg: "Limit message length to 500 characters."}
+      }
     },
     rating: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: {args: false, msg: "No rating was provided."}
     }
   }, {
     sequelize,

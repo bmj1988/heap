@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/ownerAll', authOwner, async (req, res) => {
     const owner = req.owner
     const shops = await owner.getShops()
-    res.json(shops)
+    res.json({Shops: shops})
 
 })
 
@@ -17,6 +17,7 @@ router.get('/home', [requireAuth, authOwner], async (req, res) => {
         include: [
             {
                 model: Listing,
+                required: false,
             },
             {
                 model: ShopReview,
