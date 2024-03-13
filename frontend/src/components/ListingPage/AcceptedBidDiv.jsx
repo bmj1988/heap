@@ -3,6 +3,7 @@ import NewMessageModal from "../Modals/NewMessageModal";
 import ConfirmAcceptModal from "../Main/Vendor/Listings/Modals/ConfirmAcceptModal";
 import { useModal } from "../../context/Modal";
 import MessageHistoryModal from "../Modals/MessageHistory";
+import ConfirmRevokeModal from "../Modals/ConfirmRevokeModal";
 
 const AcceptedBidDiv = ({ bid }) => {
     const agent = bid.Agent;
@@ -21,7 +22,7 @@ const AcceptedBidDiv = ({ bid }) => {
     }
 
     const revoke = () => {
-        // setModalContent(<ConfirmRevokeModal bidId={bid.id}/>)
+        setModalContent(<ConfirmRevokeModal bidId={bid.id}/>)
     }
 
     return (
@@ -44,7 +45,7 @@ const AcceptedBidDiv = ({ bid }) => {
                         <FaCommentsDollar className="eldAccept messageIcon buttonizer" />
                         <span className="tooltipText">View message history</span>
                     </div>
-                    <div className="sbButton tooltipDiv" onClick={() => accept()}>
+                    <div className="sbButton tooltipDiv" onClick={() => revoke()}>
                         <FaUndoAlt className={revokeAllowed ? "iconRevoke" : "grayedOut"} />
                         <span className="tooltipText">{revokeAllowed ? "Revoke bid" : "Cannot revoke bid before 2 hours have passed"}</span>
                     </div>

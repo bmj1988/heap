@@ -64,3 +64,39 @@
 .yours {
     background-color: #EEEEEE;
 }
+
+.bcmMain {
+    display: flex;
+    flex-direction: column;
+    text-wrap: wrap;
+    max-width: 300px;
+    padding: 10px;
+}
+
+.bcmMain h2 {
+    margin-top: 0px;
+}
+
+.bcmMain p {
+    font-size: 16px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.bcmMain button {
+    border: none;
+    width: 50%;
+    box-shadow: -2px 2px 2px 2px #EEEEEE;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.bcmSubmit {
+    font-size: 30px;
+    color: rgb(108, 223, 108);
+}
+
+.bcmGoBack {
+    color: red;
+    font-size: 30px;
+}

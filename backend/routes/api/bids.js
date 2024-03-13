@@ -60,6 +60,14 @@ router.patch('/:bidId', authOwner, async (req, res) => {
     res.json({msg: "Bid Accepted"})
 })
 
+/// REVOKE BID
+
+router.patch('/:bidId/revoke', authOwner, async (req, res) => {
+    const bid = await Bid.findByPk(req.params.bidId)
+    await bid.update({ accepted: false})
+    res.json(bid)
+})
+
 /// EDIT BID
 
 router.put('/:bidId', [authAgent, bidAuth], async (req, res) => {
