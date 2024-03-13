@@ -38,3 +38,29 @@
 .nmmMain button {
     font-size: 18px;
 }
+
+.mhmMain {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    padding: 10px;
+}
+
+.mhmMain .replyContainer {
+    max-height: 550px;
+    overflow-y: scroll;
+}
+
+.srmMain {
+    text-wrap: wrap;
+    max-width: 400px;
+    border: 1px solid black;
+    margin: 10px 0px;
+
+}
+
+.yours {
+    background-color: #EEEEEE;
+}

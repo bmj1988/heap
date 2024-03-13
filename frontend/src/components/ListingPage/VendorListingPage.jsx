@@ -1,10 +1,13 @@
 import React, { Suspense } from 'react';
-import { FaImage, FaEdit, FaTimesCircle, FaCheck } from 'react-icons/fa'
+import { FaImage, FaEdit, FaTimesCircle, FaCheck, FaCheckSquare } from 'react-icons/fa'
 import { useModal } from '../../context/Modal';
 import ConfirmAcceptModal from '../Main/Vendor/Listings/Modals/ConfirmAcceptModal';
 import ConfirmDeleteModal from '../Main/Vendor/Listings/Modals/ConfirmDeleteModal';
 import EditListingModal from '../Main/Vendor/Listings/Modals/EditListingModal';
 import NoBidsModal from '../Main/Vendor/Listings/Modals/NoBidsModal';
+import AcceptedBidDiv from './AcceptedBidDiv';
+import NotAcceptedButtons from './NotAcceptedButtons';
+import AcceptedButtonsDiv from './AcceptedButtonsDiv';
 const BidDiv = React.lazy(() => import("./BidDiv"))
 
 const VendorListingPage = ({ listing, func }) => {
@@ -13,8 +16,16 @@ const VendorListingPage = ({ listing, func }) => {
     const { closeModal, setModalContent } = useModal();
     const dateListed = new Date(listing.createdAt).toLocaleDateString()
     const bids = listing.Bids
-
+    const accepted = bids?.find((bid) => bid.accepted === true)
     const highest = bids?.find((bid) => bid.offer === listing.highest)
+
+    const status = () => {
+        if (accepted) {
+            return "Bid accepted, awaiting pickup"
+        }
+        else if (listing.open) return "Open"
+        else return "Closed"
+    }
 
     const acceptHighest = () => {
         bids?.length > 0 ? setModalContent(<ConfirmAcceptModal closeModal={closeModal} bid={highest} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} func={func} />) : setModalContent(<NoBidsModal closeModal={closeModal} />)
@@ -41,7 +52,10 @@ const VendorListingPage = ({ listing, func }) => {
                 <p className='boldFont'>Listed on: </p> <p>{dateListed}</p>
             </div>
             <div className='slpDetail'>
-                <p className='boldFont'>Asking price: </p> <p>{`$${listing.price}`}</p>
+                <p className='boldFont'>Status: </p> <p>{status()}</p>
+            </div>
+            <div className='slpDetail'>
+                <p className='boldFont'>Asking price: </p> <p>{`${listing.price}`}</p>
             </div>
             <div className='slpDetail'>
                 <p className='boldFont'>Current bids: </p> <p>{`${bids.length}`}</p>
@@ -57,23 +71,10 @@ const VendorListingPage = ({ listing, func }) => {
             </div>
 
             <Suspense fallback={'Loading bids...'}>
-                {bids.length > 0 ? <BidDiv bids={bids} /> : null}
+                {accepted ? <AcceptedBidDiv bid={accepted} /> : null}
+                {!accepted  && bids.length > 0 ? <BidDiv bids={bids} /> : null}
+                {!accepted ? <NotAcceptedButtons acceptHighest={acceptHighest} removeListing={removeListing} editListing={editListing} bids={bids.length > 0} /> : <AcceptedButtonsDiv bid={accepted} /> }
             </Suspense>
-
-            <div className="eldButtonGroup">
-                <div className="eldSeparateButtons" onClick={(e) => editListing(e)}>
-                    <p className="eldButtonText">Edit</p>
-                    <FaEdit className="eldEdit" />
-                </div>
-                <div className="eldSeparateButtons" onClick={(e) => removeListing(e)}>
-                    <p className="eldButtonText">Remove</p>
-                    <FaTimesCircle className="eldDelete" />
-                </div>
-                <div className="eldSeparateButtons" onClick={(e) => acceptHighest(e)}>
-                    <p className={bids?.length > 0 ? "eldButtonText" : "eldButtonText grayedIcon"}>Accept Highest Bid</p>
-                    <FaCheck className={bids?.length > 0 ? "eldAccept" : "eldAccept grayedIcon"} />
-                </div>
-            </div>
         </div >
     )
 }

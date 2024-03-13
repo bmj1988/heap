@@ -8,9 +8,10 @@ const BidDiv = ({ bids }) => {
     return (
         <>
             {showBids.length > 0 && <div className="bd">
+                <h3>Current bids:</h3>
                 {showBids.map((bid) => {
                     return (
-                        <React.Suspense fallback="Loading...">
+                        <React.Suspense fallback="Loading..." key={bid.id}>
                             <SingleBid bid={bid} key={bid.id} />
                         </React.Suspense>
                     )

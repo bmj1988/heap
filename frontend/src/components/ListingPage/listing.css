@@ -41,9 +41,12 @@
 }
 
 .bd {
+    display: flex;
+    flex-direction: column;
     background-color: #EEEEEE;
     padding: 10px;
     overflow-y: scroll;
+    gap: 10px;
 }
 
 .sbMain p {
@@ -77,4 +80,45 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+h3 {
+    margin-top: 0px;
+    margin-bottom: 2px;
+}
+
+.tooltipText {
+    visibility: hidden;
+    position: absolute;
+    background-color: none;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    transition-delay: 150ms;
+    padding-left: 12%;
+}
+
+.tooltipDiv:hover .tooltipText {
+    visibility: visible;
+}
+
+.abMain {
+    max-height: 300px;
+    display: flex;
+    gap: 20px;
+    border: 1px solid black;
+    padding: 10px;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+}
+
+.iconRevoke {
+    color: red;
+    font-size: 30px;
+}
+
+.buttonizer {
+    border-radius: 50%;
+    border: 1px solid black;
+    box-shadow: -2px 2px 2px 2px #EEEEEE
 }

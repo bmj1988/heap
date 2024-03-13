@@ -8,7 +8,7 @@ const router = express.Router();
 // Sign up
 router.post('/', async (req, res, next) => {
 
-    const { email, password, firstName, lastName, owner, agent, city, state, license } = req.body;
+    const { email, password, firstName, lastName, owner, agent, city, state, license, name } = req.body;
     const errors = {}
     if (!password || password.length < 6 || password.length > 40) {
         errors.password = "Must provide a password at least 6-40 characters long."
@@ -16,7 +16,7 @@ router.post('/', async (req, res, next) => {
         err.errors = errors
         throw err
     }
-
+    name = name || firstName
     const hashedPassword = bcrypt.hashSync(password);
     const tsx = await sequelize.transaction();
 
@@ -29,7 +29,7 @@ router.post('/', async (req, res, next) => {
         }
 
         else if (agent) {
-            await Agent.create({ userId: user.id, city, state, license }, { transaction: tsx })
+            await Agent.create({ userId: user.id, city, state, license, name }, { transaction: tsx })
             await user.update({ agent: true }, { transaction: tsx })
         }
 

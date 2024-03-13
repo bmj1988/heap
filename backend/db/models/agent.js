@@ -49,6 +49,13 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {args: true, msg: "Must provide a state"}
       }
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: {args: false, msg: "Agent must provide a name"},
+      validate: {
+        notEmpty: {args: true, msg: "Must provide a name"}
+      }
+    },
   }, {
     sequelize,
     modelName: 'Agent',

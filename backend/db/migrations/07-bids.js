@@ -45,6 +45,9 @@ module.exports = {
         allowNull: false,
         defaultValue: false
       },
+      acceptedOn: {
+        type: Sequelize.DATE
+      },
       seen: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

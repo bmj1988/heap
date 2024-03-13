@@ -2,31 +2,19 @@ const express = require('express');
 const { requireAuth, restoreUser } = require('../../utils/auth');
 const router = express.Router();
 const Sequelize = require('sequelize')
-const { Spot, User, Image, Review, sequelize, Message } = require('../../db/models')
+const { User, sequelize, Agent, Message, Bid } = require('../../db/models')
 const Op = Sequelize.Op;
 
 
-router.get('/replies/:messageId', requireAuth, async (req, res) => {
-    const replies = await Message.findAll({
-        where: {
-            [Op.or]: [
-                { id: req.params.messageId },
-                { replyId: req.params.messageId }
-            ]
-        },
+router.get('/replies/:bidId', requireAuth, async (req, res) => {
+    const replies = await Bid.findByPk(req.params.bidId, {
         include: [{
-            model: User,
-            as: 'sender',
-            attributes: ['id', 'firstName', 'lastName']
+            model: Agent,
+            attributes: ['id', 'userId', 'name']
         },
         {
-            model: User,
-            as: 'recipient',
-            attributes: ['id', 'firstName', 'lastName']
+            model: Message
         }],
-        attributes: {
-            exclude: ['updatedAt']
-        },
         order: [['createdAt', 'ASC']]
     })
     res.json(replies)

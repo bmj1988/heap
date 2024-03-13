@@ -484,6 +484,11 @@ select {
 .grayedOut {
     color: gray;
     cursor: not-allowed;
+    font-size: 30px;
+}
+
+.notAllowed {
+    cursor: not-allowed;
 }
 
 .smdMain {

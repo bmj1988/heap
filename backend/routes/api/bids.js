@@ -51,11 +51,12 @@ router.patch('/:bidId', authOwner, async (req, res) => {
         }
     })
     await bid.update({
-        accepted: true
+        accepted: true,
+        acceptedOn: new Date()
     })
     console.log(bid)
     const shop = bid.Listing.Shop
-    const newMessage = await Message.create({ toId: bid.agentId, fromId: owner.id, bidId: bid.id, content: `Your bid has been accepted. The listing is available for pickup at ${shop.address}, ${shop.city}, ${shop.state}` })
+    await Message.create({ toId: bid.agentId, fromId: owner.id, bidId: bid.id, content: `Your bid for listing ${bid.Listing.id} has been accepted. The listing is available for pickup at ${shop.address}, ${shop.city}, ${shop.state}` })
     res.json({msg: "Bid Accepted"})
 })
 

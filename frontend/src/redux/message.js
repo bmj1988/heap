@@ -26,6 +26,24 @@ const send = (message) => {
     )
 }
 
+const addReplies = (replies) => {
+    return (
+        {
+            type: REPLIES,
+            replies
+        }
+    )
+}
+
+const deleteMessageFromInbox = (messageId) => {
+    return (
+        {
+            type: DELMESSAGE,
+            messageId
+        }
+    )
+}
+
 
 
 /// THUNKS
@@ -92,12 +110,11 @@ export const thunkDeleteMessage = (messageId) => async (dispatch) => {
     }
 }
 
-export const thunkGetReplies = (messageId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/messages/replies/${messageId}`)
+export const thunkGetReplies = (bidId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/messages/replies/${bidId}`)
     if (response.ok) {
-        const replies = await response.json();
-        dispatch(addReplies(replies))
-        return replies
+        const bidAndMessages = await response.json();
+        dispatch(addReplies(bidAndMessages))
     }
     else {
         const error = { message: 'Replies could not be loaded' }
@@ -115,16 +132,30 @@ export const messageByDateArray = createSelector((state) => state?.messages, (me
     else return []
 })
 
+export const repliesByIdArray = createSelector((state) => state?.message, (messages) => {
+    if (messages.current) return Object.values(messages.current).sort((a, b) => {
+        if (a.id > b.id) return -1
+        if (a.id < b.id) return 1
+    })
+    else return []
+})
+
+
 /// REDUCER
 
-const initialState = { inbox: null, outbox: null }
+const initialState = { inbox: null, outbox: null, current: {} }
 export const messageReducer = (state = initialState, action) => {
     let messageState = { ...state }
     switch (action.type) {
         case MESSAGES: {
+            const newState = {}
             newState.inbox = action.payload.inbox
             newState.outbox = action.payload.outbox
             return newState
+        }
+        case SEND: {
+            messageState.current[action.message.id] = action.message
+             return messageState
         }
         case LOADINBOX: {
             action.messages.forEach((message) => {
@@ -137,12 +168,12 @@ export const messageReducer = (state = initialState, action) => {
             return messageState;
         }
         case REPLIES: {
-            if (action.replies.length > 0) {
-                const replyId = action.replies[0].replyId || action.replies[0].id
-                console.log(replyId, action.replies)
-                messageState[replyId].replies = action.replies
-                return messageState
-            }
+            const messageChainId = action.replies.id;
+            messageState[messageChainId] = { bid: action.replies, agent: action.agent, messages: {} }
+            action.replies.Messages.forEach((reply) => {
+                messageState.current[reply.id] = reply
+            })
+            return messageState
         }
         default: {
             return messageState;

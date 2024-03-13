@@ -35,6 +35,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false
     },
+    acceptedOn: {
+      type: DataTypes.DATE,
+    },
     message: {
       type: DataTypes.TEXT,
       defaultValue: null,

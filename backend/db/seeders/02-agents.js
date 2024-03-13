@@ -17,25 +17,29 @@ module.exports = {
         userId: 2,
         license: '1',
         city: 'LA',
-        state: 'CA'
+        state: 'CA',
+        name: "Keenan's Cores"
       },
       {
         userId: 4,
         license: '2',
         city: 'Philadelphia',
-        state: 'PA'
+        state: 'PA',
+        name: "Always Open Scrap"
       },
       {
         userId: 7,
         license: '3',
         city: 'New York',
-        state: 'NY'
+        state: 'NY',
+        name: "Standard Business"
       },
       {
         userId: 8,
         license: '4',
         city: 'Washington',
-        state: 'DC'
+        state: 'DC',
+        name: "Elite business"
       }
     ], { validate: true })
   },
