@@ -17,7 +17,7 @@ export default function Layout() {
 
   return (
     <div className="rootDiv">
-      <Navigation />
+      <Navigation/>
       {isLoaded && <Outlet />}
       <Modal />
     </div>

@@ -40,16 +40,16 @@ function LoginFormModal() {
     closeModal();
   }
 
-  const loginDemoAgent = async () => {
-    await dispatch(
-      thunkLogin({
-        email: 'user1@user.io',
-        password: 'password'
-      })
-    )
+  // const loginDemoAgent = async () => {
+  //   await dispatch(
+  //     thunkLogin({
+  //       email: 'user1@user.io',
+  //       password: 'password'
+  //     })
+  //   )
 
-    closeModal();
-  }
+  //   closeModal();
+  // }
 
   return (
     <div className="lfmMain textmark" >
@@ -78,8 +78,8 @@ function LoginFormModal() {
         <button type="submit" className="loginButton"><FaAngleDoubleRight className="clpSubmit"/></button>
         </div>
       </form>
-      <button onClick={() => loginDemoOwner()}>Log In Demo User: Owner</button>
-      <button onClick={() => loginDemoAgent()}>Log In Demo User: Agent</button>
+      <button onClick={() => loginDemoOwner()}>Log In Demo User: Vendor</button>
+      {/* <button onClick={() => loginDemoAgent()}>Log In Demo User: Agent</button> */}
     </div >
   );
 }

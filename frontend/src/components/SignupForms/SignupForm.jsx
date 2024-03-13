@@ -21,6 +21,10 @@ const SignupForm = () => {
 
     const submit = async (e) => {
         e.preventDefault();
+        if (password !== confirmPassword) {
+            setErrors({password: "The passwords you entered do not match."})
+            return
+        }
 
         const newUser = {
             firstName,
@@ -41,7 +45,7 @@ const SignupForm = () => {
         }
 
         const response = await dispatch(thunkSignup(newUser))
-        if (response.errors) setErrors(response.errors)
+        if (response) setErrors(response.errors)
         else navigate('/')
     }
 
@@ -64,7 +68,6 @@ const SignupForm = () => {
                     <input type="password" className="signup" onChange={(e) => setPassword(e.target.value)} />
                     <label>Confirm password</label>
                     <input type="password" className="signup" onChange={(e) => setConfirmPassword(e.target.value)} />
-                    {password !== confirmPassword && <p className="errors">The passwords you entered do not match.</p>}
                     <label>Cell number (optional)</label>
                     <input type="text" className="signup" onChange={(e) => setPhone(e.target.value)} />
                 </fieldset>
@@ -107,7 +110,7 @@ const SignupForm = () => {
                     {errors.license ? <span className="errors"> {errors.license} </span> : null}
                     <input type='text' className="signup" onChange={(e) => setLicense(e.target.value)} />
                 </fieldset>}
-                <button type="submit" className={"signupSubmit textmark"} disabled={password !== confirmPassword}>Sign up</button>
+                <button type="submit" className={"signupSubmit textmark"}>Sign up</button>
             </form>
         </div>
     )

@@ -10,7 +10,7 @@ function Navigation() {
       <nav className="main">
         <LogoDiv />
         <SearchBar/>
-        <ProfileButton />
+        <ProfileButton/>
       </nav>
     </div>
   );

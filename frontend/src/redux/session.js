@@ -63,7 +63,6 @@ export const thunkSignup = (user) => async (dispatch) => {
         }
     }
     catch (e) {
-        console.log(e)
         const errors = await e.json();
         return errors
     }

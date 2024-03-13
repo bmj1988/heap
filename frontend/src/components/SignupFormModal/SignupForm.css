@@ -1,0 +1,14 @@
+.smmMain {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    border: 3px solid #741cb8;
+    padding: 0px 10px 10px 10px;
+    font-size: 18px;
+}
+
+.smmMain form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
