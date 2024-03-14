@@ -8,6 +8,8 @@ import NoBidsModal from '../Main/Vendor/Listings/Modals/NoBidsModal';
 import AcceptedBidDiv from './AcceptedBidDiv';
 import NotAcceptedButtons from './NotAcceptedButtons';
 import AcceptedButtonsDiv from './AcceptedButtonsDiv';
+import { useSelector } from 'react-redux';
+import { bidsArray } from '../../redux/listing';
 const BidDiv = React.lazy(() => import("./BidDiv"))
 
 const VendorListingPage = ({ listing, func }) => {
@@ -15,7 +17,7 @@ const VendorListingPage = ({ listing, func }) => {
     const shop = listing?.Shop;
     const { closeModal, setModalContent } = useModal();
     const dateListed = new Date(listing.createdAt).toLocaleDateString()
-    const bids = listing.Bids
+    const bids = useSelector(bidsArray)
     const accepted = bids?.find((bid) => bid.accepted === true)
     const highest = bids?.find((bid) => bid.offer === listing.highest)
 

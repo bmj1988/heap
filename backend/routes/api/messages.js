@@ -17,35 +17,32 @@ router.get('/replies/:bidId', requireAuth, async (req, res) => {
         }],
         order: [['createdAt', 'ASC']]
     })
+    await Message.update({ seen: true }, { where: { bidId: req.params.bidId } })
     res.json(replies)
 })
 
 /// GET ALL CURRENT USERS MESSAGES (INBOX THUNK)
 router.get('/', requireAuth, async (req, res) => {
-    const user = await User.findByPk(parseInt(req.user.id))
+    const user = req.user
     const inbox = await Message.findAll({
-        where: {
-            [Op.or]: [
-                { fromId: user.id },
-                { toId: user.id }
-            ]
-        },
-        include: [{
+        where: { toId: user.id },
+        include: {
             model: User,
-            as: 'sender',
-            attributes: ['id', 'firstName', 'lastName']
+            as: 'Sender',
+            attributes: ['id', 'firstName'],
+            include: {
+                model: Agent,
+                as: 'Agent Info',
+                required: false,
+            }
         },
-        {
-            model: User,
-            as: 'recipient',
-            attributes: ['id', 'firstName', 'lastName']
-        }],
-        attributes: {
-            exclude: ['updatedAt']
-        },
+        order: [['id', 'DESC']]
+    })
+    const outbox = await Message.findAll({
+        where: { fromId: user.id }
     })
 
-    res.json(inbox)
+    res.json({ inbox: inbox, outbox: outbox })
 })
 
 router.post('/send', requireAuth, async (req, res) => {

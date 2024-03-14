@@ -1,7 +1,8 @@
 const express = require('express')
-const { Listing, Bid, Shop, Agent, sequelize } = require('../../db/models');
+const { Listing, Bid, Shop, Agent, Message, sequelize } = require('../../db/models');
 const { authAgent, authOwner } = require('../../utils/auth');
 const { listingAuth } = require('../../utils/listingMiddleware')
+const { Op } = require('sequelize')
 
 const router = express.Router();
 
@@ -95,7 +96,7 @@ router.post('/new', authOwner, async (req, res, next) => {
         return res.json(newListing)
     }
     else {
-        const tsx = sequelize.transaction();
+        const tsx = await sequelize.transaction();
         try {
 
             const { address, city, state, image, price, description } = req.body
@@ -138,6 +139,44 @@ router.get('/:listingId/bids', authOwner, async (req, res) => {
     res.json(listingWithBids)
 })
 
+
+/// CLOSE A BID - OWNER
+router.delete('/:listingId/close', [authOwner, listingAuth], async (req, res, next) => {
+    const owner = req.owner
+    const listing = req.listing
+    if (owner.id === listing.ownerId) {
+        const tsx = await sequelize.transaction();
+        try {
+            await Bid.destroy({
+                where: {
+                    [Op.and]: [{ listingId: listing.id },
+                    { accepted: false }]
+                }
+            })
+            const winningBid = await Bid.findOne({
+                where: {
+                    [Op.and]: [{ listingId: listing.id },
+                    { accepted: true }]
+                }
+            })
+            await Message.destroy({
+                where: {
+                    bidId: winningBid.id
+                }
+            })
+            await listing.update({ open: false, highest: winningBid.price }, { transaction: tsx })
+            await tsx.commit()
+            res.json({ msg: "Listing closed" })
+        }
+        catch (e) {
+            await tsx.rollback();
+            next(e)
+        }
+    }
+    else res.status(401).json({ errors: "This listing does not belong to you." })
+})
+
+
 router.delete('/:listingId', [authOwner, listingAuth], async (req, res) => {
     const owner = req.owner
     const listing = req.listing
@@ -145,6 +184,7 @@ router.delete('/:listingId', [authOwner, listingAuth], async (req, res) => {
     res.json({ msg: "Successfully deleted" })
 
 })
+
 
 router.put('/:listingId', [authOwner], async (req, res, next) => {
     const owner = req.owner

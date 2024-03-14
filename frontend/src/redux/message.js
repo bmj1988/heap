@@ -50,7 +50,7 @@ const deleteMessageFromInbox = (messageId) => {
 
 export const thunkGetMessages = () => async (dispatch) => {
     try {
-        const response = await csrfFetch('/api/messages/home')
+        const response = await csrfFetch('/api/messages/')
         if (response.ok) {
             const mailbox = await response.json()
             dispatch(getAllMessages(mailbox))
@@ -124,7 +124,18 @@ export const thunkGetReplies = (bidId) => async (dispatch) => {
 
 /// SELECTORS
 
-export const messageByDateArray = createSelector((state) => state?.messages, (messages) => {
+export const inboxArray = createSelector((state) => state.message, (messages) => {
+    if (messages.inbox) return Object.values(messages.inbox)
+    else return []
+})
+
+export const outboxArray = createSelector((state) => state.message, (messages) => {
+    if (messages.outbox) return Object.values(messages.outbox)
+    else return []
+})
+
+
+export const messageByDateArray = createSelector((state) => state?.message, (messages) => {
     if (messages) return Object.values(messages).sort((a, b) => {
         if (a.id > b.id) return -1
         if (a.id < b.id) return 1
@@ -155,7 +166,7 @@ export const messageReducer = (state = initialState, action) => {
         }
         case SEND: {
             messageState.current[action.message.id] = action.message
-             return messageState
+            return messageState
         }
         case LOADINBOX: {
             action.messages.forEach((message) => {
@@ -170,6 +181,7 @@ export const messageReducer = (state = initialState, action) => {
         case REPLIES: {
             const messageChainId = action.replies.id;
             messageState[messageChainId] = { bid: action.replies, agent: action.agent, messages: {} }
+            messageState.current = {}
             action.replies.Messages.forEach((reply) => {
                 messageState.current[reply.id] = reply
             })

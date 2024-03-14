@@ -8,6 +8,7 @@ import ListingPage from '../components/ListingPage/ListingPage';
 import ShopHub from '../components/Main/Vendor/Shops/ShopHub/ShopHub';
 import { csrfFetch } from '../redux/csrf';
 import CreateListingPage from '../components/Main/Vendor/Listings/CreateNewListingPage/CreateListingPage';
+import MessageCenter from '../components/MessageCenter/MessageCenter';
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: '/my-listings',
         element: <ListingHub />
+      },
+      {
+        path: '/messages',
+        element: <MessageCenter />
       },
       {
         path: '/listings',

@@ -1,0 +1,36 @@
+.imdMain {
+    max-width: 600px;
+    display: flex;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 2px solid black;
+    cursor: pointer;
+    gap: 5px;
+    margin: 0px 0px 1px 10px;
+}
+
+.imdMain p {
+    border-right: 2px solid black;
+    margin: 2px;
+    width: 150px;
+}
+
+.imdMain:hover {
+    background-color: #EEEEEE;
+}
+
+.imdMain .messageText {
+    max-width: 400px;
+    border-right: none;
+    display: block;
+    text-wrap:nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.inboxMain {
+    margin-left: 10px;
+}

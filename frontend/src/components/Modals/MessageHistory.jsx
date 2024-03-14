@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { repliesByIdArray, thunkGetReplies, thunkSend } from "../../redux/message";
-import { useModal } from "../../context/Modal";
 import ModalSingleReply from "./ModalSingleReply";
+import './modal.css'
 
 const MessageHistoryModal = ({ bidId, toId, close }) => {
     const dispatch = useDispatch();
@@ -35,13 +35,13 @@ const MessageHistoryModal = ({ bidId, toId, close }) => {
 
     return (
         <div className="mhmMain">
-            <div className="replyContainer">
+            {bid && agent && replies && <div className="replyContainer">
                 {replies &&
                     replies.map((reply) => {
                         return (<ModalSingleReply message={reply} agent={agent} key={reply.id} />)
                     })
                 }
-            </div>
+            </div>}
             <textarea rows={5} cols={30} placeholder="Send a message" onChange={(e) => setContent(e.target.value)} />
             {errors.content && <p className="errors">{errors.content}</p>}
             <button onClick={(e) => send(e)}>Send</button>

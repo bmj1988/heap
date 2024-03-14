@@ -35,6 +35,15 @@
     gap: 10px;
 }
 
+.slpDesc {
+    display: flex;
+    flex-direction: column;
+    text-indent: 10px;
+    align-items: center;
+}
+.slpDesc p {
+    margin: 0px 10px;
+}
 .slpDetail p {
     margin-top: 1px;
     margin-bottom: 1px;

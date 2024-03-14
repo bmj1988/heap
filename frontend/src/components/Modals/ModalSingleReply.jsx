@@ -8,7 +8,7 @@ const ModalSingleReply = ({message, agent}) => {
 
     return (
         <div className={yours ? "srmMain yours textmark" : "srmMain textmark"}>
-            <p className="boldFont">{yours ? "You:" : them }</p>
+            <p className="boldFont">{yours ? "You:" : `${them}:` }</p>
             <p> {message.content} </p>
             <p> {`${sent.getMonth()}/${sent.getDate()}, ${sent.getHours() > 12 ? sent.getHours() - 12 : sent.getHours()}:${sent.getMinutes() < 10 ? "0" + sent.getMinutes() : sent.getMinutes()} ${sent.getHours() < 12 ? "AM" : "PM"}`} </p>
         </div>

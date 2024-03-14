@@ -1,7 +1,9 @@
+import { useDispatch } from "react-redux";
 import { thunkRevokeBid } from "../../redux/listing";
 import BinaryChoiceModal from "./BinaryChoiceModal";
 
 const ConfirmRevokeModal = ({ bidId }) => {
+    const dispatch = useDispatch();
 
     const confirm = () => {
         dispatch(thunkRevokeBid(bidId))

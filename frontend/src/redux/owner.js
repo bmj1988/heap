@@ -1,5 +1,6 @@
 import { csrfFetch } from './csrf'
 import { createSelector } from 'reselect'
+import { acceptBidListing } from './listing'
 /// ACTIONS
 
 const VENDOR_HOME = 'vendor/LOAD'

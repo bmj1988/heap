@@ -47,6 +47,12 @@ function ProfileButton() {
     closeMenu();
   }
 
+  const toMessageCenter = (e) => {
+    e.preventDefault();
+    navigate('/messages')
+    closeMenu();
+  }
+
   const logout = (e) => {
     e.preventDefault();
     dispatch(thunkLogout());
@@ -69,6 +75,7 @@ function ProfileButton() {
                 <div className="profileOptions">{user.email}</div>
                 {user.owner ? <div className="profileOptions" onClick={toListingHub}>Manage Listings</div> : null}
                 {user.owner ? <div className="profileOptions" onClick={toShopHub}>Manage Shops</div> : null}
+                <div className="profileOptions" onClick={toMessageCenter}>Messages</div>
                 <div className="profileOptions bottomOption" onClick={logout}>Log Out</div>
               </div>
             ) : (

@@ -138,6 +138,14 @@ p.smallText {
     box-sizing: border-box;
 }
 
+.pDiv .desc {
+    display: block;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .newListingMainDiv {
     display: flex;
     flex-direction: column;
@@ -465,8 +473,6 @@ select {
 .clpSubmit {
     font-size: 30px;
     color: rgb(108, 223, 108);
-
-
 }
 
 .clpButtonDiv {
@@ -498,15 +504,46 @@ select {
     margin: 5px;
     padding: 10px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
-.smdMain .message {
+.message {
     max-width: 200px;
-    display: flex;
+    display: block;
     text-wrap: nowrap;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .smdMain .listingP {
     margin: 0px
+}
+
+.messagesDownArrow {
+    color: #741cb8;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.messagesDownArrow:hover {
+    color: #9436db;
+}
+
+.lldMain {
+    display: flex;
+    font-size: 14px;
+    border: 1px solid black;
+    align-items: center;
+    max-width: 260;
+}
+
+.lldMain p {
+    border-right: 1px solid black;
+    margin: 1px;
+    width: 80px;
+}
+
+.lldMain:hover {
+    background-color: #EEEEEE;
 }

@@ -21,7 +21,7 @@ const ListingDiv = ({ listing }) => {
                         <p className="listingP boldFont">Date listed:</p><p className='listingP'>{dateListed} </p>
                     </div>
                     <div className='pDiv'>
-                        <p className="listingP boldFont">Description:</p><p className='listingP'> {listing.description}</p>
+                        <p className="listingP boldFont">Description:</p><p className='listingP desc'> {listing.description}</p>
                     </div>
                     <div className='pDiv'>
                         <p className="listingP boldFont">Asking price:</p><p className='listingP'> {listing.price}</p>
