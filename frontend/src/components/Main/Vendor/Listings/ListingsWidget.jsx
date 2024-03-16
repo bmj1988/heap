@@ -15,7 +15,7 @@ const ListingsWidget = () => {
         const lastMessage = listings[listings.length - 1]
         if (lastDisplayed === lastMessage) setMore(false)
         else setMore(true)
-    }, [displayed])
+    }, [displayed, listings])
 
     const showMore = () => {
         const indexOfLastInDisplayed = listings.indexOf(displayed[displayed.length - 1])

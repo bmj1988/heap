@@ -24,7 +24,7 @@ export const thunkAuthenticate = () => async (dispatch) => {
             dispatch(setUser(data));
         }
     } catch (e) {
-        const error = await response.json();
+        const error = await e.json();
         return error
     }
 };

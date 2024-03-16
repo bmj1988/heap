@@ -8,7 +8,7 @@ const Outbox = ({ outbox }) => {
         <div className="inboxMain textmark">
             <h2>Sent</h2>
             {outbox.map((message) => {
-                return (<InboxMessageDiv message={message} />)
+                return (<InboxMessageDiv message={message} key={message.id} />)
             })}
         </div>
     )

@@ -11,20 +11,20 @@ import Spinner from '../../Spinner.jsx'
 import MessagesWidget from './Messages/MessagesWidget.jsx'
 import ListingHistoryWidget from './Listings/History/ListingHistoryWidget.jsx'
 
-const OwnerMain = ({ user }) => {
+const OwnerMain = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loaded, setLoaded] = useState(false)
     useEffect(() => {
         dispatch(thunkVendorHome()).then(() => setLoaded(true))
-    })
+    }, [])
 
     if (!loaded) return (<Spinner />)
 
     return (
         <div className='mpd'>
             <PurpleOutlineDiv boldText={'Create a new listing'} smallText={""} logo={<FaCube className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv firstDiv flex-start'} clicker={() => navigate('/listings/new')} widget={<NewListingWidget />} />
-            <PurpleOutlineDiv boldText={'Current listings'} smallText={""} logo={<FaCubes className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv flex-start'} clicker={(e) => navigate('/my-listings')} widget={<ListingsWidget />} />
+            <PurpleOutlineDiv boldText={'Current listings'} smallText={""} logo={<FaCubes className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv flex-start'} clicker={() => navigate('/my-listings')} widget={<ListingsWidget />} />
             <PurpleOutlineDiv boldText={'Messages'} smallText={""} logo={<FaEnvelope className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv flex-start'} clicker={() => navigate('/messages')} widget={<MessagesWidget />} />
             <PurpleOutlineDiv boldText={'Past listings'} smallText={""} logo={<FaHistory className='cube heapPurple' />} css={"purpleOutlineDiv colorDiv lastDiv flex-start"} clicker={null} widght={<ListingHistoryWidget />} />
         </div>

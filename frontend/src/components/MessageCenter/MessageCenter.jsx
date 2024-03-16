@@ -9,7 +9,7 @@ const MessageCenter = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(thunkGetMessages())
-    }, [])
+    }, [dispatch])
     const inbox = useSelector(inboxArray)
     const outbox = useSelector(outboxArray)
 

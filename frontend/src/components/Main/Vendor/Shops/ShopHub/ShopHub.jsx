@@ -16,9 +16,9 @@ const ShopHub = () => {
 
     useEffect(() => {
         dispatch(thunkShopHub()).then(() => setLoaded(true))
-    }, [loaded])
+    }, [loaded, dispatch])
 
-    const addShop = (e) => {
+    const addShop = () => {
         setModalContent(<AddShopModal close={closeModal} update={setLoaded} />)
     }
 
@@ -32,7 +32,7 @@ const ShopHub = () => {
                 return (<ShopCube shop={shop} key={shop.id} storeUpdateFunc={setLoaded} />)
             })}
             {shops.length < 1 && <h2>Looks like you have no shops! Create one now.</h2>}
-            <div className='sab textmark' onClick={(e) => addShop(e)}>
+            <div className='sab textmark' onClick={() => addShop()}>
                 <h2>Add a shop</h2>
                 <FaPlus className="sabIcon" />
             </div>

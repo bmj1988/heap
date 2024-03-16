@@ -21,7 +21,7 @@ const CreateListingPage = () => {
 
     useEffect(() => {
         dispatch(thunkLoadShops())
-    }, [])
+    }, [dispatch])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -61,7 +61,7 @@ const CreateListingPage = () => {
             <h1>Create a new listing</h1>
             <form id="clpForm" onSubmit={(e) => handleSubmit(e)}>
                 <h4>Set Location:</h4>
-                <p className="clpExplain">You can choose any locations you've used in the past, or just choose Set a New Location and provide an address. This address will be saved in your Shops, but you can delete it at any time from the Shop hub.</p>
+                <p className="clpExplain">You can choose any locations you have used for listings in the past, or just choose Set a New Location and provide an address. This address will be saved in your Shops, but you can delete it at any time from the Shop hub.</p>
                 <select value={shopId} onChange={(e) => setShopId(e.target.value)}>
                     {shops.map((shop) => {
                         return (<option value={shop.id} key={shop.id}>{shop.name || shop.address}</option>)
@@ -74,7 +74,7 @@ const CreateListingPage = () => {
                     <WidgetLabel labelText="State:" labelFor="state" inputFunc={setState} placeholder={"Provide a state"}/>
                 </div>}
                 <h4>Listing information</h4>
-                <p className="clpExplain">Providing an image, asking price and description may help agents give you the bids you're looking for. None of these fields are required, but they help your listings sell more quickly.</p>
+                <p className="clpExplain">Providing an image, asking price and description may help agents give you the bids more accurate bids more quickly. None of these fields are required, but they help your listings sell more quickly.</p>
                 <WidgetLabel labelText="Image:" labelFor={"image"} inputFunc={setImage} placeholder={"Provide an image URL"} />
                 <WidgetLabel labelText={'Price:'} labelFor={'price'} inputFunc={setPrice} placeholder={"Provide an asking price"}/>
                 <div className="clpTextarea">

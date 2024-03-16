@@ -62,19 +62,19 @@ export const thunkGetMessages = () => async (dispatch) => {
     }
 }
 
-export const thunkLoadInbox = () => async (dispatch) => {
-    try {
-        const response = await csrfFetch(`/api/messages`)
-        if (response.ok) {
-            const messages = await response.json();
-            dispatch(loadInbox(messages))
-            return messages
-        }
-    }
-    catch (e) {
-        console.log(e)
-    }
-}
+// export const thunkLoadInbox = () => async (dispatch) => {
+//     try {
+//         const response = await csrfFetch(`/api/messages`)
+//         if (response.ok) {
+//             const messages = await response.json();
+//             dispatch(loadInbox(messages))
+//             return messages
+//         }
+//     }
+//     catch (e) {
+//         console.log(e)
+//     }
+// }
 
 export const thunkSend = (message) => async (dispatch) => {
     const response = await csrfFetch(`/api/messages/send`, {

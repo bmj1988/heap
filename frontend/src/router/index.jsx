@@ -6,7 +6,6 @@ import SignupForm from '../components/SignupForms/SignupForm';
 import ListingHub from '../components/Main/Vendor/Listings/ListingHub';
 import ListingPage from '../components/ListingPage/ListingPage';
 import ShopHub from '../components/Main/Vendor/Shops/ShopHub/ShopHub';
-import { csrfFetch } from '../redux/csrf';
 import CreateListingPage from '../components/Main/Vendor/Listings/CreateNewListingPage/CreateListingPage';
 import MessageCenter from '../components/MessageCenter/MessageCenter';
 

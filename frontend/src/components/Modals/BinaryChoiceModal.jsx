@@ -1,7 +1,7 @@
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { useModal } from "../../context/Modal";
 
-const BinaryChoiceModal = ({ thunkTarget, text, topic, confirmFunc }) => {
+const BinaryChoiceModal = ({ text, topic, confirmFunc }) => {
     const { closeModal } = useModal();
 
     const confirm = () => {

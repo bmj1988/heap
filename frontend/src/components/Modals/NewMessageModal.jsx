@@ -21,7 +21,7 @@ const NewMessageModal = ({ toId, bidId, close }) => {
         <div className="nmmMain textmark">
             <h1>Message</h1>
             <form onSubmit={(e) => handleSubmit(e)} className="nmmForm">
-                <textarea rows='8' classname="nmmText" maxLength={750} placeholder="Write your message" autoFocus onChange={(e) => setContent(e.target.value)} />
+                <textarea rows='8' className="nmmText" maxLength={750} placeholder="Write your message" autoFocus onChange={(e) => setContent(e.target.value)} />
                 <button disabled={content.length < 1}>Send Message</button>
             </form>
         </div >

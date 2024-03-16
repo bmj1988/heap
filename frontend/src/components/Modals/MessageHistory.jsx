@@ -8,7 +8,7 @@ const MessageHistoryModal = ({ bidId, toId, close }) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(thunkGetReplies(bidId))
-    }, [])
+    }, [bidId, dispatch])
     const [content, setContent] = useState('');
     const [errors, setErrors] = useState({})
 

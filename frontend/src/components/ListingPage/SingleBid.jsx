@@ -1,6 +1,5 @@
 import { FaCommentDollar, FaCheck, FaTimesCircle } from "react-icons/fa"
 import './listing.css'
-import { thunkAcceptBid } from "../../redux/owner"
 import ConfirmAcceptModal from "../Main/Vendor/Listings/Modals/ConfirmAcceptModal"
 import { useModal } from '../../context/Modal'
 import NewMessageModal from "../Modals/NewMessageModal"

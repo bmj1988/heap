@@ -29,13 +29,13 @@ const ShopCube = ({ shop, storeUpdateFunc }) => {
         setShowMenu(!showMenu);
     }
 
-    const edit = (e) => {
+    const edit = () => {
         setModalContent(<EditShopModal shop={shop} close={closeModal} update={storeUpdateFunc} />)
         setShowMenu(!showMenu)
     }
 
-    const deleteShop =  (e) => {
-        setModalContent(<DeleteShopModal closeModal={closeModal} shopId={shop.id} func={storeUpdateFunc}/>)
+    const deleteShop = () => {
+        setModalContent(<DeleteShopModal closeModal={closeModal} shopId={shop.id} func={storeUpdateFunc} />)
     }
 
     return (
@@ -53,10 +53,10 @@ const ShopCube = ({ shop, storeUpdateFunc }) => {
             <div className='sscMenuContainer'>
                 {showMenu && (
                     <div className='shopMenu-dropdown' ref={shopMenuRef}>
-                        <div className="profileOptions" onClick={(e) => edit(e)}>
+                        <div className="profileOptions" onClick={() => edit()}>
                             {`Edit shop information`}
                         </div>
-                        <div className="profileOptions" onClick={(e) => deleteShop(e)}>
+                        <div className="profileOptions" onClick={() => deleteShop()}>
                             {`Delete location`}
                         </div>
                         <div className="profileOptions">

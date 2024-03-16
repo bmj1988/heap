@@ -20,7 +20,7 @@ const NewListingWidget = () => {
         e.preventDefault()
         let newListing;
 
-        if (shopId === 0) {
+        if (shopId == 0) {
             newListing = {
                 description,
                 price,
@@ -38,7 +38,7 @@ const NewListingWidget = () => {
                 image,
             }
         }
-
+        console.log(newListing)
         const response = await csrfFetch('/api/listings/new', {
             method: 'POST',
             headers: {

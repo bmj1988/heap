@@ -8,16 +8,17 @@ const MessagesWidget = () => {
     const messages = useSelector(messagesArray)
     const [displayed, setDisplayed] = useState(messages.slice(0, 5))
     const [more, setMore] = useState(false)
+    const lastDisplayed = displayed[displayed.length - 1]
+    const lastMessage = messages[messages.length - 1]
 
     useEffect(() => {
-        const lastDisplayed = displayed[displayed.length - 1]
-        const lastMessage = messages[messages.length - 1]
-        if (lastDisplayed === lastMessage) setMore(false)
+        if (lastDisplayed.id === lastMessage.id) setMore(false)
         else setMore(true)
-    }, [displayed])
+    }, [displayed, messages])
 
     const showMore = () => {
-        const indexOfLastInDisplayed = messages.indexOf(displayed[displayed.length - 1])
+        const indexedMessage = messages.find((message) => message.id === lastDisplayed.id)
+        const indexOfLastInDisplayed = messages.indexOf(indexedMessage)
         if (messages.length > indexOfLastInDisplayed + 1) {
             const lastIndex = messages[indexOfLastInDisplayed + 5] ? indexOfLastInDisplayed + 5 : messages.length
             setDisplayed(messages.slice(indexOfLastInDisplayed + 1, lastIndex))
@@ -29,7 +30,7 @@ const MessagesWidget = () => {
             {messages && displayed.map((message) => {
                 return (<SingleMessageDiv message={message} key={message.id} />)
             })}
-            {more && <FaCaretDown onClick={() => showMore()} className="messagesDownArrow" />}
+            {more ? <FaCaretDown onClick={() => showMore()} className="messagesDownArrow" /> : null}
         </div>
     )
 }

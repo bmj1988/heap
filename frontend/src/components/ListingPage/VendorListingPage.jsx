@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { FaImage, FaEdit, FaTimesCircle, FaCheck, FaCheckSquare } from 'react-icons/fa'
+import { FaImage, FaTimesCircle, FaCheck } from 'react-icons/fa'
 import { useModal } from '../../context/Modal';
 import ConfirmAcceptModal from '../Main/Vendor/Listings/Modals/ConfirmAcceptModal';
 import ConfirmDeleteModal from '../Main/Vendor/Listings/Modals/ConfirmDeleteModal';

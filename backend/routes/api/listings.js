@@ -101,7 +101,7 @@ router.post('/new', authOwner, async (req, res, next) => {
 
             const { address, city, state, image, price, description } = req.body
             const newShop = await Shop.create({ address, city, state, ownerId: owner.id }, { transaction: tsx })
-            const newListing = await newShop.createListing({ image, price, description, ownerId: owner.id }, { transaction: tsx })
+            const newListing = await newShop.createListing({ image, price, description, ownerId: owner.id}, { transaction: tsx })
 
             await tsx.commit()
 

@@ -1,19 +1,20 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import LineListingDiv from "./LineListingDiv";
+import { listingHistoryArray, thunkListingHistory } from "../../../../../redux/listing";
 
 const ListingHistoryWidget = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(thunkListingHistory())
-    }, [])
+    }, [dispatch])
 
-    const history = useSelector(listingHistory)
+    const history = useSelector(listingHistoryArray)
 
     return (
         <div>
             {history && history.map((oldListing) => {
-                return <LineListingDiv listing={oldListing} />
+                return <LineListingDiv listing={oldListing} key={oldListing.id} />
             })}
         </div>
     )

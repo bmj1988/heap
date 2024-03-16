@@ -1,6 +1,6 @@
 import { csrfFetch } from './csrf'
 import { createSelector } from 'reselect'
-import { acceptBidListing } from './listing'
+
 /// ACTIONS
 
 const VENDOR_HOME = 'vendor/LOAD'
@@ -166,6 +166,24 @@ export const thunkEditListing = (listingInfo) => async (dispatch) => {
         return e
     }
 }
+
+export const thunkCloseListing = (listingId) => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/listings/${listingId}/close`, {
+            method: 'DELETE'
+        })
+        if (response.ok) {
+            dispatch(removeListing(listingId))
+        }
+    }
+    catch (e) {
+        const err = await e.json()
+        return err
+    }
+}
+
+
+/// SHOPS
 
 export const thunkShopHub = () => async (dispatch) => {
     try {

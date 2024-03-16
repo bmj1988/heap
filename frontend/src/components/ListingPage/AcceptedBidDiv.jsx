@@ -1,6 +1,4 @@
-import { FaCheck, FaCommentsDollar, FaUndoAlt, FaUser } from "react-icons/fa";
-import NewMessageModal from "../Modals/NewMessageModal";
-import ConfirmAcceptModal from "../Main/Vendor/Listings/Modals/ConfirmAcceptModal";
+import { FaCommentsDollar, FaUndoAlt, FaUser } from "react-icons/fa";
 import { useModal } from "../../context/Modal";
 import MessageHistoryModal from "../Modals/MessageHistory";
 import ConfirmRevokeModal from "../Modals/ConfirmRevokeModal";
