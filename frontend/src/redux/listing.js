@@ -23,7 +23,7 @@ const revokeBid = (bid) => {
     }
 }
 
-export const acceptBidListing = (bidId) => {
+export const acceptBid = (bidId) => {
     return {
         type: ACCEPT_BID,
         payload: bidId
@@ -45,6 +45,20 @@ export const thunkListingDetails = (listingId) => async (dispatch) => {
         if (response.ok) {
             const listingDetails = await response.json()
             dispatch(addListingDetails(listingDetails))
+        }
+    }
+    catch (e) {
+        return e
+    }
+}
+
+export const thunkAcceptBid = (bidId) => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/bids/${bidId}`, {
+            method: 'PATCH'
+        })
+        if (response.ok) {
+            dispatch(acceptBid(bidId))
         }
     }
     catch (e) {
@@ -116,7 +130,7 @@ export const listingsReducer = (state = initialState, action) => {
         }
         case ACCEPT_BID: {
             const bid = newState.bids[action.payload]
-            newState.bids[action.payload] = { ...bid, accepted: true }
+            newState.bids[action.payload] = { ...bid, accepted: true, acceptedOn: new Date() }
             return newState
         }
         case HISTORY: {

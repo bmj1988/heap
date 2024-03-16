@@ -11,13 +11,14 @@ const MessagesWidget = () => {
     const lastDisplayed = displayed[displayed.length - 1]
     const lastMessage = messages[messages.length - 1]
 
+
     useEffect(() => {
-        if (lastDisplayed.id === lastMessage.id) setMore(false)
+        if (!lastDisplayed || lastDisplayed.id === lastMessage.id) setMore(false)
         else setMore(true)
     }, [displayed, messages])
 
     const showMore = () => {
-        const indexedMessage = messages.find((message) => message.id === lastDisplayed.id)
+        const indexedMessage = messages?.find((message) => message.id === lastDisplayed.id)
         const indexOfLastInDisplayed = messages.indexOf(indexedMessage)
         if (messages.length > indexOfLastInDisplayed + 1) {
             const lastIndex = messages[indexOfLastInDisplayed + 5] ? indexOfLastInDisplayed + 5 : messages.length

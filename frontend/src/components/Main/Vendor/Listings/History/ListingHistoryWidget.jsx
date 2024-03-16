@@ -12,7 +12,7 @@ const ListingHistoryWidget = () => {
     const history = useSelector(listingHistoryArray)
 
     return (
-        <div>
+        <div className="lhwMain textmark">
             {history && history.map((oldListing) => {
                 return <LineListingDiv listing={oldListing} key={oldListing.id} />
             })}

@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import '../../../main.css'
-import { thunkAcceptBid } from '../../../../../redux/owner';
-import { acceptBidListing } from '../../../../../redux/listing';
+import { thunkAcceptBid } from '../../../../../redux/listing';
 
 const ConfirmAcceptModal = ({ closeModal, bid, confirmIcon, cancelIcon }) => {
     const dispatch = useDispatch();
@@ -11,7 +10,7 @@ const ConfirmAcceptModal = ({ closeModal, bid, confirmIcon, cancelIcon }) => {
         closeModal()
     }
     const accept = async () => {
-        dispatch(thunkAcceptBid(bid.id)).then(() => dispatch(acceptBidListing(bid.id)))
+        dispatch(thunkAcceptBid(bid.id))
         closeModal()
     }
     return (

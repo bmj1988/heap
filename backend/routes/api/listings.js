@@ -26,6 +26,17 @@ router.get('/open', authOwner, async (req, res) => {
     res.json(listings)
 })
 
+router.get('/history', authOwner, async (req, res) => {
+    const owner = req.owner;
+    const listings = await Listing.scope("history").findAll({
+        where: {
+            ownerId: owner.id
+        }
+    })
+
+    res.json({ History: listings })
+})
+
 /// AGENTS LISTINGS ROUTES
 agentListings = Listing.scope('defaultScope', 'agentView')
 
@@ -114,16 +125,7 @@ router.post('/new', authOwner, async (req, res, next) => {
     }
 })
 
-router.get('/history', authOwner, async (req, res) => {
-    const owner = req.owner;
-    const listings = await Listing.scope("history").findAll({
-        where: {
-            ownerId: owner.id
-        }
-    })
 
-    res.json({ History: listings })
-})
 
 
 ///GET INFO FOR A LISTING - OWNER
@@ -164,7 +166,7 @@ router.delete('/:listingId/close', [authOwner, listingAuth], async (req, res, ne
                     bidId: winningBid.id
                 }
             })
-            await listing.update({ open: false, highest: winningBid.price }, { transaction: tsx })
+            await listing.update({ open: false, highest: winningBid.offer }, { transaction: tsx })
             await tsx.commit()
             res.json({ msg: "Listing closed" })
         }

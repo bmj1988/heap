@@ -35,11 +35,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false
     },
-    replyId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: null
-    },
     content: {
       type: DataTypes.TEXT,
       allowNull: false,

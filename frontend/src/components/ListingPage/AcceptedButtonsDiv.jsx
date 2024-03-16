@@ -3,11 +3,11 @@ import ConfirmRevokeModal from "../Modals/ConfirmRevokeModal"
 import { useModal } from "../../context/Modal"
 import ConfirmCloseModal from "../Modals/ConfirmCloseModal";
 
-const AcceptedButtonsDiv = ({ bid }) => {
+const AcceptedButtonsDiv = ({ bid, revokeAllowed }) => {
     const { setModalContent } = useModal();
-    const revokeAllowed = (new Date() - new Date(bid.acceptedOn)) / 1000 / 60 / 60 > 2
+
     const revoke = () => {
-        setModalContent(<ConfirmRevokeModal bidId={bid.id} />)
+        revokeAllowed ? setModalContent(<ConfirmRevokeModal bidId={bid.id} />) : null
     }
     const closeListing = () => {
         setModalContent(<ConfirmCloseModal listingId={bid.listingId} />)

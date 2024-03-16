@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { FaImage, FaTimesCircle, FaCheck } from 'react-icons/fa'
 import { useModal } from '../../context/Modal';
 import ConfirmAcceptModal from '../Main/Vendor/Listings/Modals/ConfirmAcceptModal';
@@ -20,6 +20,11 @@ const VendorListingPage = ({ listing, func }) => {
     const bids = useSelector(bidsArray)
     const accepted = bids?.find((bid) => bid.accepted === true)
     const highest = bids?.find((bid) => bid.offer === listing.highest)
+    const [revokeAllowed, setRevokeAllowed] = useState(false)
+
+    useEffect(() => {
+        (new Date() - new Date(accepted?.acceptedOn)) / 1000 / 60 / 60 > 2 ? setRevokeAllowed(true) : setRevokeAllowed(false)
+    }, [accepted])
 
     const status = () => {
         if (accepted) {
@@ -30,7 +35,7 @@ const VendorListingPage = ({ listing, func }) => {
     }
 
     const acceptHighest = () => {
-        bids?.length > 0 ? setModalContent(<ConfirmAcceptModal closeModal={closeModal} bid={highest} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} func={func} />) : setModalContent(<NoBidsModal closeModal={closeModal} />)
+        listing.highest ? setModalContent(<ConfirmAcceptModal closeModal={closeModal} bid={highest} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} func={func} />) : setModalContent(<NoBidsModal closeModal={closeModal} />)
     }
 
     const removeListing = () => {
@@ -73,9 +78,9 @@ const VendorListingPage = ({ listing, func }) => {
             </div>
 
             <Suspense fallback={'Loading bids...'}>
-                {accepted ? <AcceptedBidDiv bid={accepted} /> : null}
-                {!accepted  && bids.length > 0 ? <BidDiv bids={bids} /> : null}
-                {!accepted ? <NotAcceptedButtons acceptHighest={acceptHighest} removeListing={removeListing} editListing={editListing} bids={bids.length > 0} /> : <AcceptedButtonsDiv bid={accepted} /> }
+                {accepted ? <AcceptedBidDiv bid={accepted} revokeAllowed={revokeAllowed} /> : null}
+                {!accepted && bids.length > 0 ? <BidDiv bids={bids} /> : null}
+                {!accepted ? <NotAcceptedButtons acceptHighest={acceptHighest} removeListing={removeListing} editListing={editListing} bids={listing.highest} /> : <AcceptedButtonsDiv bid={accepted} revokeAllowed={revokeAllowed} />}
             </Suspense>
         </div >
     )

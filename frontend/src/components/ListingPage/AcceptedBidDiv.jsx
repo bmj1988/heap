@@ -3,11 +3,10 @@ import { useModal } from "../../context/Modal";
 import MessageHistoryModal from "../Modals/MessageHistory";
 import ConfirmRevokeModal from "../Modals/ConfirmRevokeModal";
 
-const AcceptedBidDiv = ({ bid }) => {
+const AcceptedBidDiv = ({ bid, revokeAllowed }) => {
     const agent = bid.Agent;
     const acceptedOn = new Date(bid.acceptedOn)
     const { setModalContent, closeModal } = useModal();
-    const revokeAllowed = (new Date() - acceptedOn) / 1000 / 60 / 60 > 2
 
     const message = () => {
         setModalContent(<MessageHistoryModal close={closeModal} bidId={bid.id} toId={agent.userId} />)
@@ -20,7 +19,7 @@ const AcceptedBidDiv = ({ bid }) => {
     }
 
     const revoke = () => {
-        setModalContent(<ConfirmRevokeModal bidId={bid.id}/>)
+        revokeAllowed ? setModalContent(<ConfirmRevokeModal bidId={bid.id}/>) : null
     }
 
     return (

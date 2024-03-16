@@ -535,15 +535,25 @@ select {
     font-size: 14px;
     border: 1px solid black;
     align-items: center;
-    max-width: 260;
+    max-width: 270px;
+    background-color: white;
+    cursor: pointer
 }
 
 .lldMain p {
     border-right: 1px solid black;
     margin: 1px;
-    width: 80px;
+    width: 90px;
 }
 
-.lldMain:hover {
-    background-color: #EEEEEE;
+.lldMain p.end {
+    border-right: none;
+}
+
+.lhwMain {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    line-height: 16px;
+    margin-top: 10px;
 }

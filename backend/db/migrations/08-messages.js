@@ -46,12 +46,6 @@ module.exports = {
           schema: options.schema
         }
       },
-      replyId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        defaultValue: null,
-
-      },
       content: {
         type: Sequelize.TEXT,
         allowNull: false

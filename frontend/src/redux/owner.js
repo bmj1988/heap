@@ -120,20 +120,6 @@ export const thunkLoadListings = () => async (dispatch) => {
     }
 }
 
-export const thunkAcceptBid = (bidId) => async (dispatch) => {
-    try {
-        const response = await csrfFetch(`/api/bids/${bidId}`, {
-            method: 'PATCH'
-        })
-        if (response.ok) {
-            dispatch(acceptBid(bidId))
-        }
-    }
-    catch (e) {
-        return e
-    }
-}
-
 export const thunkRemoveListing = (listingId) => async (dispatch) => {
     try {
         const response = await csrfFetch(`/api/listings/${listingId}`, {
@@ -173,7 +159,7 @@ export const thunkCloseListing = (listingId) => async (dispatch) => {
             method: 'DELETE'
         })
         if (response.ok) {
-            dispatch(removeListing(listingId))
+            dispatch(thunkVendorHome())
         }
     }
     catch (e) {
@@ -287,6 +273,9 @@ export const vendorReducer = (state = initialState, action) => {
     let newState = { ...state }
     switch (action.type) {
         case VENDOR_HOME: {
+            newState.shops = {}
+            newState.listings = {}
+            newState.messages = {}
             action.payload.shops.forEach((shop) => {
                 newState.shops[shop.id] = shop
             })
@@ -311,11 +300,6 @@ export const vendorReducer = (state = initialState, action) => {
                 newState.shops[shop.id] = shop
             })
             return newState;
-        }
-        case ACCEPT_BID: {
-            const bid = newState.listings[action.payload]
-            newState.listings[action.payload] = { ...bid, accepted: true }
-            return newState
         }
         case ADD_LISTING: {
             newState.listings[action.payload.id] = action.payload

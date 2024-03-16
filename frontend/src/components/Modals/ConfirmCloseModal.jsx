@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { thunkCloseListing } from "../../redux/owner";
+import { thunkCloseListing, thunkVendorHome } from "../../redux/owner";
 import BinaryChoiceModal from "./BinaryChoiceModal";
 import { useNavigate } from 'react-router-dom'
 
@@ -8,8 +8,7 @@ const ConfirmCloseModal = ({ listingId }) => {
     const dispatch = useDispatch();
 
     const confirm = async () => {
-        await dispatch(thunkCloseListing(listingId))
-        navigate('/')
+        dispatch(thunkCloseListing(listingId)).then(() => navigate('/'))
     }
 
 
