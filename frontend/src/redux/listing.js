@@ -6,6 +6,7 @@ const ADD_LISTING = 'listing/ADD'
 const REVOKE_BID = 'bid/REVOKE'
 const ACCEPT_BID = 'bid/ACCEPT'
 const HISTORY = 'listing/HISTORY'
+const CLEAR = 'vendor/CLEAR'
 
 /// ACTION CREATORS
 
@@ -49,6 +50,65 @@ export const thunkListingDetails = (listingId) => async (dispatch) => {
     }
     catch (e) {
         return e
+    }
+}
+
+export const thunkEditListing = (listingInfo) => async (dispatch) => {
+
+    try {
+        const response = await csrfFetch(`/api/listings/${listingInfo.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(listingInfo)
+        })
+        if (response.ok) {
+            const editedListing = await response.json();
+            dispatch(addListingDetails(editedListing))
+        }
+    }
+    catch (e) {
+        const err = await e.json();
+        console.log(err)
+        return err
+    }
+}
+
+export const thunkEditListingAWS = (listingInfo, form) => async (dispatch) => {
+    const { imgUrl } = form
+    try {
+        const formData = new FormData();
+        for (let detail in listingInfo) {
+            formData.append(detail, listingInfo[detail])
+        }
+        formData.append('image', imgUrl)
+
+        const option = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            body: formData
+        }
+
+        const response = await csrfFetch(`/api/listings/${listingInfo.id}`, option);
+        if (response.ok) {
+            const editedListing = await response.json();
+            dispatch(addListingDetails(editedListing))
+        }
+        else if (response.status < 500) {
+            const data = await response.json();
+            if (data.errors) {
+                return data
+            } else {
+                throw new Error('An error occured. Please try again.')
+            }
+        }
+        return response;
+    }
+    catch (e) {
+        const err = await e.json();
+        console.log(err)
+        return err
     }
 }
 
@@ -110,12 +170,12 @@ export const listingHistoryArray = createSelector((state) => state.listings, (li
 })
 
 /// REDUCER
-const initialState = {}
+const initialState = {listing: null, bids: null}
 export const listingsReducer = (state = initialState, action) => {
     let newState = { ...state }
     switch (action.type) {
         case ADD_LISTING: {
-            newState[action.payload.id] = action.payload
+            newState.listing = action.payload
             newState['bids'] = {}
             if (action.payload.Bids) {
                 action.payload.Bids.forEach((bid) => {
@@ -139,6 +199,9 @@ export const listingsReducer = (state = initialState, action) => {
                 newState.history[listing.id] = listing
             })
             return newState
+        }
+        case CLEAR: {
+            return initialState;
         }
         default: {
             return newState

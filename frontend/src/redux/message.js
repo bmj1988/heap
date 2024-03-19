@@ -6,6 +6,7 @@ const LOADINBOX = 'messages/INBOX'
 const DELMESSAGE = 'message/DELETE'
 const SEND = 'message/SEND'
 const REPLIES = 'message/REPLIES'
+const CLEAR = 'message/CLEAR'
 
 /// ACTION CREATORS
 
@@ -186,6 +187,9 @@ export const messageReducer = (state = initialState, action) => {
                 messageState.current[reply.id] = reply
             })
             return messageState
+        }
+        case CLEAR: {
+            return initialState;
         }
         default: {
             return messageState;

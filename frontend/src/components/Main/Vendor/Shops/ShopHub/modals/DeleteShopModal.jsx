@@ -12,11 +12,10 @@ const DeleteShopModal = ({ closeModal, shopId, func }) => {
     }
     const accept = async (e) => {
         e.preventDefault();
-        dispatch(thunkShopDelete(shopId))
-        func(false)
+        await dispatch(thunkShopDelete(shopId))
         closeModal()
     }
-
+    console.log(shopId, '!!!!!!!!!!!')
     return (
         <div className='esmMain textmark'>
             <h2>Delete shop</h2>

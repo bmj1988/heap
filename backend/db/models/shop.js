@@ -24,15 +24,24 @@ module.exports = (sequelize, DataTypes) => {
     },
     address: {
       type: DataTypes.STRING,
-      allowNull: {args: false, msg: "You must provide a street address for all listings and shops."}
+      allowNull: {args: false, msg: "You must provide a street address for all listings and shops."},
+      validate: {
+        notEmpty: {args: true,  msg: "You must provide a street address for all listings and shops."}
+      }
     },
     city: {
       type: DataTypes.STRING,
-      allowNull: {args: false, msg: "You must provide a city for all listings and shops."}
+      allowNull: {args: false, msg: "You must provide a city for all listings and shops."},
+      validate: {
+        notEmpty: {args: true, msg: "You must provide a city for all listings and shops."}
+      }
     },
     state: {
       type: DataTypes.STRING,
-      allowNull: {args: false, msg: "You must provide a state for all listings and shops."}
+      allowNull: {args: false, msg: "You must provide a state for all listings and shops."},
+      validate: {
+        notEmpty: {args: true, msg: "You must provide a state for all listings and shops."}
+      }
     },
     phone: DataTypes.STRING
   }, {

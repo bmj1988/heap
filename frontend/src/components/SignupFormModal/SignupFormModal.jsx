@@ -35,7 +35,8 @@ function SignupFormModal() {
     );
 
     if (serverResponse) {
-      setErrors(serverResponse.errors);
+      console.log(serverResponse)
+      // setErrors(serverResponse.errors);
     } else {
       closeModal();
     }

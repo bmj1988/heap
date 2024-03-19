@@ -180,10 +180,15 @@ select {
 }
 
 .eldImg {
-    width: 220px;
-    height: 150px;
+    max-width: 220px;
+    max-height: 150px;
     border-radius: 12px;
     margin: 5px;
+}
+
+.eldImgLogo {
+    width: 220px;
+    height: 150px;
 }
 
 .eldButtonGroup {
@@ -291,20 +296,39 @@ select {
 /* EDIT LISTING MODAL */
 
 .elmMain {
-    height: 570px;
-    width: 400px;
+    height: fit-content;
+    width: fit-content;
     gap: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.elmMain header {
+    background-color: inherit;
+}
+
+.elmMain .buttonDiv {
+    display: flex;
+    align-items: flex-end;
 }
 
 .elmPic {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .elmDesc {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.elmTooltip {
+    background-color: white;
+    width: 100px;
+    align-self: center;
 }
 
 .shpMain {
@@ -556,4 +580,46 @@ select {
     gap: 10px;
     line-height: 16px;
     margin-top: 10px;
+}
+
+.iubMain {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+}
+
+.iubForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.iubMain img {
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.iubMain button {
+    height: 20px;
+    width: 60px;
+}
+
+.elmMain button {
+    height: 35px;
+    border: none;
+    width: 50%;
+    box-shadow: -2px 2px 2px 2px #EEEEEE;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.elmFileInput {
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+}
+
+.lidMain {
+    margin-bottom: 20px;
 }

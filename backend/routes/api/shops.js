@@ -56,8 +56,9 @@ router.post('/new', authOwner, async (req, res) => {
     res.json(newShop)
 })
 
-router.delete('/:shopId', authShop, async (req, res) => {
-    const shop = req.shop
+router.delete('/:shopId', requireAuth, authOwner, async (req, res) => {
+    const shop = await Shop.findByPk(req.params.shopId)
+    console.log(shop)
     await shop.destroy()
     res.json({ message: "Successfully deleted." })
 })

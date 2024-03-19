@@ -1,36 +1,39 @@
 import { FaCheck, FaTimesCircle, FaEdit, FaImage } from "react-icons/fa"
+import React, { Suspense, useEffect, useState } from 'react';
 import '../../main.css'
 import { useModal } from "../../../../context/Modal";
 import ConfirmAcceptModal from "./Modals/ConfirmAcceptModal";
 import NoBidsModal from "./Modals/NoBidsModal";
-import ConfirmDeleteModal from "./Modals/ConfirmDeleteModal";
 import EditListingModal from "./Modals/EditListingModal";
 import { useNavigate } from "react-router-dom";
-const ExpandedListingDiv = ({ listing, func }) => {
-    const { closeModal, setModalContent } = useModal();
+import BinaryChoiceModal from '../../../Modals/BinaryChoiceModal'
+import NotAcceptedButtons from '../../../ListingPage/NotAcceptedButtons'
+
+const ExpandedListingDiv = ({ listing }) => {
     const navigate = useNavigate();
     const dateString = new Date(listing.createdAt).toLocaleDateString()
     const bids = listing.Bids
-
+    const accepted = bids?.find((bid) => bid.accepted === true)
     const highest = bids?.find((bid) => bid.offer === listing.highest)
+    const [revokeAllowed, setRevokeAllowed] = useState(false)
 
-    const acceptHighest = () => {
-        bids?.length > 0 ? setModalContent(<ConfirmAcceptModal closeModal={closeModal} bid={highest} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} func={func}/>) : setModalContent(<NoBidsModal closeModal={closeModal} />)
-    }
+    useEffect(() => {
+        (new Date() - new Date(accepted?.acceptedOn)) / 1000 / 60 / 60 > 2 ? setRevokeAllowed(true) : setRevokeAllowed(false)
+    }, [accepted])
 
-    const removeListing = () => {
-        setModalContent(<ConfirmDeleteModal closeModal={closeModal} listingId={listing.id} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} func={func} />)
-    }
-
-    const editListing = () => {
-        setModalContent(<EditListingModal listing={listing} closeModal={closeModal} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} func={func}/>)
+    const status = () => {
+        if (accepted) {
+            return "Bid accepted, awaiting pickup"
+        }
+        else if (listing.open) return "Open"
+        else return "Closed"
     }
 
     return (
         <div className="eldMain textmark">
             <div className="expandedListingDiv cursor-pointer" onClick={() => navigate(`/listings/${listing.id}`)}>
                 <div>
-                    {listing.img ? <img className="eldImg" src={listing.image} alt="Picture for listing" /> : <FaImage className="eldImg" />}
+                    {listing.image ? <img className="eldImg" src={listing.image} alt="Picture for listing" /> : <FaImage className="eldImgLogo" />}
                 </div>
                 <div className="eldDetails">
                     <p className="listingP noMargin"><span className="boldFont">Posted:</span>{dateString}</p>
@@ -40,20 +43,10 @@ const ExpandedListingDiv = ({ listing, func }) => {
                     <p className="listingP noMargin"><span className="boldFont">Description:</span>{listing.description}</p>
                 </div>
             </div>
-            <div className="eldButtonGroup">
-                <div className="eldSeparateButtons" onClick={(e) => editListing(e)}>
-                    <p className="eldButtonText">Edit</p>
-                    <FaEdit className="eldEdit" />
-                </div>
-                <div className="eldSeparateButtons" onClick={(e) => removeListing(e)}>
-                    <p className="eldButtonText">Remove</p>
-                    <FaTimesCircle className="eldDelete" />
-                </div>
-                <div className="eldSeparateButtons" onClick={(e) => acceptHighest(e)}>
-                    <p className={bids?.length > 0 ? "eldButtonText" : "eldButtonText grayedIcon"}>Accept Highest</p>
-                    <FaCheck className={bids?.length > 0 ? "eldAccept" : "eldAccept grayedIcon"} />
-                </div>
-            </div>
+            <Suspense fallback={'Loading...'}>
+                {accepted ? <AcceptedBidDiv bid={accepted} revokeAllowed={revokeAllowed} /> : null}
+                {!accepted ? <NotAcceptedButtons bid={listing.highest} listing={listing} /> : <AcceptedButtonsDiv bid={accepted} revokeAllowed={revokeAllowed} />}
+            </Suspense>
         </div>
     )
 }

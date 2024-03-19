@@ -12,8 +12,10 @@ const AddShopModal = ({close, update}) => {
     const [state, setState] = useState('')
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
+    const [errors, setErrors] = useState('')
 
-    const accept = () => {
+
+    const accept = async () => {
         const newShop = {
             address,
             city,
@@ -21,17 +23,29 @@ const AddShopModal = ({close, update}) => {
             name,
             phone
         }
-        dispatch(thunkShopCreate(newShop)).then(() => update(false)).then(() => close())
+        const response = await dispatch(thunkShopCreate(newShop))
+        if (response) {
+            console.log(response)
+            setErrors(response.errors)
+        }
+        else {
+            update(false).then(() => close())
+        }
     }
 
     return (
         <div className="esmMain textmark">
             <h2>Shop Info</h2>
             <WidgetLabel labelFor={'name'} labelText={'Name:'} inputFunc={setName} placeholder={'Provide a name (optional)'} />
+            {errors.name ? <p className="errors">{errors.name}</p> : null}
             <WidgetLabel labelFor={'address'} labelText={'Street Address:'} inputFunc={setAddress} placeholder={'Street address'} />
+            {errors.address ? <p className="errors">{errors.address}</p> : null}
             <WidgetLabel labelFor={'city'} labelText={'City:'} inputFunc={setCity} placeholder={'City'} />
+            {errors.city ? <p className="errors">{errors.city}</p> : null}
             <WidgetLabel labelFor={'state'} labelText={'State:'} inputFunc={setState} placeholder={"State"} />
+            {errors.state ? <p className="errors">{errors.state}</p> : null}
             <WidgetLabel labelFor={'phone'} labelText={'Phone #:'} inputFunc={setPhone} placeholder={"Phone number (optional)"} />
+            {errors.phone ? <p className="errors">{errors.phone}</p> : null}
             <div className="esmButtonGroup">
                 <FaAngleDoubleLeft className="esmButton cancel" onClick={() => close()}/>
                 <FaAngleDoubleRight className={address.length && city.length && state.length ? "esmButton accept" : "esmButton grayedOut"} onClick={address.length && city.length && state.length ? () => accept() : null}/>

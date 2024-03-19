@@ -11,8 +11,15 @@ const REMOVE_LISTING = 'listing/REMOVE'
 const SHOP_HUB = 'shopHub/load'
 const UPDATE_SHOP = 'shop/update'
 const REMOVE_SHOP = 'shop/delete'
+const CLEAR = 'vendor/CLEAR'
 
 /// ACTION CREATORS
+
+export const clearVendor = () => {
+    return {
+        type: CLEAR
+    }
+}
 
 const loadVendorHome = (home) => {
     return {
@@ -130,28 +137,31 @@ export const thunkRemoveListing = (listingId) => async (dispatch) => {
         }
     }
     catch (e) {
-        return e
+        const err = await e.json()
+        return err
     }
 }
 
-export const thunkEditListing = (listingInfo) => async (dispatch) => {
-    try {
-        const response = await csrfFetch(`/api/listings/${listingInfo.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(listingInfo)
-        })
-        if (response.ok) {
-            const editedListing = await response.json();
-            dispatch(addListing(editedListing))
-        }
-    }
-    catch (e) {
-        return e
-    }
-}
+// export const thunkEditListing = (listingInfo) => async (dispatch) => {
+
+//     try {
+//         const response = await csrfFetch(`/api/listings/${listingInfo.id}`, {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(listingInfo)
+//         })
+//         if (response.ok) {
+//             const editedListing = await response.json();
+//             console.log(editedListing)
+//             dispatch(addListing(editedListing))
+//         }
+//     }
+//     catch (e) {
+//         return e
+//     }
+// }
 
 export const thunkCloseListing = (listingId) => async (dispatch) => {
     try {
@@ -232,7 +242,8 @@ export const thunkShopCreate = (shopDetails) => async (dispatch) => {
         }
     }
     catch (e) {
-        return e
+        const err = await e.json()
+        return err
     }
 }
 
@@ -312,6 +323,9 @@ export const vendorReducer = (state = initialState, action) => {
         case REMOVE_SHOP: {
             delete newState.shops[action.payload]
             return newState
+        }
+        case CLEAR: {
+            return initialState;
         }
         default: {
             return newState

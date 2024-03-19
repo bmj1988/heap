@@ -2,7 +2,6 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { FaImage, FaTimesCircle, FaCheck } from 'react-icons/fa'
 import { useModal } from '../../context/Modal';
 import ConfirmAcceptModal from '../Main/Vendor/Listings/Modals/ConfirmAcceptModal';
-import ConfirmDeleteModal from '../Main/Vendor/Listings/Modals/ConfirmDeleteModal';
 import EditListingModal from '../Main/Vendor/Listings/Modals/EditListingModal';
 import NoBidsModal from '../Main/Vendor/Listings/Modals/NoBidsModal';
 import AcceptedBidDiv from './AcceptedBidDiv';
@@ -10,6 +9,8 @@ import NotAcceptedButtons from './NotAcceptedButtons';
 import AcceptedButtonsDiv from './AcceptedButtonsDiv';
 import { useSelector } from 'react-redux';
 import { bidsArray } from '../../redux/listing';
+import BinaryChoiceModal from '../Modals/BinaryChoiceModal';
+
 const BidDiv = React.lazy(() => import("./BidDiv"))
 
 const VendorListingPage = ({ listing, func }) => {
@@ -38,15 +39,19 @@ const VendorListingPage = ({ listing, func }) => {
         listing.highest ? setModalContent(<ConfirmAcceptModal closeModal={closeModal} bid={highest} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} func={func} />) : setModalContent(<NoBidsModal closeModal={closeModal} />)
     }
 
+
     const removeListing = () => {
-        setModalContent(<ConfirmDeleteModal closeModal={closeModal} listingId={listing.id} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} func={func} />)
+        const accept = () => {
+            const response = dispatch(thunkRemoveListing(listingId))
+            navigate('/')
+        }
+        setModalContent(<BinaryChoiceModal confirmFunc={accept} text={"Are you sure you wish to delete this listing?"} topic={"Delete listing"} />)
     }
+
 
     const editListing = () => {
-        setModalContent(<EditListingModal listing={listing} closeModal={closeModal} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} func={func} />)
+        setModalContent(<EditListingModal closeModal={closeModal} setModal={setModalContent} listing={listing} />)
     }
-
-
 
 
     return (
@@ -77,7 +82,7 @@ const VendorListingPage = ({ listing, func }) => {
                 <p className='boldFont'>Description:</p> <p>{listing.description}</p>
             </div>
 
-            <Suspense fallback={'Loading bids...'}>
+            <Suspense fallback={'Loading...'}>
                 {accepted ? <AcceptedBidDiv bid={accepted} revokeAllowed={revokeAllowed} /> : null}
                 {!accepted && bids.length > 0 ? <BidDiv bids={bids} /> : null}
                 {!accepted ? <NotAcceptedButtons acceptHighest={acceptHighest} removeListing={removeListing} editListing={editListing} bids={listing.highest} /> : <AcceptedButtonsDiv bid={accepted} revokeAllowed={revokeAllowed} />}

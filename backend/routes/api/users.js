@@ -8,7 +8,7 @@ const router = express.Router();
 // Sign up
 router.post('/', async (req, res, next) => {
 
-    const { email, password, firstName, lastName, owner, agent, city, state, license, name } = req.body;
+    let { email, password, firstName, lastName, owner, agent, city, state, license, name } = req.body;
     const errors = {}
     if (!password || password.length < 6 || password.length > 40) {
         errors.password = "Must provide a password at least 6-40 characters long."

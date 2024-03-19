@@ -1,4 +1,5 @@
 import { csrfFetch } from './csrf';
+import { clearVendor } from './owner';
 
 //Constants
 const SET_USER = 'session/setUser';
@@ -72,7 +73,8 @@ export const thunkLogout = () => async (dispatch) => {
     await csrfFetch("/api/session", {
         method: "DELETE",
     });
-    dispatch(removeUser());
+    dispatch(removeUser())
+    dispatch(clearVendor());
 };
 
 

@@ -2,7 +2,8 @@ const express = require('express')
 const { Listing, Bid, Shop, Agent, Message, sequelize } = require('../../db/models');
 const { authAgent, authOwner } = require('../../utils/auth');
 const { listingAuth } = require('../../utils/listingMiddleware')
-const { Op } = require('sequelize')
+const { Op } = require('sequelize');
+const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3');
 
 const router = express.Router();
 
@@ -112,7 +113,7 @@ router.post('/new', authOwner, async (req, res, next) => {
 
             const { address, city, state, image, price, description } = req.body
             const newShop = await Shop.create({ address, city, state, ownerId: owner.id }, { transaction: tsx })
-            const newListing = await newShop.createListing({ image, price, description, ownerId: owner.id}, { transaction: tsx })
+            const newListing = await newShop.createListing({ image, price, description, ownerId: owner.id }, { transaction: tsx })
 
             await tsx.commit()
 
@@ -188,15 +189,31 @@ router.delete('/:listingId', [authOwner, listingAuth], async (req, res) => {
 })
 
 
-router.put('/:listingId', [authOwner], async (req, res, next) => {
+router.put('/:listingId', [authOwner, singleMulterUpload('image')], async (req, res, next) => {
     const owner = req.owner
-    const { address, city, state, price, image, description } = req.body
+    const { address, city, state, price, description } = req.body
+    console.log(req.body)
+    let image;
+    if (req.file) {
+        image = await singlePublicFileUpload(req.file)
+    }
+
     const listing = await Listing.findByPk(req.params.listingId, {
-        include: {
+        include: [{
             model: Shop,
             attributes: ['name', 'address', 'city', 'state', 'phone']
-        }
+        },
+        {
+            model: Bid,
+            include: [
+                {
+                    model: Agent
+                }
+            ]
+        }]
     })
+
+    console.log(req.body.listing)
     if (owner.id === listing.ownerId) {
         const tsx = await sequelize.transaction();
 
@@ -221,7 +238,7 @@ router.put('/:listingId', [authOwner], async (req, res, next) => {
             }
             else {
                 await listing.update({ price, image, description, seen: true })
-                tsx.commit()
+                await tsx.commit()
                 res.json(listing)
             }
 

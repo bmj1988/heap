@@ -27,7 +27,8 @@ router.post('/', async (req, res, next) => {
         id: user.id,
         email,
         owner: user.owner,
-        agent: user.agent
+        agent: user.agent,
+        firstName: user.firstName,
     };
 
     await setTokenCookie(res, safeUser);

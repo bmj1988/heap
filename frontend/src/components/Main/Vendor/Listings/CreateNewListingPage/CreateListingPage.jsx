@@ -5,11 +5,13 @@ import WidgetLabel from "../../NewListing/WidgetLabelInputs";
 import '../../../main.css'
 import { useNavigate } from "react-router-dom";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import LoginFormPage from "../../../../LoginFormPage/LoginFormPage";
 
 const CreateListingPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((state) => state.session.user)
     const shops = useSelector(shopsArray)
     const [shopId, setShopId] = useState(0)
     const [description, setDescription] = useState(null)
@@ -55,6 +57,7 @@ const CreateListingPage = () => {
         }
     }
 
+    if (!user) return (<LoginFormPage />)
     return (
 
         <div className="clpMain textmark">

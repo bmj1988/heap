@@ -1,6 +1,34 @@
 import { FaCheck, FaEdit, FaTimesCircle } from "react-icons/fa";
+import BinaryChoiceModal from "../Modals/BinaryChoiceModal";
+import EditListingModal from "../Main/Vendor/Listings/Modals/EditListingModal";
+import NoBidsModal from "../Main/Vendor/Listings/Modals/NoBidsModal";
+import { useModal } from "../../context/Modal";
 
-const NotAcceptedButtons = ({ editListing, removeListing, acceptHighest, bids }) => {
+const NotAcceptedButtons = ({ listing, bid }) => {
+    const { closeModal, setModalContent } = useModal();
+    const acceptHighest = () => {
+        const accept = async () => {
+            dispatch(thunkAcceptBid(bid.id))
+            closeModal()
+        }
+
+        bid ? setModalContent(<BinaryChoiceModal confirmFunc={accept}
+            text={"By accepting this bid of ${bid.offer} you will give the agent the location information for the bid and the ability to message you about it. This will also close the listing for all new bids. Make sure to review the agent information before accepting."}
+            topic={"Accept Bid"} />)
+            : setModalContent(<NoBidsModal closeModal={closeModal} />)
+    }
+
+    const removeListing = () => {
+        const accept = () => {
+            const response = dispatch(thunkRemoveListing(listingId))
+            navigate('/')
+        }
+        setModalContent(<BinaryChoiceModal confirmFunc={accept} text={"Are you sure you wish to delete this listing?"} topic={"Delete listing"} />)
+    }
+
+    const editListing = () => {
+        setModalContent(<EditListingModal listing={listing} closeModal={closeModal} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} setModal={setModalContent} />)
+    }
 
     return (
         <div className="eldButtonGroup">
@@ -8,13 +36,13 @@ const NotAcceptedButtons = ({ editListing, removeListing, acceptHighest, bids })
                 <p className="eldButtonText">Edit</p>
                 <FaEdit className="eldEdit" />
             </div>
-            <div className="eldSeparateButtons" onClick={(e) => removeListing(e)}>
+            <div className="eldSeparateButtons" onClick={() => removeListing()}>
                 <p className="eldButtonText">Remove</p>
                 <FaTimesCircle className="eldDelete" />
             </div>
             <div className="eldSeparateButtons" onClick={(e) => acceptHighest(e)}>
-                <p className={bids ? "eldButtonText" : "eldButtonText grayedIcon"}>Accept Highest Bid</p>
-                <FaCheck className={bids ? "eldAccept" : "eldAccept grayedIcon"} />
+                <p className={bid ? "eldButtonText" : "eldButtonText grayedIcon"}>Accept Highest Bid</p>
+                <FaCheck className={bid ? "eldAccept" : "eldAccept grayedIcon"} />
             </div>
         </div>
     )
