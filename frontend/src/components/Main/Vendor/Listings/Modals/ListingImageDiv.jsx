@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import '../../../main.css'
 import { FaImage } from 'react-icons/fa';
 
@@ -10,7 +9,7 @@ const ListingImageDiv = ({ image, setImage, uploadImageUrl }) => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = (e) => {
+        reader.onload = () => {
             setImage(reader.result);
         }
         uploadImageUrl(file);

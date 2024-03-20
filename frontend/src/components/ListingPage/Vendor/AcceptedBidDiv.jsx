@@ -1,13 +1,12 @@
 import { FaCommentsDollar, FaUndoAlt, FaUser } from "react-icons/fa";
-import { useModal } from "../../context/Modal";
-import MessageHistoryModal from "../Modals/MessageHistory";
-import ConfirmRevokeModal from "../Modals/ConfirmRevokeModal";
+import MessageHistoryModal from "../../Modals/MessageHistory";
+import ConfirmRevokeModal from "../../Modals/ConfirmRevokeModal";
+import { useModal } from "../../../context/Modal";
 
 const AcceptedBidDiv = ({ bid, revokeAllowed }) => {
     const agent = bid.Agent;
     const acceptedOn = new Date(bid.acceptedOn)
     const { setModalContent, closeModal } = useModal();
-
     const message = () => {
         setModalContent(<MessageHistoryModal close={closeModal} bidId={bid.id} toId={agent.userId} />)
         return

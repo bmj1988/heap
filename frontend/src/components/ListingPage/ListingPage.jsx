@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Spinner from '../Spinner'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { thunkListingDetails } from '../../redux/listing'
 import './listing.css'
 
-const VendorListingPage = React.lazy(() => import('./VendorListingPage'))
+const VendorListingPage = React.lazy(() => import('./Vendor/VendorListingPage'))
 
 const ListingPage = () => {
     const { id } = useParams();

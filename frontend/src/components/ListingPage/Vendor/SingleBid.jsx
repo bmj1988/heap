@@ -1,8 +1,8 @@
 import { FaCommentDollar, FaCheck, FaTimesCircle } from "react-icons/fa"
-import './listing.css'
-import ConfirmAcceptModal from "../Main/Vendor/Listings/Modals/ConfirmAcceptModal"
-import { useModal } from '../../context/Modal'
-import NewMessageModal from "../Modals/NewMessageModal"
+import '../listing.css'
+import ConfirmAcceptModal from "../../Main/Vendor/Listings/Modals/ConfirmAcceptModal"
+import { useModal } from '../../../context/Modal'
+import NewMessageModal from "../../Modals/NewMessageModal"
 
 const SingleBid = ({ bid }) => {
     const agent = bid.Agent

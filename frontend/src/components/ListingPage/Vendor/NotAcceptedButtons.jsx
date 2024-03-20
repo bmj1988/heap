@@ -1,8 +1,8 @@
 import { FaCheck, FaEdit, FaTimesCircle } from "react-icons/fa";
-import BinaryChoiceModal from "../Modals/BinaryChoiceModal";
-import EditListingModal from "../Main/Vendor/Listings/Modals/EditListingModal";
-import NoBidsModal from "../Main/Vendor/Listings/Modals/NoBidsModal";
-import { useModal } from "../../context/Modal";
+import BinaryChoiceModal from "../../Modals/BinaryChoiceModal";
+import EditListingModal from "../../Main/Vendor/Listings/Modals/EditListingModal";
+import NoBidsModal from "../../Main/Vendor/Listings/Modals/NoBidsModal";
+import { useModal } from "../../../context/Modal";
 
 const NotAcceptedButtons = ({ listing, bid }) => {
     const { closeModal, setModalContent } = useModal();

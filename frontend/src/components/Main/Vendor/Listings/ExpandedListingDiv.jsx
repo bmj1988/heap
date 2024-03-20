@@ -1,13 +1,9 @@
 import { FaCheck, FaTimesCircle, FaEdit, FaImage } from "react-icons/fa"
 import React, { Suspense, useEffect, useState } from 'react';
 import '../../main.css'
-import { useModal } from "../../../../context/Modal";
-import ConfirmAcceptModal from "./Modals/ConfirmAcceptModal";
-import NoBidsModal from "./Modals/NoBidsModal";
-import EditListingModal from "./Modals/EditListingModal";
 import { useNavigate } from "react-router-dom";
-import BinaryChoiceModal from '../../../Modals/BinaryChoiceModal'
-import NotAcceptedButtons from '../../../ListingPage/NotAcceptedButtons'
+import NotAcceptedButtons from '../../../ListingPage/Vendor/NotAcceptedButtons'
+import AcceptedButtonsDiv from '../../../ListingPage/Vendor/AcceptedButtonsDiv'
 
 const ExpandedListingDiv = ({ listing }) => {
     const navigate = useNavigate();

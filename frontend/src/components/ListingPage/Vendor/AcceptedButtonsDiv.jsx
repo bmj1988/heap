@@ -1,7 +1,7 @@
 import { FaCheckSquare, FaUndoAlt } from "react-icons/fa"
-import ConfirmRevokeModal from "../Modals/ConfirmRevokeModal"
-import { useModal } from "../../context/Modal"
-import ConfirmCloseModal from "../Modals/ConfirmCloseModal";
+import ConfirmRevokeModal from "../../Modals/ConfirmRevokeModal"
+import { useModal } from "../../../context/Modal"
+import ConfirmCloseModal from "../../Modals/ConfirmCloseModal";
 
 const AcceptedButtonsDiv = ({ bid, revokeAllowed }) => {
     const { setModalContent } = useModal();
