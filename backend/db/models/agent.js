@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       Agent.hasMany(models.AgentReview, {foreignKey: 'agentId'})
 
       Agent.hasMany(models.ShopReview, {foreignKey: 'agentId'})
+
+      Agent.hasMany(models.ClosedListing, { foreignKey: 'agentId' })
     }
   }
   Agent.init({

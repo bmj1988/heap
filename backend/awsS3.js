@@ -1,11 +1,10 @@
 const AWS = require('aws-sdk')
 const NAME_OF_BUCKET = process.env.AWS_BUCKET_NAME
 const multer = require('multer')
-
 const s3 = new AWS.S3({ apiVersion: "2006-03-01" })
 
 // --------------------------- Public UPLOAD ------------------------
-
+// deleteObject(params = {}, callback) => AWS.Reqest
 const singlePublicFileUpload = async (file) => {
     const { originalname, mimetype, buffer } = await file;
     const path = require("path");
@@ -31,6 +30,47 @@ const multiplePublicFileUpload = async (files) => {
     );
 };
 
+
+const deleteSingleFile = async (fileKey) => {
+    try {
+        const deleteParams = {
+            Bucket: NAME_OF_BUCKET,
+            Key: fileKey
+        }
+        s3.deleteObject(deleteParams, (err, data) => {
+            if (err) console.log(err, err.stack);
+            else console.log(data);
+        });
+    }
+    catch (e) {
+        return e
+    }
+}
+
+const deleteMultipleFiles = async (fileKeyArray) => {
+    try {
+        const params = {
+            Bucket: NAME_OF_BUCKET,
+            Delete: {
+                Objects: [
+
+                ],
+                Quiet: false
+            }
+        }
+        for (let key in fileKeyArray) {
+            const obj = { Key: key }
+            params.Delete.Objects.push(obj)
+        }
+        s3.deleteObjects(params, function (err, data) {
+            if (err) console.log(err, err.stack);
+            else console.log(data);
+        })
+    }
+    catch (e) {
+        return e
+    }
+}
 // --------------------------- Prviate UPLOAD ------------------------
 
 const singlePrivateFileUpload = async (file) => {
@@ -90,4 +130,6 @@ module.exports = {
     retrievePrivateFile,
     singleMulterUpload,
     multipleMulterUpload,
+    deleteSingleFile,
+    deleteMultipleFiles
 };

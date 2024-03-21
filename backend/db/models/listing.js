@@ -12,9 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Listing.belongsTo(models.Shop, { foreignKey: 'shopId', onDelete: 'CASCADE' })
 
-      Listing.belongsTo(models.Owner, {foreignKey: 'ownerId', onDelete: 'CASCADE'})
+      Listing.belongsTo(models.Owner, { foreignKey: 'ownerId', onDelete: 'CASCADE' })
 
-      Listing.hasMany(models.Bid, { foreignKey: 'listingId', onDelete: 'CASCADE'  })
+      Listing.hasMany(models.Bid, { foreignKey: 'listingId', onDelete: 'CASCADE' })
+
+      Listing.hasMany(models.Image, { foreignKey: 'listingId', onDelete: 'CASCADE' })
     }
   }
   Listing.init({
@@ -31,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: "Scrap for sale",
       validate: {
-        len: {args: [0, 800], msg: "Keep it brief! Descriptions should be no longer than 750 characters."}
+        len: { args: [0, 800], msg: "Keep it brief! Descriptions should be no longer than 750 characters." }
       }
     },
     price: {

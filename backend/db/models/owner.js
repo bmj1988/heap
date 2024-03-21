@@ -17,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
       Owner.hasMany(models.AgentReview, { foreignKey: 'ownerId'})
 
       Owner.hasMany(models.Listing, {foreignKey: 'ownerId'})
+
+      Owner.hasMany(models.ClosedListing, { foreignKey: 'ownerId' })
     }
   }
   Owner.init({

@@ -1,9 +1,9 @@
 const express = require('express')
-const { Listing, Bid, Shop, Agent, Message, sequelize } = require('../../db/models');
+const { Listing, Bid, Shop, Agent, Message, Image, ClosedListing, sequelize } = require('../../db/models');
 const { authAgent, authOwner } = require('../../utils/auth');
 const { listingAuth } = require('../../utils/listingMiddleware')
 const { Op } = require('sequelize');
-const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3');
+const { singlePublicFileUpload, singleMulterUpload, multipleMulterUpload, multiplePublicFileUpload, deleteSingleFile, deleteMultipleFiles } = require('../../awsS3');
 
 const router = express.Router();
 
@@ -27,19 +27,8 @@ router.get('/open', authOwner, async (req, res) => {
     res.json(listings)
 })
 
-router.get('/history', authOwner, async (req, res) => {
-    const owner = req.owner;
-    const listings = await Listing.scope("history").findAll({
-        where: {
-            ownerId: owner.id
-        }
-    })
-
-    res.json({ History: listings })
-})
-
-/// AGENTS LISTINGS ROUTES
-agentListings = Listing.scope('defaultScope', 'agentView')
+/// AGENTS LISTINGS SCOPE
+const agentListings = Listing.scope('defaultScope', 'agentView')
 
 /// AGENTS LISTING FEED
 
@@ -76,6 +65,8 @@ router.get('/:listingId', listingAuth, async (req, res) => {
             }
         }, {
             model: Shop
+        }, {
+            model: Image
         }]
     })
     if (listing) {
@@ -98,76 +89,75 @@ router.post('/:listingId/bids', [authAgent, listingAuth], async (req, res) => {
     res.json({ msg: `Your bid of $${newBid.offer} has been placed.` })
 })
 
-/// OWNERS LISTINGS ROUTES
 
-router.post('/new', authOwner, async (req, res, next) => {
+/// CREATE NEW LISTING
+
+router.post('/new', [authOwner, multipleMulterUpload('images')], async (req, res, next) => {
     const owner = req.owner
     const { shopId } = req.body
-    if (shopId) {
-        const newListing = await Listing.create({ ...req.body, ownerId: owner.id })
-        return res.json(newListing)
+    let images;
+    let image;
+    if (req.files) {
+        const response = await multiplePublicFileUpload(req.files)
+        images = Object.values(response)
+        image = images[0]
     }
-    else {
-        const tsx = await sequelize.transaction();
-        try {
 
+    const tsx = await sequelize.transaction();
+
+    try {
+        if (shopId) {
+            const newListing = await Listing.create({ ...req.body, ownerId: owner.id, image }, { transaction: tsx })
+            if (images) {
+                let imageArray = []
+                for (let key in images) {
+                    imageArray.push({ url: images[key], listingId: newListing.id })
+                }
+                await Image.bulkCreate(imageArray, { transaction: tsx })
+            }
+            await tsx.commit();
+            return res.json(newListing)
+        }
+
+        else {
             const { address, city, state, image, price, description } = req.body
             const newShop = await Shop.create({ address, city, state, ownerId: owner.id }, { transaction: tsx })
-            const newListing = await newShop.createListing({ image, price, description, ownerId: owner.id }, { transaction: tsx })
+            const newListing = await newShop.createListing({ image, price, image, description, ownerId: owner.id }, { transaction: tsx })
+            if (images) {
+                let imageArray = []
+                for (let key in images) {
+                    imageArray.push({ url: images[key], listingId: newListing.id })
+                }
+                await Image.bulkCreate(imageArray, { transaction: tsx })
+            }
 
             await tsx.commit()
-
             res.json(newListing)
         }
-        catch (e) {
-            await tsx.rollback()
-            return next(e)
-        }
+
+    }
+    catch (e) {
+        await tsx.rollback()
+        if (images) deleteMultipleFiles(Object.values(images))
+        return next(e)
     }
 })
 
-
-
-
-///GET INFO FOR A LISTING - OWNER
-router.get('/:listingId/bids', authOwner, async (req, res) => {
-    const listingId = req.params.listingId;
-    const listingWithBids = await Listing.findByPk(listingId, {
-        include: [
-            {
-                model: Bid,
-            }
-        ]
-    })
-    res.json(listingWithBids)
-})
-
-
-/// CLOSE A BID - OWNER
+/// CLOSE A LISTING - OWNER
 router.delete('/:listingId/close', [authOwner, listingAuth], async (req, res, next) => {
     const owner = req.owner
     const listing = req.listing
     if (owner.id === listing.ownerId) {
         const tsx = await sequelize.transaction();
         try {
-            await Bid.destroy({
-                where: {
-                    [Op.and]: [{ listingId: listing.id },
-                    { accepted: false }]
-                }
-            })
             const winningBid = await Bid.findOne({
                 where: {
                     [Op.and]: [{ listingId: listing.id },
                     { accepted: true }]
                 }
             })
-            await Message.destroy({
-                where: {
-                    bidId: winningBid.id
-                }
-            })
-            await listing.update({ open: false, highest: winningBid.offer }, { transaction: tsx })
+            await ClosedListing.create({ shopId: listing.shopId, ownerId: listing.ownerId, winningBid: winningBid.offer, agentId: winningBid.agentId }, { transaction: tsx })
+            await listing.destroy({ transaction: tsx });
             await tsx.commit()
             res.json({ msg: "Listing closed" })
         }
@@ -179,7 +169,7 @@ router.delete('/:listingId/close', [authOwner, listingAuth], async (req, res, ne
     else res.status(401).json({ errors: "This listing does not belong to you." })
 })
 
-
+/// DELETE A LISTING - NO SALE
 router.delete('/:listingId', [authOwner, listingAuth], async (req, res) => {
     const owner = req.owner
     const listing = req.listing
@@ -188,36 +178,41 @@ router.delete('/:listingId', [authOwner, listingAuth], async (req, res) => {
 
 })
 
-
-router.put('/:listingId', [authOwner, singleMulterUpload('image')], async (req, res, next) => {
+/// EDIT A LISTING
+router.put('/:listingId', [authOwner, multipleMulterUpload('images')], async (req, res, next) => {
     const owner = req.owner
     const { address, city, state, price, description } = req.body
-    console.log(req.body)
+    let { deletedImages } = req.body
+    deletedImages = deletedImages ? deletedImages.split(',') : null
+    let images;
     let image;
-    if (req.file) {
-        image = await singlePublicFileUpload(req.file)
+
+    if (req.files) {
+        const response = await multiplePublicFileUpload(req.files)
+        images = Object.values(response)
+        image = images[0]
     }
 
     const listing = await Listing.findByPk(req.params.listingId, {
-        include: [{
+        include: {
             model: Shop,
             attributes: ['name', 'address', 'city', 'state', 'phone']
-        },
-        {
-            model: Bid,
-            include: [
-                {
-                    model: Agent
-                }
-            ]
-        }]
+        }
     })
+    const removeImage = deletedImages.includes(listing.image)
 
-    console.log(req.body.listing)
     if (owner.id === listing.ownerId) {
         const tsx = await sequelize.transaction();
 
         try {
+            if (deletedImages) {
+                await Image.destroy({
+                    where: {
+                        url: { [Op.in]: deletedImages }
+                    }
+                }, { transaction: tsx })
+                deleteMultipleFiles(deletedImages)
+            }
 
             if (listing.Shop.address.toLowerCase() !== address.toLowerCase()) {
 
@@ -232,19 +227,51 @@ router.put('/:listingId', [authOwner, singleMulterUpload('image')], async (req, 
                     transaction: tsx
                 })
 
+                if (images) {
+                    let imageArray = []
+                    for (let key in images) {
+                        imageArray.push({ url: images[key], listingId: listing.id })
+                    }
+                    await Image.bulkCreate(imageArray, { transaction: tsx })
+                }
+                if (!image && removeImage) image = null
                 await listing.update({ shopId: newLocation.id, price, image, description }, { transaction: tsx })
                 await tsx.commit()
-                res.json(listing)
             }
             else {
+                if (!image && removeImage) image = null
                 await listing.update({ price, image, description, seen: true })
+                if (images) {
+                    let imageArray = []
+                    for (let key in images) {
+                        imageArray.push({ url: images[key], listingId: listing.id })
+                    }
+                    await Image.bulkCreate(imageArray, { transaction: tsx })
+                }
                 await tsx.commit()
-                res.json(listing)
             }
 
+            const returnListing = await Listing.findByPk(req.params.listingId, {
+                include: [{
+                    model: Shop,
+                    attributes: ['name', 'address', 'city', 'state', 'phone']
+                },
+                {
+                    model: Bid,
+                    include: [
+                        {
+                            model: Agent
+                        }
+                    ]
+                },
+                { model: Image }]
+            })
+
+            res.json(returnListing)
         }
         catch (e) {
             await tsx.rollback();
+            if (images) deleteMultipleFiles(Object.values(images))
             next(e)
         }
     }

@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       Shop.hasMany(models.Listing, { foreignKey: 'shopId', onDelete: 'CASCADE' })
 
       Shop.hasMany(models.ShopReview, { foreignKey: 'shopId' })
+
+      Shop.hasMany(models.ClosedListing, { foreignKey: 'shopId' })
     }
   }
   Shop.init({

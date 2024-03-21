@@ -54,17 +54,18 @@ router.patch('/:bidId', authOwner, async (req, res) => {
         accepted: true,
         acceptedOn: new Date()
     })
-    console.log(bid)
-    const shop = bid.Listing.Shop
+    const listing = bid.Listing
+    const shop = listing.Shop
+    // await listing.update({open: false}) *** think this over, could just eliminate this altogether.
     await Message.create({ toId: bid.agentId, fromId: owner.id, bidId: bid.id, content: `Your bid for listing ${bid.Listing.id} has been accepted. The listing is available for pickup at ${shop.address}, ${shop.city}, ${shop.state}` })
-    res.json({msg: "Bid Accepted"})
+    res.json({ msg: "Bid Accepted" })
 })
 
 /// REVOKE BID
 
 router.patch('/:bidId/revoke', authOwner, async (req, res) => {
     const bid = await Bid.findByPk(req.params.bidId)
-    await bid.update({ accepted: false})
+    await bid.update({ accepted: false })
     res.json(bid)
 })
 
