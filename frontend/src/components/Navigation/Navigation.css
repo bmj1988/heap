@@ -1,7 +1,7 @@
 .profile-dropdown {
     position: absolute;
     background: white;
-    right: -3px;
+    right: 0px;
     width: 160px;
     border-radius: 12px 0px 0px 12px;
     box-shadow: -2px 2px 5px 5px #EEEEEE;
@@ -107,7 +107,7 @@ div.spinner {
 .profileOptions {
     display: flex;
     height: 30px;
-    width: 200px;
+    width: 153px;
     font-size: 18px;
     overflow: hidden;
     padding: 5px 0px 0px 7px;
@@ -124,4 +124,20 @@ div.spinner {
 
 .bottomOption {
     border-radius: 0px 0px 0px 12px;
+}
+
+.breaker {
+    width: 50;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+}
+
+.differentOptions {
+    display: flex;
+    height: 30px;
+    width: 153px;
+    font-size: 18px;
+    overflow: hidden;
+    padding: 5px 0px 0px 7px;
 }

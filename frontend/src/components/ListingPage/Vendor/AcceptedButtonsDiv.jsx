@@ -1,16 +1,30 @@
 import { FaCheckSquare, FaUndoAlt } from "react-icons/fa"
-import ConfirmRevokeModal from "../../Modals/ConfirmRevokeModal"
 import { useModal } from "../../../context/Modal"
-import ConfirmCloseModal from "../../Modals/ConfirmCloseModal";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { thunkCloseListing } from "../../../redux/owner";
+import BinaryChoiceModal from "../../Modals/BinaryChoiceModal";
 
 const AcceptedButtonsDiv = ({ bid, revokeAllowed }) => {
     const { setModalContent } = useModal();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const revoke = () => {
-        revokeAllowed ? setModalContent(<ConfirmRevokeModal bidId={bid.id} />) : null
+        if (revokeAllowed) {
+            const confirm = () => {
+                dispatch(thunkRevokeBid(bid.id))
+            }
+            setModalContent(<BinaryChoiceModal confirmFunc={confirm} topic={'Revoke'} text={"You are about to revoke a previously accepted bid! Once the bid is revoked, you may accept another bid, but the agent may still have the address linked to the listing."} />)
+        }
+        else return
     }
+
     const closeListing = () => {
-        setModalContent(<ConfirmCloseModal listingId={bid.listingId} />)
+        const confirm = async () => {
+            dispatch(thunkCloseListing(bid.listingId)).then(() => navigate('/'))
+        }
+        setModalContent(<BinaryChoiceModal confirmFunc={confirm} topic={'Close listing'} text={"This will close the listing, deleting all bids and messages and removing your listing from the listing feed permanently. Only do this if you have concluded business with the agent whose bid you accepted. If you wish to revoke the listing and choose another bid, please go back and choose 'Revoke'."} />)
     }
 
     return (

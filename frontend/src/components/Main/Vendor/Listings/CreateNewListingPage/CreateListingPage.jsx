@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { shopsArray, thunkAddListing, thunkLoadShops } from "../../../../../redux/owner";
+import { shopsArray, thunkLoadShops } from "../../../../../redux/owner";
 import { useDispatch, useSelector } from "react-redux";
 import WidgetLabel from "../../NewListing/WidgetLabelInputs";
 import '../../../main.css'
 import { useNavigate } from "react-router-dom";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import LoginFormPage from "../../../../LoginFormPage/LoginFormPage";
+import NewListingFormImageDiv from "./ImageDivExperimental";
+import { thunkCreateListingAWS } from '../../../../../redux/listing'
+import PriceInput from './PriceInput'
 
 const CreateListingPage = () => {
 
@@ -16,7 +19,8 @@ const CreateListingPage = () => {
     const [shopId, setShopId] = useState(0)
     const [description, setDescription] = useState(null)
     const [price, setPrice] = useState(null)
-    const [image, setImage] = useState(null)
+    const [images, setImages] = useState([])
+    const [previewImages, setPreviewImages] = useState([])
     const [address, setAddress] = useState(null)
     const [city, setCity] = useState(null)
     const [state, setState] = useState(null)
@@ -33,7 +37,6 @@ const CreateListingPage = () => {
             newListing = {
                 description,
                 price,
-                image,
                 address,
                 city,
                 state
@@ -43,12 +46,11 @@ const CreateListingPage = () => {
             newListing = {
                 shopId,
                 price,
-                description,
-                image,
+                description
             }
         }
 
-        const response = await dispatch(thunkAddListing(newListing))
+        const response = await dispatch(thunkCreateListingAWS(newListing, images))
         if (response.errors) {
             console.log(response)
         }
@@ -74,14 +76,14 @@ const CreateListingPage = () => {
                 {shopId == 0 && <div>
                     <WidgetLabel labelText="Address:" labelFor="address" inputFunc={setAddress} placeholder={"Provide a street address"} />
                     <WidgetLabel labelText="City:" labelFor="city" inputFunc={setCity} placeholder={"Provide a city"} />
-                    <WidgetLabel labelText="State:" labelFor="state" inputFunc={setState} placeholder={"Provide a state"}/>
+                    <WidgetLabel labelText="State:" labelFor="state" inputFunc={setState} placeholder={"Provide a state"} />
                 </div>}
                 <h4>Listing information</h4>
                 <p className="clpExplain">Providing an image, asking price and description may help agents give you the bids more accurate bids more quickly. None of these fields are required, but they help your listings sell more quickly.</p>
-                <WidgetLabel labelText="Image:" labelFor={"image"} inputFunc={setImage} placeholder={"Provide an image URL"} />
-                <WidgetLabel labelText={'Price:'} labelFor={'price'} inputFunc={setPrice} placeholder={"Provide an asking price"}/>
+                <NewListingFormImageDiv images={images} setImages={setImages} previewImages={previewImages} setPreviewImages={setPreviewImages} />
+                <PriceInput setPrice={setPrice} />
                 <div className="clpTextarea">
-                    <label className="listingP boldFont" htmlFor="description">{"Description (optional):"} </label> <textarea style={{ resize: 'none' }} cols={40} rows={5}  maxLength={750} id="description" placeholder="Provide a description of what you want to sell" onChange={(e) => setDescription(e.target.value)} />
+                    <label className="listingP boldFont" htmlFor="description">{"Description (optional):"} </label> <textarea style={{ resize: 'none' }} cols={40} rows={5} maxLength={750} id="description" placeholder="Provide a description of what you want to sell" onChange={(e) => setDescription(e.target.value)} />
                 </div>
                 <div className="clpButtonDiv">
                     <button type="submit" disabled={!address && shopId == 0}><FaAngleDoubleRight className={!address && shopId == 0 ? "clpSubmit grayedOut" : "clpSubmit"} /></button>

@@ -21,6 +21,9 @@ router.get('/open', authOwner, async (req, res) => {
                     model: Agent
                 }
             ]
+        },
+        {
+            model: Image
         }]
     })
 
@@ -96,18 +99,16 @@ router.post('/new', [authOwner, multipleMulterUpload('images')], async (req, res
     const owner = req.owner
     const { shopId } = req.body
     let images;
-    let image;
     if (req.files) {
         const response = await multiplePublicFileUpload(req.files)
         images = Object.values(response)
-        image = images[0]
     }
 
     const tsx = await sequelize.transaction();
 
     try {
         if (shopId) {
-            const newListing = await Listing.create({ ...req.body, ownerId: owner.id, image }, { transaction: tsx })
+            const newListing = await Listing.create({ ...req.body, ownerId: owner.id }, { transaction: tsx })
             if (images) {
                 let imageArray = []
                 for (let key in images) {
@@ -120,9 +121,9 @@ router.post('/new', [authOwner, multipleMulterUpload('images')], async (req, res
         }
 
         else {
-            const { address, city, state, image, price, description } = req.body
+            const { address, city, state, price, description } = req.body
             const newShop = await Shop.create({ address, city, state, ownerId: owner.id }, { transaction: tsx })
-            const newListing = await newShop.createListing({ image, price, image, description, ownerId: owner.id }, { transaction: tsx })
+            const newListing = await newShop.createListing({ price, description, ownerId: owner.id }, { transaction: tsx })
             if (images) {
                 let imageArray = []
                 for (let key in images) {
@@ -185,12 +186,10 @@ router.put('/:listingId', [authOwner, multipleMulterUpload('images')], async (re
     let { deletedImages } = req.body
     deletedImages = deletedImages ? deletedImages.split(',') : null
     let images;
-    let image;
 
     if (req.files) {
         const response = await multiplePublicFileUpload(req.files)
         images = Object.values(response)
-        image = images[0]
     }
 
     const listing = await Listing.findByPk(req.params.listingId, {
@@ -199,7 +198,7 @@ router.put('/:listingId', [authOwner, multipleMulterUpload('images')], async (re
             attributes: ['name', 'address', 'city', 'state', 'phone']
         }
     })
-    const removeImage = deletedImages.includes(listing.image)
+
 
     if (owner.id === listing.ownerId) {
         const tsx = await sequelize.transaction();
@@ -234,13 +233,11 @@ router.put('/:listingId', [authOwner, multipleMulterUpload('images')], async (re
                     }
                     await Image.bulkCreate(imageArray, { transaction: tsx })
                 }
-                if (!image && removeImage) image = null
-                await listing.update({ shopId: newLocation.id, price, image, description }, { transaction: tsx })
+                await listing.update({ shopId: newLocation.id, price, description }, { transaction: tsx })
                 await tsx.commit()
             }
             else {
-                if (!image && removeImage) image = null
-                await listing.update({ price, image, description, seen: true })
+                await listing.update({ price, description, seen: true })
                 if (images) {
                     let imageArray = []
                     for (let key in images) {

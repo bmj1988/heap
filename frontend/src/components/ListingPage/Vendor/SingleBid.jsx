@@ -1,8 +1,8 @@
-import { FaCommentDollar, FaCheck, FaTimesCircle } from "react-icons/fa"
+import { FaCommentDollar, FaCheck } from "react-icons/fa"
 import '../listing.css'
-import ConfirmAcceptModal from "../../Main/Vendor/Listings/Modals/ConfirmAcceptModal"
 import { useModal } from '../../../context/Modal'
 import NewMessageModal from "../../Modals/NewMessageModal"
+import BinaryChoiceModal from "../../Modals/BinaryChoiceModal"
 
 const SingleBid = ({ bid }) => {
     const agent = bid.Agent
@@ -14,7 +14,11 @@ const SingleBid = ({ bid }) => {
     }
 
     const accept = () => {
-        setModalContent(<ConfirmAcceptModal bid={bid} closeModal={closeModal} confirmIcon={<FaCheck className="eldAccept" />} cancelIcon={<FaTimesCircle className="eldDelete" />} />)
+        const confirm = async () => {
+            dispatch(thunkAcceptBid(bid.id))
+            closeModal()
+        }
+        setModalContent(<BinaryChoiceModal confirmFunc={confirm} text={`By accepting this bid of ${bid.offer} you will give the agent the location information for the bid and the ability to message you about it. This will also close the listing for all new bids. Make sure to review the agent information before accepting.`} topic={"Accept Bid"}/>)
         return
     }
 
@@ -23,7 +27,7 @@ const SingleBid = ({ bid }) => {
             <div className="sbDetails">
                 <p><span>Bid: </span>{`$${bid.offer}`}</p>
                 <p><span>Agent Rating: </span>{agent.avgRating || "No ratings yet"}</p>
-                <p><span>Comments: </span>{bid.message || "No comments"}</p>
+                <p className="message"><span>Comments: </span>{bid.message || "No comments"}</p>
             </div>
             <div className="sbButtonGroup">
                 <div className="sbButton" onClick={() => message()}>

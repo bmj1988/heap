@@ -15,7 +15,6 @@ const ListingDiv = ({ listing }) => {
         <div className="listingDiv textmark" >
             <fieldset onClick={(e) => clicker(e)}>
                 <legend>{`no.${listing.id}`}</legend>
-                {/* {listing.image ? <img src={listing.image} className="listingDivImg" alt="Listing Image" /> : null} */}
                 <div className="listingSection">
                     <div className='pDiv'>
                         <p className="listingP boldFont">Date listed:</p><p className='listingP'>{dateListed} </p>
@@ -24,7 +23,7 @@ const ListingDiv = ({ listing }) => {
                         <p className="listingP boldFont">Description:</p><p className='listingP desc'> {listing.description}</p>
                     </div>
                     <div className='pDiv'>
-                        <p className="listingP boldFont">Asking price:</p><p className='listingP'> {listing.price}</p>
+                        <p className="listingP boldFont">Asking price:</p><p className='listingP'> {listing.price === 'Best offer' ? `${listing.price}` : `$${listing.price}`}</p>
                     </div>
                     <div className='pDiv'>
                         <p className="listingP boldFont">Highest bid: </p><p className='listingP'>{listing.highest ? `$${listing.highest}` : 'No bids yet'}</p>

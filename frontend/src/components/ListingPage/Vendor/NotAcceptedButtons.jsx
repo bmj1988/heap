@@ -1,11 +1,15 @@
 import { FaCheck, FaEdit, FaTimesCircle } from "react-icons/fa";
 import BinaryChoiceModal from "../../Modals/BinaryChoiceModal";
 import EditListingModal from "../../Main/Vendor/Listings/Modals/EditListingModal";
-import NoBidsModal from "../../Main/Vendor/Listings/Modals/NoBidsModal";
 import { useModal } from "../../../context/Modal";
+import { useDispatch } from "react-redux";
+import { thunkRemoveListing } from "../../../redux/owner";
+import { useNavigate } from "react-router-dom";
 
 const NotAcceptedButtons = ({ listing, bid }) => {
     const { closeModal, setModalContent } = useModal();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const acceptHighest = () => {
         const accept = async () => {
             dispatch(thunkAcceptBid(bid.id))
@@ -13,14 +17,14 @@ const NotAcceptedButtons = ({ listing, bid }) => {
         }
 
         bid ? setModalContent(<BinaryChoiceModal confirmFunc={accept}
-            text={"By accepting this bid of ${bid.offer} you will give the agent the location information for the bid and the ability to message you about it. This will also close the listing for all new bids. Make sure to review the agent information before accepting."}
+            text={`By accepting this bid of ${bid.offer} you will give the agent the location information for the bid and the ability to message you about it. This will also close the listing for all new bids. Make sure to review the agent information before accepting.`}
             topic={"Accept Bid"} />)
-            : setModalContent(<NoBidsModal closeModal={closeModal} />)
+            : setModalContent(<BinaryChoiceModal text={"This listing currently has no bids to accept."} topic={"No bids"} noConfirm={true} />)
     }
 
     const removeListing = () => {
         const accept = () => {
-            const response = dispatch(thunkRemoveListing(listingId))
+            dispatch(thunkRemoveListing(listing.id))
             navigate('/')
         }
         setModalContent(<BinaryChoiceModal confirmFunc={accept} text={"Are you sure you wish to delete this listing?"} topic={"Delete listing"} />)

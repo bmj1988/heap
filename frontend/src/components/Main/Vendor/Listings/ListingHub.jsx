@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import { listingsArray, thunkLoadListings } from "../../../../redux/owner"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ExpandedListingDiv from "./ExpandedListingDiv";
 import { useNavigate } from "react-router-dom";
-import Spinner from '../../../Spinner'
 
 const ListingHub = () => {
     const dispatch = useDispatch();

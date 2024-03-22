@@ -70,12 +70,12 @@ function ProfileButton() {
           <div className={"profile-dropdown"} ref={ulRef}>
             {user ? (
               <div>
-                <div className="profileOptions topOption">
-                  {user.firstName}
+                <div className="differentOptions topOption">
+                {user.email}
                 </div>
-                <div className="profileOptions">{user.email}</div>
-                {user.owner ? <div className="profileOptions" onClick={toListingHub}>Manage Listings</div> : null}
-                {user.owner ? <div className="profileOptions" onClick={toShopHub}>Manage Shops</div> : null}
+                <div className="breaker"></div>
+                {user.owner ? <div className="profileOptions" onClick={toListingHub}>Listings</div> : null}
+                {user.owner ? <div className="profileOptions" onClick={toShopHub}>Shops</div> : null}
                 <div className="profileOptions" onClick={toMessageCenter}>Messages</div>
                 <div className="profileOptions bottomOption" onClick={logout}>Log Out</div>
               </div>

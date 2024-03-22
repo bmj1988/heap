@@ -1,20 +1,27 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import WidgetLabel from "../../NewListing/WidgetLabelInputs"
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa"
 import '../../../main.css'
 import { useDispatch } from "react-redux"
-import { thunkEditListing, thunkEditListingAWS } from "../../../../../redux/listing"
-import ListingImageDiv from "./ListingImageDiv"
+import { thunkEditListingAWS } from "../../../../../redux/listing"
+import ListingPageImageDiv from "../../../../ListingPage/Vendor/ListingPageImageDiv"
+import NewListingFormImageDiv from "../CreateNewListingPage/ImageDivExperimental"
 
 const EditListingModal = ({ closeModal, listing }) => {
     const dispatch = useDispatch();
-    const [image, setImage] = useState(listing.image)
+    const [previewImages, setPreviewImages] = useState(listing.Images)
+    const [originalImages, setOriginalImages] = useState([])
+    const [images, setImages] = useState([])
+    const [deletedImages, setDeletedImages] = useState([])
     const [address, setAddress] = useState(listing.Shop.address)
     const [city, setCity] = useState(listing.Shop.city)
     const [state, setState] = useState(listing.Shop.state)
     const [price, setPrice] = useState(listing.price)
     const [description, setDescription] = useState(listing.description)
-    const [imgUrl, setImgUrl] = useState("")
+    useEffect(() => {
+        const urlsOnly = listing.Images.map((img) => img.url)
+        setOriginalImages(urlsOnly)
+    }, [])
 
     const cancel = (e) => {
         e.preventDefault();
@@ -29,11 +36,12 @@ const EditListingModal = ({ closeModal, listing }) => {
             city,
             state,
             price,
-            description
+            description,
+            deletedImages
         }
 
         try {
-            await dispatch(thunkEditListingAWS(listingInfo, { imgUrl }))
+            await dispatch(thunkEditListingAWS(listingInfo, images))
             closeModal()
         }
         catch (e) {
@@ -41,12 +49,13 @@ const EditListingModal = ({ closeModal, listing }) => {
         }
     }
 
-
+    console.log(deletedImages)
     return (
         <div className="camMain elmMain textmark">
             <header>Edit Listing</header>
-            <div style={{backgroundColor: "white"}}>
-                <ListingImageDiv image={image} setImage={setImage} uploadImageUrl={setImgUrl} />
+            <div style={{ backgroundColor: "white" }}>
+                <ListingPageImageDiv images={previewImages} noEnhance={true} />
+                <NewListingFormImageDiv images={images} setImages={setImages} previewImages={previewImages} setPreviewImages={setPreviewImages} deletedImages={deletedImages} setDeletedImages={setDeletedImages} originalImages={originalImages} />
                 <WidgetLabel labelText={'Price'} labelFor={'price'} inputFunc={setPrice} defaults={price} />
 
                 <WidgetLabel labelText={'Address'} labelFor={'address'} inputFunc={setAddress} defaults={address} />

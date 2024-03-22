@@ -1,11 +1,12 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { FaImage } from 'react-icons/fa'
 import AcceptedBidDiv from './AcceptedBidDiv';
 import NotAcceptedButtons from './NotAcceptedButtons';
 import AcceptedButtonsDiv from './AcceptedButtonsDiv';
 import { useSelector } from 'react-redux';
 import { bidsArray } from '../../../redux/listing';
 import VendorListingDetails from './VendorListingDetails';
+import ListingPageImageDiv from './ListingPageImageDiv';
+import '../listing.css'
 
 const BidDiv = React.lazy(() => import("./BidDiv"))
 
@@ -22,9 +23,7 @@ const VendorListingPage = ({ listing }) => {
     return (
         <div className="slpMain textmark">
             <h2>{`Listing no.${listing.id}`}</h2>
-            <div className="elmPic">
-                {listing.image ? <img src={listing.image} className="eldImg" alt={'Current image'} /> : <FaImage className="defaultImg" />}
-            </div>
+            <ListingPageImageDiv images={listing.Images} />
             <VendorListingDetails listing={listing} bids={bids} accepted={accepted} />
             <Suspense fallback={'Loading...'}>
                 {accepted ? <AcceptedBidDiv bid={accepted} revokeAllowed={revokeAllowed} /> : null}

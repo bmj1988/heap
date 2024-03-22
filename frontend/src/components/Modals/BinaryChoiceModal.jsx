@@ -1,7 +1,7 @@
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import { useModal } from "../../context/Modal";
 
-const BinaryChoiceModal = ({ text, topic, component, confirmFunc, goBackFunc, dontClose }) => {
+const BinaryChoiceModal = ({ text, topic, component, confirmFunc, noCancel, noConfirm }) => {
     const { closeModal } = useModal();
 
     const confirm = () => {
@@ -14,10 +14,17 @@ const BinaryChoiceModal = ({ text, topic, component, confirmFunc, goBackFunc, do
             {topic ? <h2>{topic}</h2> : null}
             {text ? <p>{text}</p> : null}
             {component}
-            <div>
+            {!noCancel && !noConfirm && <div>
                 <button onClick={() => closeModal()}><FaAngleDoubleLeft className="bcmGoBack" /></button>
                 <button onClick={() => confirm()}><FaAngleDoubleRight className="bcmSubmit" /></button>
-            </div>
+            </div>}
+            {noCancel && <div>
+                <div style={{width: '50%'}}></div>
+                <button onClick={() => confirm()}><FaAngleDoubleRight className="bcmSubmit" /></button>
+            </div>}
+            {noConfirm && <div>
+                <button onClick={() => closeModal()}><FaAngleDoubleLeft className="bcmSubmit" /></button>
+            </div>}
         </div>
     )
 }

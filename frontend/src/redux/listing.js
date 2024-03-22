@@ -75,14 +75,61 @@ export const thunkEditListing = (listingInfo) => async (dispatch) => {
     }
 }
 
-export const thunkEditListingAWS = (listingInfo, form) => async (dispatch) => {
-    const { imgUrl } = form
+export const thunkCreateListingAWS = (listingInfo, images) => async (dispatch) => {
     try {
+        const imagesArray = Object.values(images)
         const formData = new FormData();
         for (let detail in listingInfo) {
             formData.append(detail, listingInfo[detail])
         }
-        formData.append('image', imgUrl)
+        for (let image of imagesArray) {
+            formData.append('images', image, image.name)
+        }
+        const option = {
+            method: 'POST',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            body: formData
+        }
+        const response = await csrfFetch('/api/listings/new', option)
+        if (response.ok) {
+            const listingToAdd = await response.json()
+            await dispatch(addListingDetails(listingToAdd))
+            return listingToAdd
+        }
+        else {
+            const error = await response.json()
+            return error
+        }
+    }
+    catch (e) {
+        const err = await e.json();
+        return err
+    }
+}
+
+export const thunkEditListingAWS = (listingInfo, images, deletedImages) => async (dispatch) => {
+    try {
+
+        const formData = new FormData();
+        if (images) {
+            const imagesArray = Object.values(images)
+            for (let image of imagesArray) {
+                formData.append('images', image, image.name)
+            }
+        }
+
+        if (deletedImages) {
+            const deletedImagesArray = Object.values(deletedImages)
+            for (let image of deletedImagesArray) {
+                formData.append('deletedImages', image)
+            }
+        }
+
+        for (let detail in listingInfo) {
+            formData.append(detail, listingInfo[detail])
+        }
+
+
 
         const option = {
             method: 'PUT',
@@ -145,7 +192,7 @@ export const thunkRevokeBid = (bidId) => async (dispatch) => {
 
 export const thunkListingHistory = () => async (dispatch) => {
     try {
-        const response = await csrfFetch(`/api/listings/history`)
+        const response = await csrfFetch(`/api/vendor/history`)
         if (response.ok) {
             const listingHistory = await response.json()
             dispatch(loadHistory(listingHistory))
@@ -170,7 +217,7 @@ export const listingHistoryArray = createSelector((state) => state.listings, (li
 })
 
 /// REDUCER
-const initialState = {listing: null, bids: null}
+const initialState = { listing: null, bids: null }
 export const listingsReducer = (state = initialState, action) => {
     let newState = { ...state }
     switch (action.type) {

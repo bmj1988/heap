@@ -1,5 +1,5 @@
 const express = require('express')
-const { Shop, User, ShopReview, Owner, Message, Listing, ClosedListing, sequelize } = require('../../db/models')
+const { Shop, User, ShopReview, Owner, Message, Listing, Image, ClosedListing, sequelize } = require('../../db/models')
 const { requireAuth, authShop, authOwner } = require('../../utils/auth')
 
 const router = express.Router()
@@ -7,6 +7,7 @@ const router = express.Router()
 router.get('/home', authOwner, async (req, res) => {
     const owner = req.owner
     const user = req.user
+
     const shops = await owner.getShops({
         include:
         {
@@ -24,7 +25,7 @@ router.get('/home', authOwner, async (req, res) => {
     const messages = await Message.findAll({
         where: {
             toId: user.id
-        }
+        },
     })
     res.json({ shops, listings, messages })
 })

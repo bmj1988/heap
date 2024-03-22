@@ -3,7 +3,9 @@ import { addListing, shopsArray } from "../../../../redux/owner"
 import { useState } from "react"
 import '../../main.css'
 import WidgetLabel from "./WidgetLabelInputs"
-import { csrfFetch } from "../../../../redux/csrf"
+import NewListingFormImageDiv from "../Listings/CreateNewListingPage/ImageDivExperimental"
+import { thunkCreateListingAWS } from "../../../../redux/listing"
+import PriceInput from "../Listings/CreateNewListingPage/PriceInput"
 
 const NewListingWidget = () => {
     const dispatch = useDispatch();
@@ -11,7 +13,8 @@ const NewListingWidget = () => {
     const [shopId, setShopId] = useState(0)
     const [description, setDescription] = useState(null)
     const [price, setPrice] = useState(null)
-    const [image, setImage] = useState('')
+    const [images, setImages] = useState([])
+    const [previewImages, setPreviewImages] = useState([])
     const [address, setAddress] = useState(null)
     const [city, setCity] = useState(null)
     const [state, setState] = useState(null)
@@ -24,7 +27,6 @@ const NewListingWidget = () => {
             newListing = {
                 description,
                 price,
-                image,
                 address,
                 city,
                 state
@@ -35,26 +37,16 @@ const NewListingWidget = () => {
                 shopId,
                 price,
                 description,
-                image,
             }
         }
-        console.log(newListing)
-        const response = await csrfFetch('/api/listings/new', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newListing)
-        })
-        if (response.ok) {
-            const listingToAdd = await response.json()
 
-            await dispatch(addListing(listingToAdd))
-            document.getElementById('newListingWidget').reset()
+        const response = await dispatch(thunkCreateListingAWS(newListing, images))
+        if (response.errors) {
+            console.log(response)
         }
         else {
-            const error = await response.json()
-            console.log(error)
+            await dispatch(addListing(response))
+            document.getElementById('newListingWidget').reset()
         }
     }
 
@@ -75,13 +67,13 @@ const NewListingWidget = () => {
                     <WidgetLabel labelText="State:" labelFor="state" inputFunc={setState} />
                 </div>}
                 <h4>Listing information</h4>
-                <WidgetLabel labelText="Image:" labelFor={"image"} inputFunc={setImage} />
-                <WidgetLabel labelText={'Price:'} labelFor={'price'} inputFunc={setPrice} />
+                <NewListingFormImageDiv images={images} setImages={setImages} previewImages={previewImages} setPreviewImages={setPreviewImages} />
+                <PriceInput setPrice={setPrice} />
                 <div>
-                    <label className="listingP boldFont" htmlFor="description">{"Description (optional):"} </label> <textarea style={{resize: 'none'}} cols={40} rows={5} id="description" onChange={(e) => setDescription(e.target.value)} />
+                    <label className="listingP boldFont" htmlFor="description">{"Description (optional):"} </label> <textarea style={{ resize: 'none' }} cols={40} rows={5} id="description" onChange={(e) => setDescription(e.target.value)} />
                 </div>
 
-                <button type="submit">Post listing</button>
+                <button onClick={(e) => handleSubmit(e)}>Post listing</button>
             </form>
         </div>
     )

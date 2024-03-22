@@ -45,9 +45,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      image: {
-        type: Sequelize.STRING,
-      },
       open: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

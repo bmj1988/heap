@@ -41,7 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "Best offer",
       allowNull: false
     },
-    image: DataTypes.STRING,
     open: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
