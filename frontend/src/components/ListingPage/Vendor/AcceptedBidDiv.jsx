@@ -3,8 +3,10 @@ import MessageHistoryModal from "../../Modals/MessageHistory";
 import { useModal } from "../../../context/Modal";
 import BinaryChoiceModal from "../../Modals/BinaryChoiceModal";
 import { thunkRevokeBid } from "../../../redux/listing";
+import { useDispatch } from "react-redux";
 
 const AcceptedBidDiv = ({ bid, revokeAllowed }) => {
+    const dispatch = useDispatch();
     const agent = bid.Agent;
     const acceptedOn = new Date(bid.acceptedOn)
     const { setModalContent, closeModal } = useModal();

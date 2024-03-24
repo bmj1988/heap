@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { thunkCloseListing } from "../../../redux/owner";
 import BinaryChoiceModal from "../../Modals/BinaryChoiceModal";
+import { thunkRevokeBid } from "../../../redux/listing";
 
 const AcceptedButtonsDiv = ({ bid, revokeAllowed }) => {
     const { setModalContent } = useModal();

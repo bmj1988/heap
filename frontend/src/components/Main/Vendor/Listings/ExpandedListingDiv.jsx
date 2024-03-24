@@ -1,5 +1,5 @@
 import { FaImage } from "react-icons/fa"
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import '../../main.css'
 import { useNavigate } from "react-router-dom";
 import NotAcceptedButtons from '../../../ListingPage/Vendor/NotAcceptedButtons'
@@ -23,7 +23,7 @@ const ExpandedListingDiv = ({ listing }) => {
                 <div>
                     {listing.Images.length > 0 ? <img className="eldImg" src={listing.Images[0]['url']} alt="Picture for listing" /> : <FaImage className="eldImgLogo" />}
                 </div>
-                <VendorListingDetails listing={listing} bids={bids} accepted={accepted}/>
+                <VendorListingDetails listing={listing} bids={bids} accepted={accepted} />
             </div>
             <Suspense fallback={'Loading...'}>
                 {!accepted ? <NotAcceptedButtons bid={highest} listing={listing} /> : <AcceptedButtonsDiv bid={accepted} revokeAllowed={revokeAllowed} />}

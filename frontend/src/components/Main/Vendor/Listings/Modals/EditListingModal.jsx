@@ -18,10 +18,11 @@ const EditListingModal = ({ closeModal, listing }) => {
     const [state, setState] = useState(listing.Shop.state)
     const [price, setPrice] = useState(listing.price)
     const [description, setDescription] = useState(listing.description)
+
     useEffect(() => {
         const urlsOnly = listing.Images.map((img) => img.url)
         setOriginalImages(urlsOnly)
-    }, [])
+    }, [listing])
 
     const cancel = (e) => {
         e.preventDefault();

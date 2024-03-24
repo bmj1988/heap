@@ -5,6 +5,7 @@ import { useModal } from "../../../context/Modal";
 import { useDispatch } from "react-redux";
 import { thunkRemoveListing } from "../../../redux/owner";
 import { useNavigate } from "react-router-dom";
+import { thunkAcceptBid } from "../../../redux/listing";
 
 const NotAcceptedButtons = ({ listing, bid }) => {
     const { closeModal, setModalContent } = useModal();

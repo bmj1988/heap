@@ -11,7 +11,7 @@ const ListingHub = () => {
 
     useEffect(() => {
         dispatch(thunkLoadListings())
-    }, [])
+    }, [dispatch])
 
     const toNewListingForm = () => {
         navigate('/listings/new')

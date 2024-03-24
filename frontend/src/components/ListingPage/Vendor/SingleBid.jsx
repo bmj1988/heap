@@ -3,6 +3,7 @@ import '../listing.css'
 import { useModal } from '../../../context/Modal'
 import NewMessageModal from "../../Modals/NewMessageModal"
 import BinaryChoiceModal from "../../Modals/BinaryChoiceModal"
+import { thunkAcceptBid } from "../../../redux/listing"
 
 const SingleBid = ({ bid }) => {
     const agent = bid.Agent
