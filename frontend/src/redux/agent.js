@@ -1,5 +1,5 @@
 /// ACTIONS
-
+const UPDATE = 'agent/UPDATE'
 /// ACTION CREATORS
 
 /// THUNKS
@@ -9,7 +9,7 @@
 /// REDUCER
 
 const initialState = { agent: null }
-const agentReducer = ({ state = initialState, action }) => {
+export const agentReducer = ({ state = initialState, action }) => {
     const newState = { ...state }
     switch (action.type) {
         case UPDATE: {

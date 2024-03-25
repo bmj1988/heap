@@ -3,8 +3,8 @@ import '../main.css'
 import PurpleOutlineDiv from '../BoxDiv.jsx'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { thunkVendorHome } from '../../../redux/owner.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { listingsArray, thunkVendorHome } from '../../../redux/owner.js'
 import ListingsWidget from './Listings/ListingsWidget.jsx'
 import NewListingWidget from './NewListing/NewListingWidget.jsx'
 import Spinner from '../../Spinner.jsx'
@@ -15,6 +15,7 @@ const OwnerMain = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loaded, setLoaded] = useState(false)
+    const listings = useSelector(listingsArray)
     useEffect(() => {
         dispatch(thunkVendorHome()).then(() => setLoaded(true))
     }, [])
@@ -24,7 +25,7 @@ const OwnerMain = () => {
     return (
         <div className='mpd'>
             <PurpleOutlineDiv boldText={'Create a new listing'} smallText={""} logo={<FaCube className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv firstDiv flex-start'} clicker={() => navigate('/listings/new')} widget={<NewListingWidget />} />
-            <PurpleOutlineDiv boldText={'Current listings'} smallText={""} logo={<FaCubes className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv flex-start'} clicker={() => navigate('/my-listings')} widget={<ListingsWidget />} />
+            <PurpleOutlineDiv boldText={'Current listings'} smallText={""} logo={<FaCubes className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv flex-start'} clicker={() => navigate('/my-listings')} widget={<ListingsWidget listings={listings} />} />
             <PurpleOutlineDiv boldText={'Messages'} smallText={""} logo={<FaEnvelope className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv flex-start'} clicker={() => navigate('/messages')} widget={<MessagesWidget />} />
             <PurpleOutlineDiv boldText={'Past listings'} smallText={""} logo={<FaHistory className='cube heapPurple' />} css={"purpleOutlineDiv colorDiv lastDiv flex-start"} clicker={null} widget={<ListingHistoryWidget />} />
         </div>

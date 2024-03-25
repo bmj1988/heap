@@ -16,7 +16,7 @@ const VendorListingDetailsDiv = ({ listing, bids, accepted }) => {
             <ListingDetail css={"slpDetail"} text={"Listed on:"} value={dateListed} />
             <ListingDetail css={"slpDetail"} text={"Status:"} value={status()} />
             <ListingDetail css={"slpDetail"} text={"Asking price:"} value={listing.price === 'Best offer' ? `${listing.price}` : `$${listing.price}`} />
-            <ListingDetail css={"slpDetail"} text={"Current bids: "} value={`${bids.length}`} />
+            <ListingDetail css={"slpDetail"} text={"Current bids: "} value={`${bids?.length}`} />
             <ListingDetail css={"slpDetail"} text={"Location: "} value={`${shop?.address }`} />
             <ListingDetail css={"slpDetail"} text={"Highest bid: "} value={listing.highest ? "$" + listing.highest : "No bids yet"} />
             <ListingDetail css={"slpDetail"} text={"Description:"} value={listing.description} />

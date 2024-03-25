@@ -1,5 +1,3 @@
-import { FaRegWindowClose } from "react-icons/fa"
-
 const PreviewImageModal = ({ pic, close }) => {
 
 

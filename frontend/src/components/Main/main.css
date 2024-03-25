@@ -670,3 +670,10 @@ select {
     font-size: 14px;
     margin-bottom: 10px;
 }
+
+.vslmMain {
+    background-color: white;
+    height: 600px;
+    padding: 10px;
+    margin-bottom: 5px;
+}

@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
 const ShopDiv = ({ shop }) => {
-    const navigate = useNavigate();
 
     // const clicker = () => {
     //     navigate(`/shops/${shop.id}`)

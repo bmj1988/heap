@@ -1,27 +1,30 @@
-import { useSelector } from "react-redux"
 import ListingDiv from "./ListingDiv"
-import { listingsArray } from "../../../../redux/owner"
 import { useEffect, useState } from "react"
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa'
 
 
-const ListingsWidget = () => {
-    const listings = useSelector(listingsArray)
+const ListingsWidget = ({listings}) => {
     const [displayed, setDisplayed] = useState(listings.slice(0, 5))
     const [more, setMore] = useState(false)
     const [less, setLess] = useState(false)
 
     useEffect(() => {
+        setDisplayed(listings.slice(0,5))
+    }, [listings])
+
+    useEffect(() => {
         const lastDisplayed = displayed[displayed.length - 1]
         const lastListing = listings[listings.length - 1]
-        if (lastDisplayed.id === lastListing.id) setMore(false)
+        if (!lastDisplayed || !lastListing) setMore(false)
+        else if (lastDisplayed.id === lastListing.id) setMore(false)
         else setMore(true)
     }, [displayed, listings])
 
     useEffect(() => {
         const firstDisplayed = displayed[0]
         const firstListing = listings[0]
-        if (firstDisplayed.id === firstListing.id) setLess(false)
+        if (!firstDisplayed || !firstListing) setLess(false)
+        else if (firstDisplayed.id === firstListing.id) setLess(false)
         else setLess(true)
     }, [displayed, listings])
 

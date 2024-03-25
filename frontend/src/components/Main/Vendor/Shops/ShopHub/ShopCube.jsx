@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useModal } from '../../../../../context/Modal';
 import EditShopModal from './modals/EditShopModal';
 import DeleteShopModal from './modals/DeleteShopModal';
+import BinaryChoiceModal from '../../../../Modals/BinaryChoiceModal';
+import ListingsWidget from '../../Listings/ListingsWidget';
+import ViewShopListingsModal from './modals/ViewListingModal';
 
 const ShopCube = ({ shop, storeUpdateFunc }) => {
     const [showMenu, setShowMenu] = useState(false)
@@ -38,6 +41,15 @@ const ShopCube = ({ shop, storeUpdateFunc }) => {
         setModalContent(<DeleteShopModal closeModal={closeModal} shopId={shop.id} func={storeUpdateFunc} />)
     }
 
+    const viewListings = () => {
+        if (shop.Listings && shop.Listings.length > 1) {
+            setModalContent(<ViewShopListingsModal component={<ListingsWidget listings={shop.Listings} />} />)
+        }
+        else {
+            setModalContent(<BinaryChoiceModal topic={"No listings"} text={"You currently have no open listings at this location"} noCancel={true} />)
+        }
+    }
+
     return (
         <div className="sscMain textmark">
             <h2>{shop.name ? shop.name : shop.address}</h2>
@@ -54,12 +66,12 @@ const ShopCube = ({ shop, storeUpdateFunc }) => {
                 {showMenu && (
                     <div className='shopMenu-dropdown' ref={shopMenuRef}>
                         <div className="profileOptions" onClick={() => edit()}>
-                            {`Edit shop information`}
+                            {`Edit shop details`}
                         </div>
                         <div className="profileOptions" onClick={() => deleteShop()}>
                             {`Delete location`}
                         </div>
-                        <div className="profileOptions">
+                        <div className="profileOptions" onClick={() => viewListings()} >
                             {`View listings`}
                         </div>
                     </div>

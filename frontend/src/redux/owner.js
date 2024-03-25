@@ -6,7 +6,6 @@ import { createSelector } from 'reselect'
 const VENDOR_HOME = 'vendor/LOAD'
 const ADD_LISTING = 'listing/ADD'
 const LOAD_LISTINGS = 'listings/LOAD'
-const ACCEPT_BID = 'bid/ACCEPT'
 const REMOVE_LISTING = 'listing/REMOVE'
 const SHOP_HUB = 'shopHub/load'
 const UPDATE_SHOP = 'shop/update'
@@ -39,13 +38,6 @@ const loadListings = (listings) => {
     return {
         type: LOAD_LISTINGS,
         payload: listings
-    }
-}
-
-const acceptBid = (bidId) => {
-    return {
-        type: ACCEPT_BID,
-        payload: bidId
     }
 }
 

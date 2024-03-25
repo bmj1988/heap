@@ -21,7 +21,7 @@ const ExpandedListingDiv = ({ listing }) => {
         <div className="eldMain textmark">
             <div className="expandedListingDiv cursor-pointer" onClick={() => navigate(`/listings/${listing.id}`)}>
                 <div>
-                    {listing.Images.length > 0 ? <img className="eldImg" src={listing.Images[0]['url']} alt="Picture for listing" /> : <FaImage className="eldImgLogo" />}
+                    {(listing.Images && listing.Images.length > 0) ? <img className="eldImg" src={listing.Images[0]['url']} alt="Picture for listing" /> : <FaImage className="eldImgLogo" />}
                 </div>
                 <VendorListingDetails listing={listing} bids={bids} accepted={accepted} />
             </div>

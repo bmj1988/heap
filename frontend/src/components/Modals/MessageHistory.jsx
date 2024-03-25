@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { repliesByIdArray, thunkGetReplies, thunkSend } from "../../redux/message";
 import ModalSingleReply from "./ModalSingleReply";
 import './modal.css'
+import { FaAngleDoubleLeft, FaEnvelope } from "react-icons/fa";
 
 const MessageHistoryModal = ({ bidId, toId, close }) => {
     const dispatch = useDispatch();
@@ -44,8 +45,10 @@ const MessageHistoryModal = ({ bidId, toId, close }) => {
             </div>}
             <textarea rows={5} cols={30} placeholder="Send a message" onChange={(e) => setContent(e.target.value)} />
             {errors.content && <p className="errors">{errors.content}</p>}
-            <button onClick={(e) => send(e)}>Send</button>
-            <button onClick={() => close()}>Close Modal</button>
+            <div>
+                <button onClick={() => close()}><FaAngleDoubleLeft className="bcmGoBack" /></button>
+                <button onClick={(e) => send(e)}><FaEnvelope className="bcmSubmit" /></button>
+            </div>
         </div>
     )
 }

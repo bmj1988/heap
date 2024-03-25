@@ -13,7 +13,7 @@ const BinaryChoiceModal = ({ text, topic, component, confirmFunc, noCancel, noCo
         <div className="bcmMain textmark">
             {topic ? <h2>{topic}</h2> : null}
             {text ? <p>{text}</p> : null}
-            {component}
+            {component ? component : null}
             {!noCancel && !noConfirm && <div>
                 <button onClick={() => closeModal()}><FaAngleDoubleLeft className="bcmGoBack" /></button>
                 <button onClick={() => confirm()}><FaAngleDoubleRight className="bcmSubmit" /></button>

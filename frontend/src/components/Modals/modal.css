@@ -21,6 +21,14 @@
 
 }
 
+.nmmMain button {
+    border: none;
+    width: 50%;
+    box-shadow: -2px 2px 2px 2px #EEEEEE;
+    background-color: inherit;
+    cursor: pointer;
+}
+
 .nmmMain textarea {
     width: 80%;
     font-size: 16px;
@@ -46,19 +54,40 @@
     height: fit-content;
     margin: 10px;
     padding: 10px;
+    background-color: white;
+}
+
+.mhmMain button {
+    border: none;
+    width: 50%;
+    box-shadow: -2px 2px 2px 2px #EEEEEE;
+    background-color: inherit;
+    cursor: pointer;
 }
 
 .mhmMain .replyContainer {
     max-height: 550px;
     overflow-y: scroll;
+    width: 300px;
+    min-width: fit-content;
 }
 
 .srmMain {
     text-wrap: wrap;
     max-width: 400px;
     border: 1px solid black;
-    margin: 10px 0px;
+    margin: 5px 0px;
+    padding: 0px 2px;
+    box-sizing: border-box;
+}
 
+.srmMain p {
+    margin-top: 0px;
+}
+
+.lastP {
+    margin-bottom: 0px;
+    margin-left: 60%;
 }
 
 .yours {

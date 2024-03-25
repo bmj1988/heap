@@ -26,7 +26,6 @@ const NotAcceptedButtons = ({ listing, bid }) => {
     const removeListing = () => {
         const accept = () => {
             dispatch(thunkRemoveListing(listing.id))
-            navigate('/')
         }
         setModalContent(<BinaryChoiceModal confirmFunc={accept} text={"Are you sure you wish to delete this listing?"} topic={"Delete listing"} />)
     }
