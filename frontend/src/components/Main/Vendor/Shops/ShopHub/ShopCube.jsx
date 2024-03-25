@@ -42,8 +42,8 @@ const ShopCube = ({ shop, storeUpdateFunc }) => {
     }
 
     const viewListings = () => {
-        if (shop.Listings && shop.Listings.length > 1) {
-            setModalContent(<ViewShopListingsModal component={<ListingsWidget listings={shop.Listings} />} />)
+        if (shop.Listings && shop.Listings.length > 0) {
+            setModalContent(<ViewShopListingsModal listings={shop.Listings} name={shop.name || shop.address}/>)
         }
         else {
             setModalContent(<BinaryChoiceModal topic={"No listings"} text={"You currently have no open listings at this location"} noCancel={true} />)

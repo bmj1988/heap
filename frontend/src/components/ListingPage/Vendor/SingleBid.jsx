@@ -4,8 +4,10 @@ import { useModal } from '../../../context/Modal'
 import NewMessageModal from "../../Modals/NewMessageModal"
 import BinaryChoiceModal from "../../Modals/BinaryChoiceModal"
 import { thunkAcceptBid } from "../../../redux/listing"
+import { useDispatch } from "react-redux"
 
 const SingleBid = ({ bid }) => {
+    const dispatch = useDispatch();
     const agent = bid.Agent
     const { setModalContent, closeModal } = useModal();
 

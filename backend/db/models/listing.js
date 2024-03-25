@@ -58,17 +58,15 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Listing',
-    defaultScope: {
-      where: { open: true }
-    },
     scopes: {
-      history: {
+      awaitingPickup: {
         where: { open: false }
       },
       agentView: {
         attributes: {
           exclude: ['highest', 'seen', 'shopId']
-        }
+        },
+        where: { open: true }
       }
     }
   });

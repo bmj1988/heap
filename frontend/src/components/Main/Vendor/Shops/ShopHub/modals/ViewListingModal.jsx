@@ -1,10 +1,14 @@
-const ViewShopListingsModal = ({ component }) => {
+import ListingDiv from "../../../Listings/ListingDiv";
+
+const ViewShopListingsModal = ({ listings, name }) => {
 
     return (
         <div className="vslmMain textmark">
-            <h3>Current listings</h3>
-            <div>
-                {component}
+            <h3>{`Current listings at ${name}`}</h3>
+            <div className="vslmListings">
+                {listings.map((listing) => {
+                    return <ListingDiv listing={listing} />
+                })}
             </div>
         </div>
     )

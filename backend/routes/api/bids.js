@@ -12,7 +12,7 @@ router.get('/open', authAgent, async (req, res) => {
     const agent = req.agent
     const openBids = await agent.getBids({
         include: {
-            model: Listing.scope('defaultScope', 'agentView')
+            model: Listing.scope('agentView')
         }
     })
 
@@ -56,7 +56,7 @@ router.patch('/:bidId', authOwner, async (req, res) => {
     })
     const listing = bid.Listing
     const shop = listing.Shop
-    // await listing.update({open: false}) *** think this over, could just eliminate this altogether.
+    await listing.update({open: false, highest: bid.offer})
     await Message.create({ toId: bid.agentId, fromId: owner.id, bidId: bid.id, content: `Your bid for listing ${bid.Listing.id} has been accepted. The listing is available for pickup at ${shop.address}, ${shop.city}, ${shop.state}` })
     res.json({ msg: "Bid Accepted" })
 })

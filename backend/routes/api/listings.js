@@ -31,7 +31,7 @@ router.get('/open', authOwner, async (req, res) => {
 })
 
 /// AGENTS LISTINGS SCOPE
-const agentListings = Listing.scope('defaultScope', 'agentView')
+const agentListings = Listing.scope('agentView')
 
 /// AGENTS LISTING FEED
 

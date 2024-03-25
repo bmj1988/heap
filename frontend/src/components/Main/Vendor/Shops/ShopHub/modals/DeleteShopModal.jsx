@@ -3,7 +3,7 @@ import '../../../../main.css'
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 import { thunkShopDelete } from '../../../../../../redux/owner';
 
-const DeleteShopModal = ({ closeModal, shopId, func }) => {
+const DeleteShopModal = ({ closeModal, shopId }) => {
     const dispatch = useDispatch();
 
     const cancel = (e) => {

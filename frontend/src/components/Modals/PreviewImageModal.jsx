@@ -1,4 +1,4 @@
-const PreviewImageModal = ({ pic, close }) => {
+const PreviewImageModal = ({ pic }) => {
 
 
     return (

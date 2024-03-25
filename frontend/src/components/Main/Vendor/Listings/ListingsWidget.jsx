@@ -1,9 +1,12 @@
 import ListingDiv from "./ListingDiv"
 import { useEffect, useState } from "react"
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa'
+import { useSelector } from "react-redux"
+import { listingsArray } from "../../../../redux/owner"
 
 
-const ListingsWidget = ({listings}) => {
+const ListingsWidget = () => {
+    const listings = useSelector(listingsArray)
     const [displayed, setDisplayed] = useState(listings.slice(0, 5))
     const [more, setMore] = useState(false)
     const [less, setLess] = useState(false)
