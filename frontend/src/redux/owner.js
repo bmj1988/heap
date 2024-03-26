@@ -134,27 +134,6 @@ export const thunkRemoveListing = (listingId) => async (dispatch) => {
     }
 }
 
-// export const thunkEditListing = (listingInfo) => async (dispatch) => {
-
-//     try {
-//         const response = await csrfFetch(`/api/listings/${listingInfo.id}`, {
-//             method: 'PUT',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify(listingInfo)
-//         })
-//         if (response.ok) {
-//             const editedListing = await response.json();
-//             console.log(editedListing)
-//             dispatch(addListing(editedListing))
-//         }
-//     }
-//     catch (e) {
-//         return e
-//     }
-// }
-
 export const thunkCloseListing = (listingId) => async (dispatch) => {
     try {
         const response = await csrfFetch(`/api/listings/${listingId}/close`, {

@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import '../../main.css'
 
-const ListingDiv = ({ listing }) => {
+const ListingDiv = ({ listing, close }) => {
     const navigate = useNavigate();
 
     const clicker = (e) => {
         e.preventDefault();
+        if (close) close();
         navigate(`/listings/${listing.id}`)
     }
 
