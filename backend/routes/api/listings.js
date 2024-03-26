@@ -157,7 +157,7 @@ router.delete('/:listingId/close', [authOwner, listingAuth], async (req, res, ne
                     { accepted: true }]
                 }
             })
-            await ClosedListing.create({ shopId: listing.shopId, ownerId: listing.ownerId, winningBid: winningBid.offer, agentId: winningBid.agentId }, { transaction: tsx })
+            await ClosedListing.create({ shopId: listing.shopId, ownerId: listing.ownerId, winningBid: winningBid.offer, agentId: winningBid.agentId, listedOn: listing.createdAt }, { transaction: tsx })
             await listing.destroy({ transaction: tsx });
             await tsx.commit()
             res.json({ msg: "Listing closed" })

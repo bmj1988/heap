@@ -13,14 +13,14 @@ const MessagesWidget = () => {
     useEffect(() => {
         const lastDisplayed = displayed[displayed.length - 1]
         const lastMessage = messages[messages.length - 1]
-        if (!lastDisplayed || lastDisplayed.id === lastMessage.id) setMore(false)
+        if (!lastDisplayed || !lastMessage || lastDisplayed.id === lastMessage.id) setMore(false)
         else setMore(true)
     }, [displayed, messages])
 
     useEffect(() => {
         const firstDisplayed = displayed[0]
         const firstMessage = messages[0]
-        if (firstDisplayed.id === firstMessage.id) setLess(false)
+        if (!firstDisplayed || !firstMessage || firstDisplayed.id === firstMessage.id) setLess(false)
         else setLess(true)
     }, [displayed, messages])
 

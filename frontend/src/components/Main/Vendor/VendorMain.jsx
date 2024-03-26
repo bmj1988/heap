@@ -26,7 +26,7 @@ const OwnerMain = () => {
             <PurpleOutlineDiv boldText={'Create a new listing'} smallText={""} logo={<FaCube className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv firstDiv flex-start'} clicker={() => navigate('/listings/new')} widget={<NewListingWidget />} />
             <PurpleOutlineDiv boldText={'Current listings'} smallText={""} logo={<FaCubes className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv flex-start'} clicker={() => navigate('/my-listings')} widget={<ListingsWidget />} />
             <PurpleOutlineDiv boldText={'Messages'} smallText={""} logo={<FaEnvelope className='cube heapPurple' />} css={'purpleOutlineDiv colorDiv flex-start'} clicker={() => navigate('/messages')} widget={<MessagesWidget />} />
-            <PurpleOutlineDiv boldText={'Past listings'} smallText={""} logo={<FaHistory className='cube heapPurple' />} css={"purpleOutlineDiv colorDiv lastDiv flex-start"} clicker={null} widget={<ListingHistoryWidget />} />
+            <PurpleOutlineDiv boldText={'Past listings'} smallText={""} logo={<FaHistory className='cube heapPurple' />} css={"purpleOutlineDiv colorDiv lastDiv flex-start"} clicker={() => navigate('/history')} widget={<ListingHistoryWidget />} />
         </div>
     )
 }

@@ -217,7 +217,7 @@ export const listingHistoryArray = createSelector((state) => state.listings, (li
 })
 
 /// REDUCER
-const initialState = { listing: null, bids: null }
+const initialState = { listing: null, bids: null, history: null }
 export const listingsReducer = (state = initialState, action) => {
     let newState = { ...state }
     switch (action.type) {

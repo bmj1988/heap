@@ -8,6 +8,7 @@ import ListingPage from '../components/ListingPage/ListingPage';
 import ShopHub from '../components/Main/Vendor/Shops/ShopHub/ShopHub';
 import CreateListingPage from '../components/Main/Vendor/Listings/CreateNewListingPage/CreateListingPage';
 import MessageCenter from '../components/MessageCenter/MessageCenter';
+import ListingHistoryPage from '../components/ListingHistoryPage/ListingHistoryPage';
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: '/my-shops',
         element: <ShopHub />,
+      },
+      {
+        path: '/history',
+        element: <ListingHistoryPage />
       }
     ],
   },

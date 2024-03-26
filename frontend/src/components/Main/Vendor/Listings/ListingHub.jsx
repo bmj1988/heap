@@ -20,11 +20,13 @@ const ListingHub = () => {
     return (
         <div className="textmark">
             <h1>Your open listings</h1>
-            {listings.length > 0 ? listings.map((listing) => {
-                return (
-                    <ExpandedListingDiv listing={listing} key={listing.id} />
-                )
-            }) : <h2>You currently have no open listings. <span className="linkDupeSpan" onClick={(e) => toNewListingForm(e)}>Create a listing now.</span></h2>}
+            <div className="lhListings">
+                {listings.length > 0 ? listings.map((listing) => {
+                    return (
+                        <ExpandedListingDiv listing={listing} key={listing.id} />
+                    )
+                }) : <h2>You currently have no open listings. <span className="linkDupeSpan" onClick={(e) => toNewListingForm(e)}>Create a listing now.</span></h2>}
+            </div>
         </div>
     )
 }
