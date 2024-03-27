@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasOne(models.Agent, { foreignKey: 'userId', onDelete: 'CASCADE', as: 'Agent Info' })
+      User.hasOne(models.Agent, { foreignKey: 'userId', onDelete: 'CASCADE'})
 
-      User.hasOne(models.Owner, { foreignKey: 'userId', onDelete: 'CASCADE', as: 'Owner Info' })
+      User.hasOne(models.Owner, { foreignKey: 'userId', onDelete: 'CASCADE'})
 
       User.hasMany(models.Message, { foreignKey: 'fromId', onDelete: 'CASCADE', as: 'Sender' })
 

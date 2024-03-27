@@ -38,12 +38,27 @@ const agentListings = Listing.scope('agentView')
 router.get('/feed', authAgent, async (req, res) => {
     const query = {};
 
-    query.limit = req.query.size || 20
-    query.size = req.query.size * (req.query.page - 1) || 20
+    query.limit = req.query.size || 10
+    query.offset = req.query.size * (req.query.page - 1) || 0
+    query.order = [['createdAt', 'ASC']]
 
-    const listings = await agentListings.findAll()
+    const { count, rows } = await agentListings.findAndCountAll({
+        include: [{
+            model: Image,
+            required: false,
+        },
+        {
+            model: Shop,
+            attributes: {
+                include: ['city', 'state']
+            }
+        }],
+        ...query,
+        distinct: true,
+    })
 
-    res.json(listings)
+    const details = { count: count, size: query.limit, page: req.query.page || 0 }
+    res.json({ listings: rows, details })
 })
 
 /// GET LISTING DETAILS
