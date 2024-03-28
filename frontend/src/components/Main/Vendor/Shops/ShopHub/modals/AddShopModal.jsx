@@ -3,9 +3,9 @@ import WidgetLabel from "../../../NewListing/WidgetLabelInputs"
 import '../../../../main.css'
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa"
 import { useDispatch } from "react-redux"
-import { thunkShopCreate} from "../../../../../../redux/owner"
+import { thunkShopCreate } from "../../../../../../redux/owner"
 
-const AddShopModal = ({close, update}) => {
+const AddShopModal = ({ close }) => {
     const dispatch = useDispatch();
     const [address, setAddress] = useState('')
     const [city, setCity] = useState('')
@@ -25,11 +25,10 @@ const AddShopModal = ({close, update}) => {
         }
         const response = await dispatch(thunkShopCreate(newShop))
         if (response) {
-            console.log(response)
             setErrors(response.errors)
         }
         else {
-            update(false).then(() => close())
+            close()
         }
     }
 
@@ -47,8 +46,8 @@ const AddShopModal = ({close, update}) => {
             <WidgetLabel labelFor={'phone'} labelText={'Phone #:'} inputFunc={setPhone} placeholder={"Phone number (optional)"} />
             {errors.phone ? <p className="errors">{errors.phone}</p> : null}
             <div className="esmButtonGroup">
-                <FaAngleDoubleLeft className="esmButton cancel" onClick={() => close()}/>
-                <FaAngleDoubleRight className={address.length && city.length && state.length ? "esmButton accept" : "esmButton grayedOut"} onClick={address.length && city.length && state.length ? () => accept() : null}/>
+                <FaAngleDoubleLeft className="esmButton cancel" onClick={() => close()} />
+                <FaAngleDoubleRight className={address.length && city.length && state.length ? "esmButton accept" : "esmButton grayedOut"} onClick={address.length && city.length && state.length ? () => accept() : null} />
 
             </div>
         </div>

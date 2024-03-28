@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
           {
             path: ':id',
             element: <ListingPage />
-          }
+          },
         ]
       },
       {
@@ -50,12 +50,12 @@ export const router = createBrowserRouter([
       {
         path: '/history',
         element: <ListingHistoryPage />
+      },
+      {
+        path: '*',
+        element: <Page404 />
       }
     ],
   },
-  {
-    path: '*',
-    element: <Page404 />
-  }
 
 ]);

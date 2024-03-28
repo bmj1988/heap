@@ -194,7 +194,8 @@ export const thunkShopUpdate = (shopDetails) => async (dispatch) => {
         }
     }
     catch (e) {
-        return e
+        const err = await e.json();
+        return err
     }
 }
 
@@ -282,6 +283,9 @@ export const vendorReducer = (state = initialState, action) => {
                 newState.shops[shop.id] = shop
             })
             return newState;
+        }
+        case UPDATE_SHOP: {
+            newState.shops[action.payload.id] = action.payload
         }
         case ADD_LISTING: {
             newState.listings[action.payload.id] = action.payload

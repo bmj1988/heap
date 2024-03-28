@@ -18,6 +18,7 @@ const AcceptedBidDiv = ({ bid, revokeAllowed }) => {
     const userProfile = () => {
         // navigate(`/agents/${agent.id}`)
         // setModalContent(<AgentProfilePreview id={agent.id} close={closeModal}/>)
+        alert("Feature coming soon!")
     }
 
 
@@ -44,7 +45,7 @@ const AcceptedBidDiv = ({ bid, revokeAllowed }) => {
                     <p><span>Comments: </span>{bid.message || "No comments"}</p>
                 </div>
                 <div className="sbButtonGroup">
-                    <div className="sbButton tooltipDiv">
+                    <div className="sbButton tooltipDiv" onClick={() => userProfile()}>
                         <FaUser className="eldAccept messageIcon buttonizer" />
                         <span className="tooltipText">Check agent profile</span>
                     </div>

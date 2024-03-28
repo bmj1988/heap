@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Spinner from '../Spinner'
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { thunkListingDetails } from '../../redux/listing'
 import './listing.css'
 
@@ -10,12 +10,16 @@ const VendorListingPage = React.lazy(() => import('./Vendor/VendorListingPage'))
 const ListingPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const user = useSelector((state) => state.session.user)
     const listing = useSelector((state) => state.listings.listing)
 
     useEffect(() => {
         const loadDetailsFirst = async () => {
-            await dispatch(thunkListingDetails(id))
+            const response = await dispatch(thunkListingDetails(id))
+            if (!response.ok) {
+                navigate('/404')
+            }
         }
         loadDetailsFirst();
     }, [dispatch, id])

@@ -5,10 +5,12 @@ import { useModal } from "../../../context/Modal";
 import { useDispatch } from "react-redux";
 import { thunkRemoveListing } from "../../../redux/owner";
 import { thunkAcceptBid } from "../../../redux/listing";
+import { useNavigate } from "react-router-dom";
 
 const NotAcceptedButtons = ({ listing, bid }) => {
     const { closeModal, setModalContent } = useModal();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const acceptHighest = () => {
         const accept = async () => {
             dispatch(thunkAcceptBid(bid.id))
@@ -24,6 +26,7 @@ const NotAcceptedButtons = ({ listing, bid }) => {
     const removeListing = () => {
         const accept = () => {
             dispatch(thunkRemoveListing(listing.id))
+            navigate('/')
         }
         setModalContent(<BinaryChoiceModal confirmFunc={accept} text={"Are you sure you wish to delete this listing?"} topic={"Delete listing"} />)
     }

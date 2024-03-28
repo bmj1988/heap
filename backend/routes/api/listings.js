@@ -122,7 +122,7 @@ router.post('/new', [authOwner, multipleMulterUpload('images')], async (req, res
 
         else {
             const { address, city, state, price, description } = req.body
-            const newShop = await Shop.create({ address, city, state, ownerId: owner.id }, { transaction: tsx })
+            const newShop = await Shop.create({ address, city, state, ownerId: owner.id }, { transaction: tsx, validate: true })
             const newListing = await newShop.createListing({ price, description, ownerId: owner.id }, { transaction: tsx })
             if (images) {
                 let imageArray = []

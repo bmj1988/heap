@@ -32,12 +32,12 @@ const ShopCube = ({ shop, storeUpdateFunc }) => {
     }
 
     const edit = () => {
-        setModalContent(<EditShopModal shop={shop} close={closeModal} update={storeUpdateFunc} />)
+        setModalContent(<EditShopModal shop={shop} close={closeModal}  />)
         setShowMenu(!showMenu)
     }
 
     const deleteShop = () => {
-        setModalContent(<DeleteShopModal closeModal={closeModal} shopId={shop.id} func={storeUpdateFunc} />)
+        setModalContent(<DeleteShopModal closeModal={closeModal} shopId={shop.id} />)
     }
 
     const viewListings = () => {

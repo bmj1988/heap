@@ -32,6 +32,7 @@ const MessageHistoryModal = ({ bidId, toId, close }) => {
         }
         dispatch(thunkSend(message))
         setContent('')
+        close()
     }
 
     return (

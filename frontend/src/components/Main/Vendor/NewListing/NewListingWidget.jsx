@@ -11,13 +11,14 @@ const NewListingWidget = () => {
     const dispatch = useDispatch();
     const shops = useSelector(shopsArray)
     const [shopId, setShopId] = useState(0)
-    const [description, setDescription] = useState(null)
-    const [price, setPrice] = useState(null)
+    const [description, setDescription] = useState('')
+    const [price, setPrice] = useState('')
     const [images, setImages] = useState([])
     const [previewImages, setPreviewImages] = useState([])
-    const [address, setAddress] = useState(null)
-    const [city, setCity] = useState(null)
-    const [state, setState] = useState(null)
+    const [address, setAddress] = useState('')
+    const [city, setCity] = useState('')
+    const [state, setState] = useState('')
+    const [errors, setErrors] = useState({})
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -42,10 +43,10 @@ const NewListingWidget = () => {
 
         const response = await dispatch(thunkCreateListingAWS(newListing, images))
         if (response.errors) {
-            console.log(response)
+            setErrors(response.errors)
         }
         else {
-            await dispatch(addListing(response))
+            // await dispatch(addListing(response))
             document.getElementById('newListingWidget').reset()
         }
     }
@@ -63,15 +64,20 @@ const NewListingWidget = () => {
                 </select>
                 {shopId == 0 && <div>
                     <WidgetLabel labelText="Address:" labelFor="address" inputFunc={setAddress} />
+                    {errors.address ? <p className="errors">{errors.address}</p> : null}
                     <WidgetLabel labelText="City:" labelFor="city" inputFunc={setCity} />
+                    {errors.city ? <p className="errors">{errors.city}</p> : null}
                     <WidgetLabel labelText="State:" labelFor="state" inputFunc={setState} />
+                    {errors.state ? <p className="errors">{errors.state}</p> : null}
                 </div>}
                 <h4>Listing information</h4>
                 <NewListingFormImageDiv images={images} setImages={setImages} previewImages={previewImages} setPreviewImages={setPreviewImages} />
                 <PriceInput setPrice={setPrice} />
+                {errors.price ? <p className="errors">{errors.price}</p> : null}
                 <div>
                     <label className="listingP boldFont" htmlFor="description">{"Description (optional):"} </label> <textarea style={{ resize: 'none' }} cols={40} rows={5} id="description" onChange={(e) => setDescription(e.target.value)} />
                 </div>
+                {errors.description ? <p className="errors">{errors.description}</p> : null}
 
                 <button onClick={(e) => handleSubmit(e)}>Post listing</button>
             </form>

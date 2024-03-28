@@ -19,7 +19,7 @@ const ShopHub = () => {
     }, [loaded, dispatch])
 
     const addShop = () => {
-        setModalContent(<AddShopModal close={closeModal} update={setLoaded} />)
+        setModalContent(<AddShopModal close={closeModal} />)
     }
 
 
