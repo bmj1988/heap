@@ -204,9 +204,6 @@ export const thunkListingHistory = () => async (dispatch) => {
     }
 }
 
-const sortListingsByDateDescending = (a, b) => {
-
-}
 
 /// SELECTORS
 export const bidsArray = createSelector((state) => state.listings, (listingsState) => {

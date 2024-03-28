@@ -1,0 +1,6 @@
+.alfMain {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    border: 3px solid royalblue
+}

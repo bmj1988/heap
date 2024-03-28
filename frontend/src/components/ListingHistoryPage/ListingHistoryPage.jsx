@@ -8,13 +8,13 @@ const ListingHistoryPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(thunkListingHistory())
-    }, [])
+    }, [dispatch])
     return (
         <div className="lhp">
             <h2>Listing history</h2>
             {listingHistory.length > 0 && <div className="lhpListings">
                 {listingHistory.map((listing) => {
-                    return <LineListingDiv listing={listing} />
+                    return <LineListingDiv key={listing.id} listing={listing} />
                 })}
             </div>}
             {!listingHistory.length > 0 && <div>

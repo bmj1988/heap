@@ -53,6 +53,12 @@ function ProfileButton() {
     closeMenu();
   }
 
+  const toListingHistory = (e) => {
+    e.preventDefault();
+    navigate('/history');
+    closeMenu();
+  }
+
   const logout = (e) => {
     e.preventDefault();
     dispatch(thunkLogout());
@@ -77,6 +83,7 @@ function ProfileButton() {
                 {user.owner ? <div className="profileOptions" onClick={toListingHub}>Listings</div> : null}
                 {user.owner ? <div className="profileOptions" onClick={toShopHub}>Shops</div> : null}
                 <div className="profileOptions" onClick={toMessageCenter}>Messages</div>
+                <div className="profileOptions" onClick={toListingHistory}>History </div>
                 <div className="profileOptions bottomOption" onClick={logout}>Log Out</div>
               </div>
             ) : (

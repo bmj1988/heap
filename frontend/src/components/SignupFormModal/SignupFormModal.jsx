@@ -20,7 +20,7 @@ function SignupFormModal() {
     if (password !== confirmPassword) {
       return setErrors({
         confirmPassword:
-          "Confirm Password field must be the same as the Password field",
+          "The passwords you entered do not match",
       });
     }
 
@@ -35,8 +35,7 @@ function SignupFormModal() {
     );
 
     if (serverResponse) {
-      console.log(serverResponse)
-      // setErrors(serverResponse.errors);
+      setErrors(serverResponse.errors);
     } else {
       closeModal();
     }

@@ -7,7 +7,7 @@ const ViewShopListingsModal = ({ listings, name, close }) => {
             <h3>{`Current listings at ${name}`}</h3>
             <div className="vslmListings">
                 {listings.map((listing) => {
-                    return <ListingDiv listing={listing} close={close} />
+                    return <ListingDiv listing={listing} key={listing.id} close={close} />
                 })}
             </div>
         </div>

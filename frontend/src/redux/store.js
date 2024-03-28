@@ -9,12 +9,14 @@ import sessionReducer from "./session";
 import { vendorReducer } from "./owner";
 import { listingsReducer } from "./listing";
 import { messageReducer } from "./message";
+import { agentReducer } from "./agent";
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     vendor: vendorReducer,
     listings: listingsReducer,
     message: messageReducer,
+    agent: agentReducer
 });
 
 let enhancer;

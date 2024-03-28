@@ -1,11 +1,8 @@
-import { useSelector } from "react-redux"
-import { messagesArray } from "../../../../redux/owner"
 import SingleMessageDiv from "./SingleMessageDiv"
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa'
 import { useEffect, useState } from "react"
 
-const MessagesWidget = () => {
-    const messages = useSelector(messagesArray)
+const MessagesWidget = ({ messages }) => {
     const [displayed, setDisplayed] = useState(messages.slice(0, 5))
     const [more, setMore] = useState(false)
     const [less, setLess] = useState(false)

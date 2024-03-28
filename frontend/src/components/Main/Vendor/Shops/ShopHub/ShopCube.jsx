@@ -5,7 +5,6 @@ import { useModal } from '../../../../../context/Modal';
 import EditShopModal from './modals/EditShopModal';
 import DeleteShopModal from './modals/DeleteShopModal';
 import BinaryChoiceModal from '../../../../Modals/BinaryChoiceModal';
-import ListingsWidget from '../../Listings/ListingsWidget';
 import ViewShopListingsModal from './modals/ViewListingModal';
 
 const ShopCube = ({ shop, storeUpdateFunc }) => {
