@@ -91,6 +91,45 @@
     justify-content: center;
     align-items: center;
 }
+
 .submitted {
     font-size: 50px;
+}
+
+.abwd {
+    font-size: 14px;
+}
+
+.abwd fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.abwd p {
+    margin: 0px;
+}
+
+.addressWrap {
+    overflow: auto;
+    text-wrap: wrap;
+}
+
+.abwd-link-div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+}
+
+.abwd-contact-info {
+    display:flex;
+    width: 40%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.abwd-message {
+    font-size: 25px;
+    cursor: pointer;
 }
