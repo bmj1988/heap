@@ -7,7 +7,7 @@ import DeleteShopModal from './modals/DeleteShopModal';
 import BinaryChoiceModal from '../../../../Modals/BinaryChoiceModal';
 import ViewShopListingsModal from './modals/ViewListingModal';
 
-const ShopCube = ({ shop, storeUpdateFunc }) => {
+const ShopCube = ({ shop }) => {
     const [showMenu, setShowMenu] = useState(false)
     const shopMenuRef = useRef();
     const { setModalContent, closeModal } = useModal();
