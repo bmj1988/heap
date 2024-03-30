@@ -1,10 +1,10 @@
 const express = require('express')
-const { Shop, User, ShopReview, Owner, Message, Listing, Image, ClosedListing, sequelize } = require('../../db/models')
-const { requireAuth, authShop, authOwner } = require('../../utils/auth')
+const { ShopReview, Message, ClosedListing, sequelize } = require('../../db/models')
+const { authOwner } = require('../../utils/auth')
 
 const router = express.Router()
-
-router.get('/home', authOwner, async (req, res) => {
+router.use(authOwner)
+router.get('/home', async (req, res) => {
     const owner = req.owner
     const user = req.user
 
@@ -30,7 +30,7 @@ router.get('/home', authOwner, async (req, res) => {
     res.json({ shops, listings, messages })
 })
 
-router.get('/history', authOwner, async (req, res) => {
+router.get('/history', async (req, res) => {
     const owner = req.owner;
     const listings = await ClosedListing.findAll({
         where: {
