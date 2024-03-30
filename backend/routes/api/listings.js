@@ -36,13 +36,19 @@ const agentListings = Listing.scope('agentView')
 /// AGENTS LISTING FEED
 
 router.get('/feed', authAgent, async (req, res) => {
+    const agent = req.agent
     const query = {};
-
-    query.limit = req.query.size || 10
+    query.limit = req.query.size || 5
     query.offset = req.query.size * (req.query.page - 1) || 0
     query.order = [['createdAt', 'ASC']]
 
+    const bids = await agent.getBids();
+    const listingIds = bids.map((bid) => bid.listingId)
+
     const { count, rows } = await agentListings.findAndCountAll({
+        where: {
+            id: { [Op.notIn]: listingIds }
+        },
         include: [{
             model: Image,
             required: false,

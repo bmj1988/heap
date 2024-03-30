@@ -204,6 +204,19 @@ export const thunkListingHistory = () => async (dispatch) => {
     }
 }
 
+export const thunkAgentListingHistory = () => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/agent/history`)
+        if (response.ok) {
+            const listingHistory = await response.json()
+            dispatch(loadHistory(listingHistory))
+        }
+    }
+    catch (e) {
+        const err = await e.json()
+        return err
+    }
+}
 
 /// SELECTORS
 export const bidsArray = createSelector((state) => state.listings, (listingsState) => {

@@ -32,7 +32,6 @@ router.get('/', requireAuth, async (req, res) => {
             attributes: ['id', 'firstName'],
             include: {
                 model: Agent,
-                as: 'Agent Info',
                 required: false,
             }
         },

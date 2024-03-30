@@ -34,5 +34,23 @@ router.get('/home', async (req, res) => {
 
 })
 
+router.get('/currentBids', async (req, res) => {
+    const agent = req.agent
+    const currentBids = await agent.getBids();
+
+    res.json(currentBids)
+})
+
+router.get('/history', async (req, res) => {
+    const agent = req.agent;
+    const history = await ClosedListing.findAll({
+        where: {
+            agentId: agent.id
+        }
+    })
+
+    res.json(history)
+})
+
 
 module.exports = router;

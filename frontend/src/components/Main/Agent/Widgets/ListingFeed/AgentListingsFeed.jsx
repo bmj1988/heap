@@ -2,19 +2,38 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import FeedDisplay from "./FeedDisplay"
 import { agentFeedArray, thunkGetAgentListings } from "../../../../../redux/agent"
+import { FaCaretDown, FaCaretUp } from "react-icons/fa"
 
 const AgentListingsFeed = () => {
     const dispatch = useDispatch();
     const agentFeed = useSelector(agentFeedArray)
-    const [page, setPage] = useState(1)
+    const details = useSelector((state) => state.agent.feed.details)
+    const [page, setPage] = useState(details.page)
+    const [size, setSize] = useState(details.size);
+    const [less, setLess] = useState(false);
+    const [more, setMore] = useState(false);
 
     useEffect(() => {
-        dispatch(thunkGetAgentListings(page))
+        dispatch(thunkGetAgentListings(size, page))
     }, [page])
 
+    useEffect(() => {
+        if (details.count && page && details.count > page * size) setMore(true)
+        else setMore(false)
+    }, [details, page, size, setMore])
+
+    useEffect(() => {
+        if (page > 1) setLess(true)
+        else setLess(false)
+    }, [page, setLess])
+
     return (
-        <div className="alfMain">
-            <FeedDisplay listings={agentFeed} />
+        <div className="alfMain textmark">
+            {agentFeed.length > 0 ? <FeedDisplay listings={agentFeed} /> : <h2>There are no new listings to display at this time</h2>}
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                {less && <FaCaretUp className="messagesDownArrow" onClick={() => setPage(page - 1)} />}
+                {more && <FaCaretDown className="messagesDownArrow" onClick={() => setPage(page + 1)} />}
+            </div>
         </div>
     )
 }

@@ -51,6 +51,23 @@ export const thunkGetAgentListings = (size, page) => async (dispatch) => {
         return e
     }
 }
+
+export const thunkPlaceBid = (listingId, offer) => async (dispatch) => {
+    try {
+        await csrfFetch(`/api/listings/${listingId}/bids`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                body: JSON.stringify({ offer: offer })
+            })
+    }
+    catch (e) {
+        const err = await e.json();
+        return err
+    }
+}
 /// SELECTORS
 
 export const agentFeedArray = createSelector((state) => state.agent, (agentInfo) => {
@@ -60,6 +77,11 @@ export const agentFeedArray = createSelector((state) => state.agent, (agentInfo)
 
 export const agentMessagesArray = createSelector((state) => state.agent, (agentInfo) => {
     if (agentInfo.messages) return Object.values(agentInfo.messages)
+    else return []
+})
+
+export const acceptedBidsArray = createSelector((state) => state.agent, (agentInfo) => {
+    if (agentInfo.accepted) return Object.values(agentInfo.accepted)
     else return []
 })
 
@@ -82,10 +104,11 @@ export const agentReducer = (state = initialState, action) => {
             return newState;
         }
         case LOAD_AGENT_FEED: {
+            newState.feed.listings = {};
             action.payload.listings.forEach((listing) => {
                 newState.feed.listings[listing.id] = listing
             })
-            newState.details = action.payload.details
+            newState.feed.details = action.payload.details
 
             return newState
         }
