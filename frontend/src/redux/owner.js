@@ -286,6 +286,7 @@ export const vendorReducer = (state = initialState, action) => {
         }
         case UPDATE_SHOP: {
             newState.shops[action.payload.id] = action.payload
+            return newState
         }
         case ADD_LISTING: {
             newState.listings[action.payload.id] = action.payload

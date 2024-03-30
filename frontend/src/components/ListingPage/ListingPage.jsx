@@ -22,9 +22,8 @@ const ListingPage = () => {
             }
         }
         loadDetailsFirst();
-    }, [dispatch, id])
+    }, [dispatch, navigate, id])
 
-    // if (!loaded) return (<Spinner />)
     return (
         <React.Suspense fallback={<Spinner />}>
             {user.owner && listing ? <VendorListingPage listing={listing} /> : null}

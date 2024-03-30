@@ -40,10 +40,6 @@ fieldset {
     font-size: 12px;
 }
 
-.errors {
-    color: red
-}
-
 input[type=radio] {
     accent-color: #741cb8;
 }
