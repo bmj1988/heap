@@ -1,10 +1,11 @@
 import { FaImage } from "react-icons/fa"
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState, lazy } from 'react';
 import '../../main.css'
 import { useNavigate } from "react-router-dom";
-import NotAcceptedButtons from '../../../ListingPage/Vendor/NotAcceptedButtons'
-import AcceptedButtonsDiv from '../../../ListingPage/Vendor/AcceptedButtonsDiv'
 import VendorListingDetails from '../../../ListingPage/Vendor/VendorListingDetails'
+
+const NotAcceptedButtons = lazy(() => import('../../../ListingPage/Vendor/NotAcceptedButtons'))
+const AcceptedButtonsDiv = lazy(() => import('../../../ListingPage/Vendor/AcceptedButtonsDiv'))
 
 const ExpandedListingDiv = ({ listing }) => {
     const navigate = useNavigate();

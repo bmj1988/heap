@@ -18,7 +18,6 @@ const MessageHistoryModal = ({ bidId, toId, close }) => {
     const replies = useSelector(repliesByIdArray)
     const agent = bid?.Agent
 
-
     const send = (e) => {
         if (content.length < 1) {
             setErrors({ content: "Did not include a message" })

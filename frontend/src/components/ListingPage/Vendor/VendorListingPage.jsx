@@ -1,7 +1,4 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import AcceptedBidDiv from './AcceptedBidDiv';
-import NotAcceptedButtons from './NotAcceptedButtons';
-import AcceptedButtonsDiv from './AcceptedButtonsDiv';
 import { useSelector } from 'react-redux';
 import { bidsArray } from '../../../redux/listing';
 import VendorListingDetails from './VendorListingDetails';
@@ -9,6 +6,10 @@ import ListingPageImageDiv from './ListingPageImageDiv';
 import '../listing.css'
 
 const BidDiv = React.lazy(() => import("./BidDiv"))
+const NotAcceptedButtons = React.lazy(() => import("./NotAcceptedButtons"))
+const AcceptedButtonsDiv = React.lazy(() => import('./AcceptedButtonsDiv'))
+const AcceptedBidDiv = React.lazy(() => import("./AcceptedBidDiv"))
+
 
 const VendorListingPage = ({ listing }) => {
     const bids = useSelector(bidsArray)

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { FaAngleDoubleRight } from "react-icons/fa"
 
 const Quickbid = ({ listingId, placeBid }) => {
