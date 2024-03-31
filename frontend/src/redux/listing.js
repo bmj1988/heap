@@ -213,6 +213,7 @@ export const thunkAgentListingHistory = () => async (dispatch) => {
         }
     }
     catch (e) {
+        console.log(e)
         const err = await e.json()
         return err
     }

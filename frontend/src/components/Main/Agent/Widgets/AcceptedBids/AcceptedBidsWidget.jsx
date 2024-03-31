@@ -8,7 +8,7 @@ const AcceptedBidsWidget = () => {
     return (
         <div>
             {acceptedBids.map((bid) => {
-                return (<AcceptedBidDiv bid={bid} />)
+                return (<AcceptedBidDiv bid={bid} key={bid.id} />)
             })}
         </div>
     )

@@ -9,6 +9,7 @@ import ShopHub from '../components/Main/Vendor/Shops/ShopHub/ShopHub';
 import CreateListingPage from '../components/Main/Vendor/Listings/CreateNewListingPage/CreateListingPage';
 import MessageCenter from '../components/MessageCenter/MessageCenter';
 import ListingHistoryPage from '../components/ListingHistoryPage/ListingHistoryPage';
+import HeapMS from '../components/InfoPages/Heap';
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       {
         path: '/history',
         element: <ListingHistoryPage />
+      },
+      {
+        path: '/mission',
+        element: <HeapMS />
       },
       {
         path: '*',

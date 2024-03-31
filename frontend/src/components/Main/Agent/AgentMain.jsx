@@ -9,9 +9,11 @@ import { agentMessagesArray, thunkAgentHome } from "../../../redux/agent";
 import AgentListingsFeed from "./Widgets/ListingFeed/AgentListingsFeed";
 import AgentProfileWidget from "./Widgets/Profile/AgentProfileWidget";
 import AcceptedBidsWidget from "./Widgets/AcceptedBids/AcceptedBidsWidget"
+import { useNavigate } from "react-router-dom";
 
 const AgentMain = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {

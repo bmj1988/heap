@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import React from 'react'
 import '../../main.css'
 
 const ListingDiv = ({ listing, close }) => {
@@ -36,4 +37,4 @@ const ListingDiv = ({ listing, close }) => {
     )
 }
 
-export default ListingDiv
+export default React.memo(ListingDiv)

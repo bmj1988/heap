@@ -146,8 +146,8 @@ export const messageByDateArray = createSelector((state) => state?.message, (mes
 
 export const repliesByIdArray = createSelector((state) => state?.message, (messages) => {
     if (messages.current) return Object.values(messages.current).sort((a, b) => {
-        if (a.id > b.id) return -1
-        if (a.id < b.id) return 1
+        if (a.id > b.id) return 1
+        if (a.id < b.id) return -1
     })
     else return []
 })

@@ -1,5 +1,5 @@
 const express = require('express')
-const { Shop, Listing, User, Message, Agent, Bid } = require('../../db/models')
+const { Shop, Listing, User, Message, Agent, Bid, ClosedListing } = require('../../db/models')
 const { authAgent } = require('../../utils/auth')
 
 const router = express.Router();
@@ -49,7 +49,7 @@ router.get('/history', async (req, res) => {
         }
     })
 
-    res.json(history)
+    res.json({History: history})
 })
 
 

@@ -23,7 +23,7 @@ const ExpandedListingDiv = ({ listing }) => {
                 <div>
                     {(listing.Images && listing.Images.length > 0) ? <img className="eldImg" src={listing.Images[0]['url']} alt="Picture for listing" /> : <FaImage className="eldImgLogo" />}
                 </div>
-                <VendorListingDetails listing={listing} bids={bids} accepted={accepted} />
+                <VendorListingDetails listing={listing} bids={bids} accepted={accepted} cube={true} />
             </div>
             <Suspense fallback={'Loading...'}>
                 {!accepted ? <NotAcceptedButtons bid={highest} listing={listing} /> : <AcceptedButtonsDiv bid={accepted} revokeAllowed={revokeAllowed} />}

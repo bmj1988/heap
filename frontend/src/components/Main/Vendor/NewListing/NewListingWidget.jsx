@@ -12,7 +12,7 @@ const NewListingWidget = () => {
     const shops = useSelector(shopsArray)
     const [shopId, setShopId] = useState(0)
     const [description, setDescription] = useState('')
-    const [price, setPrice] = useState('')
+    const [price, setPrice] = useState('Best offer')
     const [images, setImages] = useState([])
     const [previewImages, setPreviewImages] = useState([])
     const [address, setAddress] = useState('')

@@ -2,6 +2,7 @@
     display: flex;
     max-width: 1920px;
     height: 800px;
+    min-height: 400px;
     box-sizing: border-box;
     margin: 20px;
     gap: 5px;
@@ -170,8 +171,8 @@ select {
 }
 
 .eldMain {
-    max-width: 500px;
-    max-height: 300px;
+    max-width: 530px;
+    max-height: 330px;
     border: 2px solid #741cb8;
     margin: 10px;
     border-radius: 8px;

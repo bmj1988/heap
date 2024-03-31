@@ -50,15 +50,32 @@
     max-width: 250px;
 }
 
+.slpIndie p {
+    text-wrap: wrap;
+    max-width: 250px;
+    max-height: 150px;
+    overflow: auto;
+}
+
+.slpMicro .slpValue {
+    text-wrap: wrap;
+    max-height: 100px;
+    max-width: 180px;
+    overflow: auto;
+
+}
+
 .slpDesc {
     display: flex;
     flex-direction: column;
     text-indent: 10px;
     align-items: center;
 }
+
 .slpDesc p {
     margin: 0px 10px;
 }
+
 .slpDetail p {
     margin-top: 1px;
     margin-bottom: 1px;

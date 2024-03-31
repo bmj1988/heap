@@ -8,8 +8,8 @@ const AgentListingsFeed = () => {
     const dispatch = useDispatch();
     const agentFeed = useSelector(agentFeedArray)
     const details = useSelector((state) => state.agent.feed.details)
-    const [page, setPage] = useState(details.page)
-    const [size, setSize] = useState(details.size);
+    const [page, setPage] = useState(1)
+    const [size, setSize] = useState(5);
     const [less, setLess] = useState(false);
     const [more, setMore] = useState(false);
 
@@ -18,19 +18,23 @@ const AgentListingsFeed = () => {
     }, [page])
 
     useEffect(() => {
-        if (details.count && page && details.count > page * size) setMore(true)
+        if (details.count && page && details.count > details.page * details.size) {
+            setPage(parseInt(details.page))
+            setSize(parseInt(details.size))
+            setMore(true)}
         else setMore(false)
-    }, [details, page, size, setMore])
+    }, [details, setMore])
 
     useEffect(() => {
         if (page > 1) setLess(true)
         else setLess(false)
     }, [page, setLess])
 
+
     return (
         <div className="alfMain textmark">
             {agentFeed.length > 0 ? <FeedDisplay listings={agentFeed} /> : <h2>There are no new listings to display at this time</h2>}
-            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {less && <FaCaretUp className="messagesDownArrow" onClick={() => setPage(page - 1)} />}
                 {more && <FaCaretDown className="messagesDownArrow" onClick={() => setPage(page + 1)} />}
             </div>

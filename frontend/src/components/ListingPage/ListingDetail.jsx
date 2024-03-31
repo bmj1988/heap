@@ -3,7 +3,7 @@ import './listing.css'
 const ListingDetail = ({ css, text, value }) => {
     return (
         <div className={css || null}>
-            <p className='boldFont'>{text}</p> <p>{value}</p>
+            <p className='boldFont slpBold'>{text}</p> <p className='slpValue'>{value}</p>
         </div>
     )
 }

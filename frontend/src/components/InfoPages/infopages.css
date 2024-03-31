@@ -1,0 +1,17 @@
+.msMain {
+    max-width: 600px;
+    text-indent: 1%;
+    margin: auto;
+}
+
+.msMain h2 {
+    text-decoration: underline;
+}
+
+.msIcons {
+    display: flex;
+    width: 100%;
+    font-size: 60px;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}

@@ -42,13 +42,16 @@ router.patch('/:bidId', authOwner, async (req, res) => {
     const owner = req.owner
     const { bidId } = req.params
     const bid = await Bid.findByPk(bidId, {
-        include: {
+        include: [{
             model: Listing,
             include: {
                 model: Shop,
                 attributes: ['address', 'city', 'state']
             }
-        }
+        },
+        {
+            model: Agent
+        }]
     })
     await bid.update({
         accepted: true,
@@ -56,8 +59,8 @@ router.patch('/:bidId', authOwner, async (req, res) => {
     })
     const listing = bid.Listing
     const shop = listing.Shop
-    await listing.update({open: false, highest: bid.offer})
-    await Message.create({ toId: bid.agentId, fromId: owner.id, bidId: bid.id, content: `Your bid for listing ${bid.Listing.id} has been accepted. The listing is available for pickup at ${shop.address}, ${shop.city}, ${shop.state}` })
+    await listing.update({ open: false, highest: bid.offer })
+    await Message.create({ toId: bid.Agent.userId, fromId: owner.userId, bidId: bid.id, content: `Your bid for listing ${bid.Listing.id} has been accepted. The listing is available for pickup at ${shop.address}, ${shop.city}, ${shop.state}` })
     res.json({ msg: "Bid Accepted" })
 })
 

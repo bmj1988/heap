@@ -63,7 +63,7 @@ router.get('/feed', authAgent, async (req, res) => {
         distinct: true,
     })
 
-    const details = { count: count, size: query.limit, page: req.query.page || 0 }
+    const details = { count: count, size: query.limit, page: req.query.page || 1 }
     res.json({ listings: rows, details })
 })
 
@@ -177,7 +177,7 @@ router.delete('/:listingId/close', [authOwner, listingAuth], async (req, res, ne
                     [Op.and]: [{ listingId: listing.id },
                     { accepted: true }]
                 }
-            })
+            }, { transaction: tsx })
             await ClosedListing.create({ shopId: listing.shopId, ownerId: listing.ownerId, winningBid: winningBid.offer, agentId: winningBid.agentId, listedOn: listing.createdAt }, { transaction: tsx })
             await listing.destroy({ transaction: tsx });
             await tsx.commit()
