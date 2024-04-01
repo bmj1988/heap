@@ -256,9 +256,8 @@ export const vendorReducer = (state = initialState, action) => {
     let newState = { ...state }
     switch (action.type) {
         case VENDOR_HOME: {
-            newState.shops = {}
-            newState.listings = {}
-            newState.messages = {}
+            newState = initialState
+            console.log(action.payload)
             action.payload.shops.forEach((shop) => {
                 newState.shops[shop.id] = shop
             })

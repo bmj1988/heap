@@ -35,7 +35,7 @@ const ListingsWidget = () => {
         const lastDisplayed = displayed[displayed.length - 1]
         const indexedListing = listings.find((listing) => listing.id === lastDisplayed.id)
         const idx = listings.indexOf(indexedListing)
-        const lastIndex = listings[idx + 5] ? idx + 5 : listings.length
+        const lastIndex = listings[idx + 5] ? idx + 6 : listings.length
         setDisplayed(listings.slice(idx + 1, lastIndex))
     }
 

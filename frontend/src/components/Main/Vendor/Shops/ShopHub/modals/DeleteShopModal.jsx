@@ -15,7 +15,7 @@ const DeleteShopModal = ({ closeModal, shopId }) => {
         await dispatch(thunkShopDelete(shopId))
         closeModal()
     }
-    console.log(shopId, '!!!!!!!!!!!')
+
     return (
         <div className='esmMain textmark'>
             <h2>Delete shop</h2>

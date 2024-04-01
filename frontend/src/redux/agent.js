@@ -92,7 +92,6 @@ export const agentReducer = (state = initialState, action) => {
     const newState = { ...state }
     switch (action.type) {
         case AGENT_HOME: {
-            console.log(action.payload)
             const agentDetails = { name: action.payload.Agent.name, id: action.payload.Agent.id }
             newState.agent = agentDetails
             action.payload.Recipient.forEach((message) => {
@@ -104,6 +103,7 @@ export const agentReducer = (state = initialState, action) => {
             return newState;
         }
         case LOAD_AGENT_FEED: {
+            console.log("!!!!!!!!!!!!!!!", action.payload)
             newState.feed.listings = {};
             action.payload.listings.forEach((listing) => {
                 newState.feed.listings[listing.id] = listing

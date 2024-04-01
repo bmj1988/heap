@@ -38,8 +38,8 @@ const deleteSingleFile = async (fileKey) => {
             Key: fileKey
         }
         s3.deleteObject(deleteParams, (err, data) => {
-            if (err) console.log(err, err.stack);
-            else console.log(data);
+            // if (err) console.log(err, err.stack);
+            // else console.log(data);
         });
     }
     catch (e) {
@@ -63,8 +63,8 @@ const deleteMultipleFiles = async (fileKeyArray) => {
             params.Delete.Objects.push(obj)
         }
         s3.deleteObjects(params, function (err, data) {
-            if (err) console.log(err, err.stack);
-            else console.log(data);
+            // if (err) console.log(err, err.stack);
+            // else console.log(data);
         })
     }
     catch (e) {

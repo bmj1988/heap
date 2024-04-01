@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { addListing, shopsArray } from "../../../../redux/owner"
+import { shopsArray } from "../../../../redux/owner"
 import { useState } from "react"
 import '../../main.css'
 import WidgetLabel from "./WidgetLabelInputs"
@@ -46,8 +46,16 @@ const NewListingWidget = () => {
             setErrors(response.errors)
         }
         else {
-            // await dispatch(addListing(response))
             document.getElementById('newListingWidget').reset()
+            setShopId(0)
+            setDescription('')
+            setPrice('Best offer')
+            setImages([])
+            setPreviewImages([])
+            setAddress('')
+            setCity('')
+            setState('')
+            setErrors({})
         }
     }
 

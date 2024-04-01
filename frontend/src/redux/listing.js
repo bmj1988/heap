@@ -49,7 +49,8 @@ export const thunkListingDetails = (listingId) => async (dispatch) => {
         }
     }
     catch (e) {
-        return e
+        const err = await e.json()
+        return err
     }
 }
 
@@ -70,7 +71,6 @@ export const thunkEditListing = (listingInfo) => async (dispatch) => {
     }
     catch (e) {
         const err = await e.json();
-        console.log(err)
         return err
     }
 }
@@ -95,10 +95,6 @@ export const thunkCreateListingAWS = (listingInfo, images) => async (dispatch) =
             const listingToAdd = await response.json()
             await dispatch(addListingDetails(listingToAdd))
             return listingToAdd
-        }
-        else {
-            const error = await response.json()
-            return error
         }
     }
     catch (e) {
@@ -154,7 +150,6 @@ export const thunkEditListingAWS = (listingInfo, images, deletedImages) => async
     }
     catch (e) {
         const err = await e.json();
-        console.log(err)
         return err
     }
 }
@@ -213,7 +208,7 @@ export const thunkAgentListingHistory = () => async (dispatch) => {
         }
     }
     catch (e) {
-        console.log(e)
+        (e)
         const err = await e.json()
         return err
     }

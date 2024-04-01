@@ -17,7 +17,7 @@ const ListingPage = () => {
     useEffect(() => {
         const loadDetailsFirst = async () => {
             const response = await dispatch(thunkListingDetails(id))
-            if (!response.ok) {
+            if (response) {
                 navigate('/404')
             }
         }

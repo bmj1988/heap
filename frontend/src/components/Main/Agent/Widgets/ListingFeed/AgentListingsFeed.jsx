@@ -15,7 +15,7 @@ const AgentListingsFeed = () => {
 
     useEffect(() => {
         dispatch(thunkGetAgentListings(size, page))
-    }, [page])
+    }, [page, size, dispatch])
 
     useEffect(() => {
         if (details.count && page && details.count > details.page * details.size) {
@@ -23,7 +23,7 @@ const AgentListingsFeed = () => {
             setSize(parseInt(details.size))
             setMore(true)}
         else setMore(false)
-    }, [details, setMore])
+    }, [details, setMore, page])
 
     useEffect(() => {
         if (page > 1) setLess(true)

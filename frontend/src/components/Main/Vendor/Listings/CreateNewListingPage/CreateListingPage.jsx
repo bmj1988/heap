@@ -52,7 +52,7 @@ const CreateListingPage = () => {
 
         const response = await dispatch(thunkCreateListingAWS(newListing, images))
         if (response.errors) {
-            console.log(response)
+            setErrors(response.errors)
         }
         else {
             navigate(`/listings/${response.id}`)

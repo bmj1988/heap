@@ -10,7 +10,7 @@ const ListingHistoryPage = () => {
     useEffect(() => {
         if (user.vender) dispatch(thunkListingHistory())
         else if (user.agent) dispatch(thunkAgentListingHistory())
-    }, [dispatch])
+    }, [dispatch, user])
     return (
         <div className="lhp textmark">
             <h2>Listing history</h2>

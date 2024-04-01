@@ -19,9 +19,10 @@ router.get('/home', async (req, res) => {
                 [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('ShopReviews.rating')), 2), 'avgRating'],
             ]
         },
-        group: ['Shop.id']
+        group: ['Shop.id'],
+        raw: true
     })
-    const listings = await owner.getListings()
+    const listings = await owner.getListings({raw : true})
     const messages = await Message.findAll({
         where: {
             toId: user.id
@@ -35,7 +36,8 @@ router.get('/history', async (req, res) => {
     const listings = await ClosedListing.findAll({
         where: {
             ownerId: owner.id
-        }
+        },
+        raw: true
     })
 
     res.json({ History: listings })

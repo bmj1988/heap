@@ -50,7 +50,6 @@ const EditListingModal = ({ closeModal, listing }) => {
         }
     }
 
-    console.log(deletedImages)
     return (
         <div className="camMain elmMain textmark">
             <header>Edit Listing</header>

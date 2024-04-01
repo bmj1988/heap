@@ -42,7 +42,11 @@ router.get('/feed', authAgent, async (req, res) => {
     query.offset = req.query.size * (req.query.page - 1) || 0
     query.order = [['createdAt', 'ASC']]
 
-    const bids = await agent.getBids();
+    const bids = await agent.getBids({
+        attributes: ['listingId'],
+        raw: true
+    });
+
     const listingIds = bids.map((bid) => bid.listingId)
 
     const { count, rows } = await agentListings.findAndCountAll({
@@ -62,7 +66,7 @@ router.get('/feed', authAgent, async (req, res) => {
         ...query,
         distinct: true,
     })
-
+    console.log(rows)
     const details = { count: count, size: query.limit, page: req.query.page || 1 }
     res.json({ listings: rows, details })
 })
