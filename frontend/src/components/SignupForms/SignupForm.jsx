@@ -1,10 +1,11 @@
-import { useState } from "react"
-import { useDispatch } from 'react-redux'
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { thunkSignup } from "../../redux/session"
 import './signup.css'
 
 const SignupForm = () => {
+    const user = useSelector((state) => state.session.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [firstName, setFirstName] = useState(null)
@@ -18,6 +19,10 @@ const SignupForm = () => {
     const [state, setState] = useState('MD')
     const [license, setLicense] = useState(null)
     const [errors, setErrors] = useState({})
+
+    useEffect(() => {
+        if (user) navigate('/')
+    }, [])
 
     const submit = async (e) => {
         e.preventDefault();
@@ -48,6 +53,7 @@ const SignupForm = () => {
         if (response) setErrors(response.errors)
         else navigate('/')
     }
+
 
     return (
         <div className="textmark">

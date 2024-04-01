@@ -1,6 +1,6 @@
 # Heap
 
- Heap is an online auction site with industry specific tweaks. Vendors list for free, agents pay for access to listings. In an effort to make this relationship as equitable as possible, it seeks to streamline much of the buying process for the agent. My goal for the project is sturdiness. No exposed wiring, no breaks, strong simple logic, and the kitchen sink of performance tweaks available to me -- node clustering, lazy loading major components based on session state, and lean querying.
+ Heap is an online auction site with industry specific tweaks. Vendors list for free, agents pay for access to listings. In an effort to make this relationship as equitable as possible, it seeks to streamline much of the buying process for the agent. My goal for the project is sturdiness. No exposed wiring, no breaks, strong simple logic, lazy loading major components based on session state, and lean querying (raw where possible).
 
 ## Database Schema Design
 

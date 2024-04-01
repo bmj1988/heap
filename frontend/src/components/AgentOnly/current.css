@@ -1,0 +1,24 @@
+
+.acbm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.acbm table {
+    border: 1px solid black;
+}
+
+.acbm caption {
+    font-size: 20px;
+    margin: 20px;
+}
+
+.acbm th {
+    padding: 5px;
+}
+
+.acbm td {
+    padding: 5px;
+}

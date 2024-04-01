@@ -23,13 +23,12 @@ const AgentListingsFeed = () => {
             setSize(parseInt(details.size))
             setMore(true)}
         else setMore(false)
-    }, [details, setMore, page])
+    }, [details, setMore])
 
     useEffect(() => {
         if (page > 1) setLess(true)
         else setLess(false)
     }, [page, setLess])
-
 
     return (
         <div className="alfMain textmark">

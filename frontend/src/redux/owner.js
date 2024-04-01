@@ -257,7 +257,6 @@ export const vendorReducer = (state = initialState, action) => {
     switch (action.type) {
         case VENDOR_HOME: {
             newState = initialState
-            console.log(action.payload)
             action.payload.shops.forEach((shop) => {
                 newState.shops[shop.id] = shop
             })

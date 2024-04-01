@@ -27,6 +27,7 @@ router.get('/home', async (req, res) => {
         where: {
             toId: user.id
         },
+        raw: true
     })
     res.json({ shops, listings, messages })
 })

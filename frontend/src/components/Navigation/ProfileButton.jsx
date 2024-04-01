@@ -59,6 +59,12 @@ function ProfileButton() {
     closeMenu();
   }
 
+  const toOpenBids = (e) => {
+    e.preventDefault();
+    navigate('/current-bids');
+    closeMenu();
+  }
+
   const logout = (e) => {
     e.preventDefault();
     dispatch(thunkLogout());
@@ -82,6 +88,7 @@ function ProfileButton() {
                 <div className="breaker"></div>
                 {user.owner ? <div className="profileOptions" onClick={toListingHub}>Listings</div> : null}
                 {user.owner ? <div className="profileOptions" onClick={toShopHub}>Shops</div> : null}
+                {user.agent ? <div className="profileOptions" onClick={toOpenBids}>Open bids</div> : null}
                 <div className="profileOptions" onClick={toMessageCenter}>Messages</div>
                 <div className="profileOptions" onClick={toListingHistory}>History </div>
                 <div className="profileOptions bottomOption" onClick={logout}>Log Out</div>

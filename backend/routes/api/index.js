@@ -34,4 +34,40 @@ router.get('/restore-user', (req, res) => {
     return res.json(req.user);
 });
 
+router.get('/agent-profile/:agentId', async (req, res) => {
+    const profile = await Agent.findByPk(req.params.agentId, {
+        include: [{
+            model: User,
+            attributes: ['profileImg']
+        },
+        {
+            model: AgentReview,
+            attributes: [],
+        }],
+
+        attributes: {
+            include: [
+                [sequelize.fn('ROUND', sequelize.fn('AVG', sequelize.col('AgentReviews.rating')), 2), 'avgRating'],
+                [sequelize.fn('COUNT', sequelize.fn('AVG', sequelize.col('AgentReviews.rating'))), 'numReview']
+            ]
+        },
+        raw: true
+    })
+    return res.json(profile)
+})
+
+/// Experimented with trying to get a loader function that would auto-redirect if you didn't have permissions
+/// couldn't get redirect off the ground (never can) and wonder what is so strange about my setup
+/// or understanding that I can't make that simple hook work.
+
+// router.get('/agent-check', (req, res) => {
+//     if (req.user.agent) res.json({ msg: "ok" })
+//     else res.status(404).json({ msg: "no agent found" })
+// });
+
+// router.get('/vendor-check', (req, res) => {
+//     if (req.user.owner) res.json({msg: "ok"})
+//     else res.status(404).json({msg: "no vendor found"})
+// })
+
 module.exports = router;

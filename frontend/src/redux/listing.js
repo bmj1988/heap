@@ -6,6 +6,7 @@ const ADD_LISTING = 'listing/ADD'
 const REVOKE_BID = 'bid/REVOKE'
 const ACCEPT_BID = 'bid/ACCEPT'
 const HISTORY = 'listing/HISTORY'
+const EDIT_BID = 'bid/EDIT'
 const CLEAR = 'vendor/CLEAR'
 
 /// ACTION CREATORS
@@ -258,6 +259,10 @@ export const listingsReducer = (state = initialState, action) => {
                 newState.history[listing.id] = listing
             })
             return newState
+        }
+        case EDIT_BID: {
+            newState.bids[action.payload.id] = action.payload
+            return newState;
         }
         case CLEAR: {
             return initialState;

@@ -26,8 +26,9 @@ const CreateListingPage = () => {
     const [state, setState] = useState(null)
 
     useEffect(() => {
-        dispatch(thunkLoadShops())
-    }, [dispatch])
+        if (!user.owner) navigate('/')
+        else dispatch(thunkLoadShops())
+    }, [dispatch, user, navigate])
 
     const handleSubmit = async (e) => {
         e.preventDefault()

@@ -5,17 +5,20 @@ import ExpandedListingDiv from "./ExpandedListingDiv";
 import { useNavigate } from "react-router-dom";
 
 const ListingHub = () => {
+    const user = useSelector((state) => state.session.user)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const listings = useSelector(listingsArray)
 
     useEffect(() => {
+        if (!user.owner) navigate('/')
         dispatch(thunkLoadListings())
-    }, [dispatch])
+    }, [dispatch, user, navigate])
 
     const toNewListingForm = () => {
         navigate('/listings/new')
     }
+
 
     return (
         <div className="textmark">

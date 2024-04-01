@@ -1,3 +1,4 @@
+import { clearAgent } from './agent';
 import { csrfFetch } from './csrf';
 import { clearVendor } from './owner';
 
@@ -74,6 +75,7 @@ export const thunkLogout = () => async (dispatch) => {
         method: "DELETE",
     });
     dispatch(removeUser())
+    dispatch(clearAgent())
     dispatch(clearVendor());
 };
 

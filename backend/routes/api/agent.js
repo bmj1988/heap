@@ -46,7 +46,8 @@ router.get('/history', async (req, res) => {
     const history = await ClosedListing.findAll({
         where: {
             agentId: agent.id
-        }
+        },
+        raw: true
     })
 
     res.json({History: history})

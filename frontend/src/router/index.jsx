@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, redirect } from 'react-router-dom';
 import Layout from './Layout';
 import MainPage from '../components/Main/MainPage';
 import Page404 from '../components/Page404';
@@ -10,6 +10,9 @@ import CreateListingPage from '../components/Main/Vendor/Listings/CreateNewListi
 import MessageCenter from '../components/MessageCenter/MessageCenter';
 import ListingHistoryPage from '../components/ListingHistoryPage/ListingHistoryPage';
 import HeapMS from '../components/InfoPages/Heap';
+import CurrentBids from '../components/AgentOnly/CurrentBids';
+import { csrfFetch } from '../redux/csrf';
+
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +28,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/my-listings',
-        element: <ListingHub />
+        element: <ListingHub />,
       },
       {
         path: '/messages',
@@ -55,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: '/mission',
         element: <HeapMS />
+      },
+      {
+        path: '/current-bids',
+        element: <CurrentBids />,
       },
       {
         path: '*',

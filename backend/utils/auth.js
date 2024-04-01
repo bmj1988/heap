@@ -43,25 +43,28 @@ const restoreUser = (req, res, next) => {
 
         try {
             const { id } = jwtPayload.data;
-            req.user = await User.findByPk(id, {
-                attributes: {
-                    include: ['email', 'createdAt', 'updatedAt', 'owner', 'agent']
-                }
+            const user = await User.findByPk(id, {
+                include: [
+                    {
+                        model: Agent,
+                        attributes: ['id'],
+                        required: false,
+                    },
+                    {
+                        model: Owner,
+                        attributes: ['id'],
+                        required: false,
+                    }
+                ]
             });
 
-            if (req.user.owner) {
-                req.owner = await Owner.findOne({
-                    where: {
-                        userId: req.user.id
-                    }
-                })
+            req.user = user
+
+            if (user.owner) {
+                req.owner = await user.getOwner();
             }
-            else if (req.user.agent) {
-                req.agent = await Agent.findOne({
-                    where: {
-                        userId: req.user.id
-                    }
-                })
+            else if (user.agent) {
+                req.agent = await user.getAgent();
             }
 
         } catch (e) {

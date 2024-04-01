@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { thunkListingDetails } from '../../redux/listing'
 import './listing.css'
+import AgentListingPage from './Agent/AgentListingPage'
 
 const VendorListingPage = React.lazy(() => import('./Vendor/VendorListingPage'))
 
@@ -27,7 +28,7 @@ const ListingPage = () => {
     return (
         <React.Suspense fallback={<Spinner />}>
             {user.owner && listing ? <VendorListingPage listing={listing} /> : null}
-            {/* {user.agent ? <AgentListingPage listing={listing} /> : null} */}
+            {user.agent && listing ? <AgentListingPage listing={listing} agentId={user.Agent.id} /> : null}
         </React.Suspense>
     )
 }

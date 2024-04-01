@@ -12,8 +12,14 @@ router.get('/open', authAgent, async (req, res) => {
     const agent = req.agent
     const openBids = await agent.getBids({
         include: {
-            model: Listing.scope('agentView')
-        }
+            model: Listing.scope('agentView'),
+            include: {
+                model: Shop,
+                attributes: ['city', 'state']
+            }
+        },
+        raw: true
+
     })
 
     res.json(openBids)

@@ -1,5 +1,3 @@
-import { FaImages } from "react-icons/fa";
-import ListingDetail from "../../../../ListingPage/ListingDetail"
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import AlreadyBid from "./AlreadyBid";
@@ -7,11 +5,12 @@ import Quickbid from "./Quickbid";
 import { useModal } from "../../../../../context/Modal";
 import BinaryChoiceModal from '../../../../Modals/BinaryChoiceModal'
 import { thunkPlaceBid } from "../../../../../redux/agent";
+import AgentListingDetails from "./AgentListingDetailsDiv";
+import AgentListingImage from "./AgentListingImage";
+import PreviewImageModal from "../../../../Modals/PreviewImageModal";
+
 const AgentFeedSingleListing = ({ listing }) => {
     const dispatch = useDispatch();
-    const shop = listing.Shop;
-    const images = listing.Images
-    const dateOfListing = new Date(listing.createdAt).toLocaleDateString();
     const [alreadyBid, setAlreadyBid] = useState(false)
     const { setModalContent } = useModal();
 
@@ -26,24 +25,16 @@ const AgentFeedSingleListing = ({ listing }) => {
         />)
     }, [dispatch, setModalContent])
 
-    const enlarge = () => {
-
-    }
+    const enlarge = useCallback((image) => {
+        setModalContent(<PreviewImageModal pic={image} />)
+    })
 
     return (
         <div>
             <fieldset className="afsl">
                 <legend>{`no.${listing.id}`}</legend>
-                {images.length > 0 ? <div id="pic" onClick={(e) => enlarge(e)}>
-                    <img src={images[0].url} />
-                </div> : <FaImages className="afsl-image" />}
-                <div id="details" className="asfl-details">
-                    <ListingDetail css={"slpDetail"} text={"Listed on:"} value={dateOfListing} />
-                    <ListingDetail css={"slpDetail"} text={"Location:"} value={`${shop.city}, ${shop.state}`} />
-                    <ListingDetail css={"slpDetail"} text={"Asking Price:"} value={listing.price === 'Best offer' ? listing.price : `$${listing.price}`} />
-                    <ListingDetail css={"slpDetail"} text={"Shop rating:"} value={shop.avgRating || "NEW"} />
-                    <ListingDetail css={"slpDetail"} text={"Description:"} value={listing.description} />
-                </div>
+                <AgentListingImage image={listing['Images.url']} enlarge={enlarge} />
+                <AgentListingDetails listing={listing} />
                 <div className="breaker-listing"></div>
                 <div id="quickbid" className="quickbid">
                     {alreadyBid ? <AlreadyBid /> : <Quickbid listingId={listing.id} placeBid={placeBid} />}

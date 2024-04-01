@@ -2,7 +2,7 @@ const express = require('express')
 const { Listing, Bid, Shop, Agent, Message, Image, ClosedListing, sequelize } = require('../../db/models');
 const { authAgent, authOwner } = require('../../utils/auth');
 const { listingAuth } = require('../../utils/listingMiddleware')
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 const { singlePublicFileUpload, singleMulterUpload, multipleMulterUpload, multiplePublicFileUpload, deleteSingleFile, deleteMultipleFiles } = require('../../awsS3');
 
 const router = express.Router();
@@ -41,32 +41,40 @@ router.get('/feed', authAgent, async (req, res) => {
     query.limit = req.query.size || 5
     query.offset = req.query.size * (req.query.page - 1) || 0
     query.order = [['createdAt', 'ASC']]
+    const schema = process.env.NODE_ENV === "production" ? `"${process.env.SCHEMA}".` : ""
+    // const bids = await agent.getBids({
+    //     attributes: ['listingId'],
+    //     raw: true
+    // });
 
-    const bids = await agent.getBids({
-        attributes: ['listingId'],
-        raw: true
-    });
-
-    const listingIds = bids.map((bid) => bid.listingId)
+    // const listingIds = bids.map((bid) => bid.listingId)
 
     const { count, rows } = await agentListings.findAndCountAll({
-        where: {
-            id: { [Op.notIn]: listingIds }
-        },
+        where: Sequelize.literal(`NOT EXISTS (
+            SELECT 1
+            FROM ${schema}"Bids" as bids
+            WHERE
+            bids."listingId" = ${schema}"Listing"."id"
+            AND bids."agentId" = ${agent.id}
+        )`),
         include: [{
             model: Image,
+            attributes: ['url'],
             required: false,
         },
         {
             model: Shop,
-            attributes: {
-                include: ['city', 'state']
-            }
+            attributes: ['city', 'state']
+        },
+        {
+            model: Bid,
+            attributes: []
         }],
         ...query,
         distinct: true,
+        raw: true
     })
-    console.log(rows)
+
     const details = { count: count, size: query.limit, page: req.query.page || 1 }
     res.json({ listings: rows, details })
 })
@@ -76,8 +84,20 @@ router.get('/feed', authAgent, async (req, res) => {
 router.get('/:listingId', listingAuth, async (req, res) => {
     const user = req.user;
     if (user.agent) {
-        const listing = await agentListings.findByPk(req.params.listingId)
-        res.json(listing)
+        const listing = await Listing.findByPk(req.params.listingId, {
+            include: [{
+                model: Bid
+            }, {
+                model: Shop
+            }, {
+                model: Image
+            }]
+        })
+
+        if (listing) {
+            return res.json(listing)
+        }
+        else return res.status(401).json({ msg: "Error" })
     }
 
     const owner = req.owner

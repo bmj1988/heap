@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       agentView: {
         attributes: {
-          exclude: ['highest', 'seen', 'shopId']
+          exclude: ['seen', 'shopId']
         },
         where: { open: true }
       }

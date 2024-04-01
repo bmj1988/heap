@@ -30,14 +30,10 @@ const AcceptedBidDiv = ({ bid }) => {
                 <p className=""><span className='boldFont'>Offer:</span>{` $${bid.offer}`}</p>
                 <p className="addressWrap" ><span className='boldFont'>Address: </span>{` ${address}`}</p>
                 <div className='abwd-link-div'>
-                    {/* <Link to={`/listings/${bid.Listing.id}`}>Link to listing</Link> */}
-                    <div className='abwd-contact-info' onClick={() => alert('Feature coming soon')}>
-                        <p>Listing Info</p>
-                        <FaExternalLinkAlt />
+                    <div className='abwd-contact-info'>
+                        <Link to={`/listings/${bid.Listing.id}`}>Link to listing</Link>
                     </div>
-
                     <FaCommentDollar className='eldAccept messageIcon abwd-message' onClick={() => message()} />
-
                 </div>
             </fieldset>
         </div>
