@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import FeedDisplay from "./FeedDisplay"
 import { agentFeedArray, thunkGetAgentListings } from "../../../../../redux/agent"
@@ -21,7 +21,8 @@ const AgentListingsFeed = () => {
         if (details.count && page && details.count > details.page * details.size) {
             setPage(parseInt(details.page))
             setSize(parseInt(details.size))
-            setMore(true)}
+            setMore(true)
+        }
         else setMore(false)
     }, [details, setMore])
 
@@ -32,11 +33,13 @@ const AgentListingsFeed = () => {
 
     return (
         <div className="alfMain textmark">
-            {agentFeed.length > 0 ? <FeedDisplay listings={agentFeed} /> : <h2>There are no new listings to display at this time</h2>}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {less && <FaCaretUp className="messagesDownArrow" onClick={() => setPage(page - 1)} />}
-                {more && <FaCaretDown className="messagesDownArrow" onClick={() => setPage(page + 1)} />}
-            </div>
+            <Suspense fallback={"Feed loading..."}>
+                {agentFeed.length > 0 ? <FeedDisplay listings={agentFeed} /> : <h2>There are no new listings to display at this time</h2>}
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    {less && <FaCaretUp className="messagesDownArrow" onClick={() => setPage(page - 1)} />}
+                    {more && <FaCaretDown className="messagesDownArrow" onClick={() => setPage(page + 1)} />}
+                </div>
+            </Suspense>
         </div>
     )
 }

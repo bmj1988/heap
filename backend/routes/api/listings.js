@@ -41,22 +41,28 @@ router.get('/feed', authAgent, async (req, res) => {
     query.limit = req.query.size || 5
     query.offset = req.query.size * (req.query.page - 1) || 0
     query.order = [['createdAt', 'ASC']]
-    const schema = process.env.NODE_ENV === "production" ? `"${process.env.SCHEMA}".` : ""
-    // const bids = await agent.getBids({
-    //     attributes: ['listingId'],
-    //     raw: true
-    // });
+    const bids = await agent.getBids({
+        attributes: ['listingId'],
+        raw: true
+    });
 
-    // const listingIds = bids.map((bid) => bid.listingId)
+    const listingIds = bids.map((bid) => bid.listingId)
+    // const schema = process.env.NODE_ENV === "production" ? `"${process.env.SCHEMA}"` : ""
 
-    const { count, rows } = await agentListings.findAndCountAll({
-        where: Sequelize.literal(`NOT EXISTS (
-            SELECT 1
-            FROM ${schema}"Bids" as bids
-            WHERE
-            bids."listingId" = ${schema}"Listing"."id"
-            AND bids."agentId" = ${agent.id}
-        )`),
+    // where: Sequelize.literal(`NOT EXISTS (
+    //     SELECT 1
+    //     FROM ${schema}."Bids" as bids
+    //     WHERE
+    //     bids."listingId" = ${schema}."Listing"."id"
+    //     AND bids."agentId" = ${agent.id}
+    // ) AND ${schema}."Listing"."open" = true`)
+    // WORKS IN LOCAL BUT THROWS INVALID REFERENCE TO FROM-CLAUSE ENTRY
+    // LOOK BACK AT SQL COURSE AND RE-EXAMINE
+
+    const { count, rows } = await Listing.findAndCountAll({
+        where: {
+            id: { [Op.notIn]: listingIds }
+        },
         include: [{
             model: Image,
             attributes: ['url'],
@@ -229,7 +235,7 @@ router.put('/:listingId', [authOwner, multipleMulterUpload('images')], async (re
     const owner = req.owner
     const { address, city, state, price, description } = req.body
     let { deletedImages } = req.body
-    deletedImages = deletedImages ? deletedImages.split(',') : null
+    console.log(deletedImages)
     let images;
 
     if (req.files) {

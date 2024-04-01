@@ -115,9 +115,8 @@ export const thunkEditListingAWS = (listingInfo, images, deletedImages) => async
             }
         }
 
-        if (deletedImages) {
-            const deletedImagesArray = Object.values(deletedImages)
-            for (let image of deletedImagesArray) {
+        if (deletedImages.length) {
+            for (let image of deletedImages) {
                 formData.append('deletedImages', image)
             }
         }

@@ -40,9 +40,9 @@ const EditListingModal = ({ closeModal, listing }) => {
             description,
             deletedImages
         }
-
+        console.log(deletedImages)
         try {
-            await dispatch(thunkEditListingAWS(listingInfo, images))
+            await dispatch(thunkEditListingAWS(listingInfo, images, deletedImages))
             closeModal()
         }
         catch (e) {

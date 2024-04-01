@@ -42,8 +42,9 @@ const NewListingFormImageDiv = ({ images, setImages, previewImages, setPreviewIm
 
     const deleteImage = (e, index) => {
         e.preventDefault();
-        if (setDeletedImages && originalImages.includes(previewImages[index])) {
-            setDeletedImages(deletedImages.concat([previewImages[index]]))
+        if (setDeletedImages && originalImages.includes(previewImages[index].url)) {
+            const deleted = ([...deletedImages, previewImages[index].url])
+            setDeletedImages(deleted)
         }
         if (index === 0) {
             setPreviewImages(previewImages.slice(1))
@@ -57,7 +58,7 @@ const NewListingFormImageDiv = ({ images, setImages, previewImages, setPreviewIm
 
     const preview = (e, index) => {
         e.preventDefault();
-        setModalContent(<PreviewImageModal pic={previewImages[index]} close={closeModal} />)
+        setModalContent(<PreviewImageModal pic={previewImages[index].url} close={closeModal} />)
     }
 
     return (
