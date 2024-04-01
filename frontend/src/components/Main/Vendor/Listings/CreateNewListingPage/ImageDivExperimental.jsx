@@ -5,7 +5,7 @@ import '../../../main.css'
 import PreviewImageModal from "../../../../Modals/PreviewImageModal";
 import { FaTimes } from "react-icons/fa";
 
-const NewListingFormImageDiv = ({ images, setImages, previewImages, setPreviewImages, deletedImages, setDeletedImages, originalImages }) => {
+const NewListingFormImageDiv = ({ images, setImages, previewImages, setPreviewImages, deletedImages, setDeletedImages, originalImages, create }) => {
     const [showUpload, setShowUpload] = useState(true);
     const { closeModal, setModalContent } = useModal();
 
@@ -58,7 +58,7 @@ const NewListingFormImageDiv = ({ images, setImages, previewImages, setPreviewIm
 
     const preview = (e, index) => {
         e.preventDefault();
-        setModalContent(<PreviewImageModal pic={previewImages[index].url} close={closeModal} />)
+        create ? setModalContent(<PreviewImageModal pic={previewImages[index]} close={closeModal} />) : setModalContent(<PreviewImageModal pic={previewImages[index].url} close={closeModal} />)
     }
 
     return (

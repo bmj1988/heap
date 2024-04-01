@@ -8,9 +8,11 @@ import { thunkPlaceBid } from "../../../../../redux/agent";
 import AgentListingDetails from "./AgentListingDetailsDiv";
 import AgentListingImage from "./AgentListingImage";
 import PreviewImageModal from "../../../../Modals/PreviewImageModal";
+import { useNavigate } from "react-router-dom";
 
 const AgentFeedSingleListing = ({ listing }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [alreadyBid, setAlreadyBid] = useState(false)
     const { setModalContent } = useModal();
 

@@ -175,7 +175,7 @@ export const thunkRevokeBid = (bidId) => async (dispatch) => {
         })
         if (response.ok) {
             const newBid = await response.json()
-            dispatch(revokeBid(newBid))
+            await dispatch(revokeBid(newBid))
         }
 
     }

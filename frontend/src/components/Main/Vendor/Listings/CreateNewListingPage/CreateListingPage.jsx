@@ -81,7 +81,7 @@ const CreateListingPage = () => {
                 </div>}
                 <h4>Listing information</h4>
                 <p className="clpExplain">Providing an image, asking price and description may help agents give you the bids more accurate bids more quickly. None of these fields are required, but they help your listings sell more quickly.</p>
-                <NewListingFormImageDiv images={images} setImages={setImages} previewImages={previewImages} setPreviewImages={setPreviewImages} />
+                <NewListingFormImageDiv create={true} images={images} setImages={setImages} previewImages={previewImages} setPreviewImages={setPreviewImages} />
                 <PriceInput setPrice={setPrice} />
                 <div className="clpTextarea">
                     <label className="listingP boldFont" htmlFor="description">{"Description (optional):"} </label> <textarea style={{ resize: 'none' }} cols={40} rows={5} maxLength={750} id="description" placeholder="Provide a description of what you want to sell" onChange={(e) => setDescription(e.target.value)} />

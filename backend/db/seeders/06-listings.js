@@ -17,6 +17,7 @@ module.exports = {
       {
         shopId: 1,
         ownerId: 1,
+        highest: 8,
       },
       {
         shopId: 2,
@@ -26,7 +27,8 @@ module.exports = {
         shopId: 1,
         ownerId: 1,
         open: false
-      }
+      },
+
     ])
   },
 

@@ -79,7 +79,7 @@ const NewListingWidget = () => {
                     {errors.state ? <p className="errors">{errors.state}</p> : null}
                 </div>}
                 <h4>Listing information</h4>
-                <NewListingFormImageDiv images={images} setImages={setImages} previewImages={previewImages} setPreviewImages={setPreviewImages} />
+                <NewListingFormImageDiv images={images} create={true} setImages={setImages} previewImages={previewImages} setPreviewImages={setPreviewImages} />
                 <PriceInput setPrice={setPrice} />
                 {errors.price ? <p className="errors">{errors.price}</p> : null}
                 <div>

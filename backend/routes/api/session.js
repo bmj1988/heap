@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Agent } = require('../../db/models');
 
 const router = express.Router();
 
@@ -12,7 +12,12 @@ router.post('/', async (req, res, next) => {
     const user = await User.unscoped().findOne({
         where: {
             email
-        }
+        },
+        include: {
+            model: Agent,
+            required: false,
+            attributes: ['id']
+        },
     });
 
     if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
@@ -34,7 +39,7 @@ router.post('/', async (req, res, next) => {
     await setTokenCookie(res, safeUser);
 
     return res.json(
-        safeUser
+        user
     );
 });
 

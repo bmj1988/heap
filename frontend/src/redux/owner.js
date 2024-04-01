@@ -110,7 +110,7 @@ export const thunkLoadListings = () => async (dispatch) => {
         const response = await csrfFetch('/api/listings/open')
         if (response.ok) {
             const listings = await response.json()
-            dispatch(loadListings(listings))
+            await dispatch(loadListings(listings))
         }
     }
 
@@ -125,7 +125,7 @@ export const thunkRemoveListing = (listingId) => async (dispatch) => {
             method: 'DELETE'
         })
         if (response.ok) {
-            dispatch(removeListing(listingId))
+            await dispatch(removeListing(listingId))
         }
     }
     catch (e) {
@@ -140,7 +140,7 @@ export const thunkCloseListing = (listingId) => async (dispatch) => {
             method: 'DELETE'
         })
         if (response.ok) {
-            dispatch(thunkVendorHome())
+            await dispatch(thunkVendorHome())
         }
     }
     catch (e) {

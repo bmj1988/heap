@@ -12,9 +12,10 @@ const AgentListingsFeed = () => {
     const [size, setSize] = useState(5);
     const [less, setLess] = useState(false);
     const [more, setMore] = useState(false);
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
-        dispatch(thunkGetAgentListings(size, page))
+        dispatch(thunkGetAgentListings(size, page)).then(setLoaded(true))
     }, [page, size, dispatch])
 
     useEffect(() => {
@@ -34,7 +35,7 @@ const AgentListingsFeed = () => {
     return (
         <div className="alfMain textmark">
             <Suspense fallback={"Feed loading..."}>
-                {agentFeed.length > 0 ? <FeedDisplay listings={agentFeed} /> : <h2>There are no new listings to display at this time</h2>}
+                {agentFeed.length > 0 && loaded ? <FeedDisplay listings={agentFeed} /> : <h2>There are no new listings to display at this time</h2>}
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     {less && <FaCaretUp className="messagesDownArrow" onClick={() => setPage(page - 1)} />}
                     {more && <FaCaretDown className="messagesDownArrow" onClick={() => setPage(page + 1)} />}

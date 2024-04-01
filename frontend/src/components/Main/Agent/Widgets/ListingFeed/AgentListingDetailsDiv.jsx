@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import ListingDetail from "../../../../ListingPage/ListingDetail"
 
 const AgentListingDetails = ({ listing, page }) => {
+    const navigate = useNavigate();
     const dateOfListing = new Date(listing.createdAt).toLocaleDateString();
+
     return (
-        <div id="details" className="asfl-details">
+        <div id="details" className="asfl-details" onClick={() => navigate(`/listings/${listing.id}`)}>
             <ListingDetail css={"slpDetail"} text={"Listed on:"} value={dateOfListing} />
             <ListingDetail css={"slpDetail"} text={"Location:"} value={`${listing["Shop.city"] || listing?.Shop?.city}, ${listing["Shop.state"] || listing.Shop.state}`} />
             <ListingDetail css={"slpDetail"} text={"Asking Price:"} value={listing.price === 'Best offer' ? listing.price : `$${listing.price}`} />

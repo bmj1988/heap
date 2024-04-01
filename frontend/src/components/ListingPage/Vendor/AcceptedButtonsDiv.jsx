@@ -13,8 +13,8 @@ const AcceptedButtonsDiv = ({ bid, revokeAllowed }) => {
 
     const revoke = () => {
         if (revokeAllowed) {
-            const confirm = () => {
-                dispatch(thunkRevokeBid(bid.id))
+            const confirm = async () => {
+               await dispatch(thunkRevokeBid(bid.id))
             }
             setModalContent(<BinaryChoiceModal confirmFunc={confirm} topic={'Revoke'} text={"You are about to revoke a previously accepted bid! Once the bid is revoked, you may accept another bid, but the agent may still have the address linked to the listing."} />)
         }
@@ -23,7 +23,7 @@ const AcceptedButtonsDiv = ({ bid, revokeAllowed }) => {
 
     const closeListing = () => {
         const confirm = async () => {
-            dispatch(thunkCloseListing(bid.listingId)).then(() => navigate('/'))
+           await dispatch(thunkCloseListing(bid.listingId)).then(() => navigate('/'))
         }
         setModalContent(<BinaryChoiceModal confirmFunc={confirm} topic={'Close listing'} text={"This will close the listing, deleting all bids and messages and removing your listing from the listing feed permanently. Only do this if you have concluded business with the agent whose bid you accepted. If you wish to revoke the listing and choose another bid, please go back and choose 'Revoke'."} />)
     }
