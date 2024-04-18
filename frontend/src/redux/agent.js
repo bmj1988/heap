@@ -243,7 +243,9 @@ export const agentReducer = (state = initialState, action) => {
             return newState
         }
         case CLEAR: {
-            return initialState
+            console.log('CLEAR POP AGENT')
+            const clearState = { agent: null, feed: { listings: {}, details: {} }, messages: {}, accepted: {}, currentBids: {}, profile: {} }
+            return clearState
         }
         default: {
             return newState

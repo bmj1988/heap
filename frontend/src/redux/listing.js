@@ -264,6 +264,8 @@ export const listingsReducer = (state = initialState, action) => {
             return newState;
         }
         case CLEAR: {
+            console.log('CLEAR POP LISTING')
+
             return initialState;
         }
         default: {

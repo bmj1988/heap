@@ -45,6 +45,11 @@ const deleteMessageFromInbox = (messageId) => {
     )
 }
 
+export const clearMessages = () => {
+    return (
+        { type: CLEAR }
+    )
+}
 
 
 /// THUNKS
@@ -189,6 +194,7 @@ export const messageReducer = (state = initialState, action) => {
             return messageState
         }
         case CLEAR: {
+            console.log('CLEAR POP MESSAGE')
             return initialState;
         }
         default: {

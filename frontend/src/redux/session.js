@@ -1,10 +1,11 @@
 import { clearAgent } from './agent';
 import { csrfFetch } from './csrf';
+import { clearMessages } from './message';
 import { clearVendor } from './owner';
 
 //Constants
 const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
+const CLEAR = 'session/removeUser';
 
 const setUser = (user) => ({
     type: SET_USER,
@@ -12,10 +13,8 @@ const setUser = (user) => ({
 });
 
 const removeUser = () => ({
-    type: REMOVE_USER
+    type: CLEAR
 });
-
-
 
 
 export const thunkAuthenticate = () => async (dispatch) => {
@@ -74,9 +73,11 @@ export const thunkLogout = () => async (dispatch) => {
     await csrfFetch("/api/session", {
         method: "DELETE",
     });
-    dispatch(removeUser())
-    dispatch(clearAgent())
-    dispatch(clearVendor());
+    await dispatch(removeUser());
+    await dispatch(clearAgent());
+    await dispatch(clearVendor());
+    await dispatch(clearMessages());
+
 };
 
 
@@ -86,7 +87,8 @@ function sessionReducer(state = initialState, action) {
     switch (action.type) {
         case SET_USER:
             return { ...state, user: action.payload };
-        case REMOVE_USER:
+        case CLEAR:
+            console.log('CLEAR POP SESSION')
             return { ...state, user: null };
         default:
             return state;

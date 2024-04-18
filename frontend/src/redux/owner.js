@@ -256,7 +256,9 @@ export const vendorReducer = (state = initialState, action) => {
     let newState = { ...state }
     switch (action.type) {
         case VENDOR_HOME: {
-            newState = initialState
+            newState.listings = {}
+            newState.shops = {}
+            newState.messages = {}
             action.payload.shops.forEach((shop) => {
                 newState.shops[shop.id] = shop
             })
@@ -299,6 +301,7 @@ export const vendorReducer = (state = initialState, action) => {
             return newState
         }
         case CLEAR: {
+            console.log('CLEAR POP OWNER')
             return initialState;
         }
         default: {
