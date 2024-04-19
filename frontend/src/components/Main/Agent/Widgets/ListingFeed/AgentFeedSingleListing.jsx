@@ -32,16 +32,13 @@ const AgentFeedSingleListing = ({ listing }) => {
     })
 
     return (
-        <div>
-            <fieldset className="afsl">
-                <legend>{`no.${listing.id}`}</legend>
+        <div className="afsl">
                 <AgentListingImage image={listing['Images.url']} enlarge={enlarge} />
                 <AgentListingDetails listing={listing} />
                 <div className="breaker-listing"></div>
                 <div id="quickbid" className="quickbid">
                     {alreadyBid ? <AlreadyBid /> : <Quickbid listingId={listing.id} placeBid={placeBid} />}
                 </div>
-            </fieldset>
         </div>
     )
 }

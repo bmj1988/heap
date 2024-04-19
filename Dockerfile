@@ -1,5 +1,5 @@
 # Build Image 1 - using node:18-alpine. Call it 'backend'
-FROM --platform=amd64 node:18 as backend
+FROM --platform=amd64 node:18-alpine as backend
 # Create a folder called 'backend' that will take all the following commands
 WORKDIR /backend
 # Copy our local backend package.json into the backend folder
@@ -11,7 +11,7 @@ COPY ./backend .
 # -------------------------------
 
 # Build image 2 - using node:18-alpine. Call it 'frontend'
-FROM --platform=amd64 node:18 as frontend
+FROM --platform=amd64 node:18-alpine as frontend
 # Create a folder called 'frontend' that will take all the following commands
 WORKDIR /frontend
 # Copy the local frontend package.json into the frontend folder
@@ -27,7 +27,7 @@ RUN npm run build
 # -------------------------
 
 # Build image 3 - Production level code. Use node:18-alpine. Call it 'production'
-FROM --platform=amd64 node:18 as production
+FROM --platform=amd64 node:18-alpine as production
 # Create environment variables for everything in the .env.example file (found locally in backend/.env)
 
 # Create an argument for NODE_ENV

@@ -12,7 +12,7 @@ const SingleMessageDiv = ({ message }) => {
     const type = user.owner ? 'Agent' : 'Vendor'
 
     const clicker = () => {
-        setModalContent(<MessageHistoryModal bidId={message.bidId} toId={message.toId} close={closeModal} />)
+        setModalContent(<MessageHistoryModal bidId={message.bidId} toId={message.toId === user.id ? message.fromId : message.toId} close={closeModal} />)
     }
 
     return (
