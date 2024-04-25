@@ -1,262 +1,80 @@
 # Heap
 
- Heap is an online auction site with industry specific tweaks. Vendors list for free, agents pay for access to listings. In an effort to make this relationship as equitable as possible, it seeks to streamline much of the buying process for the agent. My goal for the project is sturdiness. No exposed wiring, no breaks, strong simple logic, lazy loading major components based on session state, and lean querying (raw where possible).
+## About
 
-## Database Schema Design
+[![Image from Gyazo](https://i.gyazo.com/1e91892a374fa7aee55d9cb32fbd7260.png)](https://gyazo.com/1e91892a374fa7aee55d9cb32fbd7260)
 
-![db-schema]
-
-[db-schema]: </backend//static/heap-db-diagram.png>
-
-[Heap on Render](https://heap-latest.onrender.com)
-
-## API Documentation
-
-### Session
-
-<ins>LOG IN</ins>
-
-Logs a user into an account with the correct credentials.
-
-* METHOD: POST
-* URL: /api/session/
-* Headers: {"Content-Type": "application/json"}
-* On Success:
-  * Status Code: 200
-  * Headers: {"Content-Type": "application/json"}
-  * Body:
-```json
- {
-    "id": 1,
-    "firstName": "Mike",
-    "email": "demo@user.net",
-    "agent": null,
-    "owner": true,
- }
- ```
- * Error response:
-   * Status Code: 401
-   * Headers:
-   * Content-Type: application/json
-   * Body:
-
-    ```json
-    {
-      "msg": "Invalid credentials"
-    }
-    ```
-
-<ins>LOG OUT</ins>
-
-Logs a user out of their account.
-
-* METHOD: DELETE
-* URL: /api/session/
-* On Success:
-  * Status Code: 200
-  * Headers: {"Content-Type": "application/json"}
-  * Body:
-```json
- {
-    "message": "success"
- }
- ```
+ Heap is an online auction site with industry specific tweaks. Vendors list for free, agents pay for access to listings. In an effort to make this relationship as equitable as possible, it seeks to streamline much of the buying process for the agent. My goal for the project is sturdiness. No exposed wiring, no breaks, strong simple logic, lazy loading major components based on redux store, and lean querying (raw where possible).
 
 
-### Shops
+## Links
 
-#### <ins>Get All User's Shops</ins>
+[Live Site](https://heap-latest.onrender.com)
+[API Docs](https://github.com/bmj1988/heap/wiki/API-Documentation)
+[DB Schema](https://github.com/bmj1988/heap/wiki/DB-Schema)
 
-Provides a simple list of all the users shops with no associations, for dropdowns.
+## Docker Image
 
-* METHOD: GET
-* URL: /api/shops/ownerAll
-* On Success:
-  * Status Code: 200
-  * Headers: {"Content-Type": "application/json"}
-  * Body:
-```json
- { "Shops": [
- {
-    "id": 1,
-    "name": "Mike's Shop",
-    "address": "123 Fake St",
-    "city": "Washington",
-    "state": "DC"
-    },
-    {
-    "id": 2,
-    "name": "Mike's Other Shop",
-    "address": "456 Fake St",
-    "city": "Washington",
-    "state": "DC"
-    },
- ]
- }
- ```
+docker.io/bmj1988/heap:latest
 
- ####<ins>Get Shop Hub</ins>
+## Tech
+Stuff I used for development:
 
-Provides all the details necessary to populate the shop hub, including current listings and a review aggregate for the shops.
+PostgresQL db
+psql CLI
+bcrypt
+CORS
+csurf
+Postbird
+Postman
+PGAdmin
+Express
+Sequelize
+AWS S3 image hosting
+JWT
+Multer
+React
+React-Icons
+Vite
 
-* METHOD: GET
-* URL: /api/shops/home
-* On Success:
-  * Status Code: 200
-  * Headers: {"Content-Type": "application/json"}
-  * Body:
-```json
- { "Shops": [
- {
-    "id": 1,
-    "name": "Mike's Shop",
-    "address": "123 Fake St",
-    "city": "Washington",
-    "state": "DC",
-    "avgRating": 3,
-    "Listings": [{
-        "id": 1,
-        "shopId": 1,
-        "ownerId": 1,
-        "description": "Stuff for sale",
-        "price": "Best offer",
-        "image": "www.fakeimage/1.jpg"
-    }]
-    },
-    {
-    "id": 2,
-    "name": "Mike's Other Shop",
-    "address": "456 Fake St",
-    "city": "Washington",
-    "state": "DC",
-    "avgRating": 4,
-    },
- ]
- }
- ```
+And Docker and Render for deployment.
 
-####  <ins>Get Shop Details by Shop Id</ins>
 
-Provides details for a single shop.
-
-* METHOD: GET
-* URL: /api/shops/:shopId
-* On Success:
-  * Status Code: 200
-  * Headers: {"Content-Type": "application/json"}
-  * Body:
-```json
-
- {
-    "id": 1,
-    "name": "Mike's Shop",
-    "address": "123 Fake St",
-    "city": "Washington",
-    "state": "DC",
-    "avgRating": 3,
-    "Listings": [{
-        "id": 1,
-        "shopId": 1,
-        "ownerId": 1,
-        "description": "Stuff for sale",
-        "price": "Best offer",
-        "image": "www.fakeimage/1.jpg"
-    }]
-    }
-
- ```
-
-  #### <ins>Edit Shop Details by Shop Id</ins>
-
-Provides details for a single shop.
-
-* METHOD: PUT
-* URL: /api/shops/:shopId
-* Headers: {"Content-Type": "application/json"}
-* Body:
-```json
-  {
-    "name": "Mike's New Shop",
-    "address": "789 Fake St",
-    "city": "Washington",
-    "state": "DC",
-  }
-  ```
-* On Success:
-  * Status Code: 200
-  * Headers: {"Content-Type": "application/json"}
-  * Body:
-```json
-
- {
-    "id": 1,
-    "ownerId": 1,
-    "name": "Mike's New Shop",
-    "address": "789 Fake St",
-    "city": "Washington",
-    "state": "DC",
- }
-
- ```
-
-  #### <ins>Create New Shop</ins>
-
-Adds a new shop to the database.
-
-* METHOD: POST
-* URL: /api/shops/new
-* Headers: {"Content-Type": "application/json"}
-* Body:
-```json
-  {
-    "name": "Mike's New Shop",
-    "address": "789 Fake St",
-    "city": "Washington",
-    "state": "DC",
-  }
-  ```
-* On Success:
-  * Status Code: 200
-  * Headers: {"Content-Type": "application/json"}
-  * Body:
-```json
-
- {
-    "id": 1,
-    "ownerId": 1,
-    "name": "Mike's New Shop",
-    "address": "789 Fake St",
-    "city": "Washington",
-    "state": "DC",
-    "createdOn": "3/15/24"
- }
-
- ```
-
-  #### <ins>Delete a Shop</ins>
-
-Deletes a shop (or location) from the database.
-
-* METHOD: DELETE
-* URL: /api/shops/:shopId
-* On Success:
-  * Status Code: 200
-  * Headers: {"Content-Type": "application/json"}
-  * Body:
-```json
-
- {
-    "message": "Sucessfully deleted."
- }
-
- ```
+## <ins>Current Features</ins>
 
 ### Listings
 
+[![Image from Gyazo](https://i.gyazo.com/3902b946373de09752b161adbba00c45.gif)](https://gyazo.com/3902b946373de09752b161adbba00c45)
+
+A vendor account can post listings to Heap seamlessly from the splash page widget, as well as monitor, update and delete them from both the main page and from the listings tab available from the profile menu.
+
+Once a listing is closed, it becomes a "Closed listing" -- all bids, messages, images and other data associated to the listing are deleted -- and is represented by a few rows for record-keeping purposes.
+
+### Shops
+
+A shop is just a location where the items from a listing are meant to be picked up by the agent with the winning bid. For the sake of covenience, any new address entered into a create new listing form will create a new "Shop" represented by an address instead of a name. The shop hub allows vendors to edit or delete their shops as well as monitor open listings by location.
+
+
 ### Bids
 
-### Messages
+[![Image from Gyazo](https://i.gyazo.com/b566a678b75b5a9b3b2f22f76726e955.gif)](https://gyazo.com/b566a678b75b5a9b3b2f22f76726e955)
 
-### Agent Reviews
+An agent account can place bids on any open listing. A vendor then chooses which bid they wish to accept and an address for the listing is automatically sent out to the agent for pickup. An agent's main feed allows listings to be bid on directly. Currently accepted bids are monitored via the Accepted Bids tracker widget on the homepage, and all open and won bids can be accessed through the "Open bids" and "History" tabs in the profile menu.
 
-### Shop Reviews
+### Messaging
+
+[![Image from Gyazo](https://i.gyazo.com/64afe4655a755b44acb3becc8f6c4948.png)](https://gyazo.com/64afe4655a755b44acb3becc8f6c4948)
+
+Messaging opens up between users once a bid is placed on a listing. After this, a vendor may message an agent at any time, however an agent may only message a vendor after having been messaged, or their bid accepted (at which point the vendor will auto-send an acceptance message to the agent). Messages are deleted once the listings they were initiated over, are closed or deleted.
+
+### Images
+
+All images uploaded through the create listing widget and create listing page are automatically stored to the app's AWS S3 bucket and are tied to the listing itself -- if the listing is deleted or closed, the image is deleted.
+
+## <ins>Instructions</ins>
+
+To run Heap simply clone the repo and build an env based off of the .env.example. After that initiate sequelize and use the CLI to migrate and seed. Once the DB is prepared with any data you'd like, simply enter npm start in the backend folder and npm run dev in the frontend folder. Pressing "o" into the command line which runs the vite frontend will open a browser window with heap.
+
+## <ins>Planned Updates</ins>
+
+No auction app would be complete without a review system, and one for both agents and vendors has been worked out. Once the project is greenlit, I will have more resources to devote to minor tweaks and quality of life improvements. All these last small bits are in preparation for the shift to a mobile project via React-Native, which I view as a vital element of the project. After this, the card system (which will be integrated in a major feature implementation for Firms) and the Firm role are my highest priorities.

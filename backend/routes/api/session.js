@@ -34,12 +34,17 @@ router.post('/', async (req, res, next) => {
         owner: user.owner,
         agent: user.agent,
         firstName: user.firstName,
+        Agent: user.Agent,
+        lastName: user.lastName,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        phone: user.phone,
     };
 
     await setTokenCookie(res, safeUser);
 
     return res.json(
-        user
+        safeUser
     );
 });
 
