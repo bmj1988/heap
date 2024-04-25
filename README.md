@@ -10,7 +10,9 @@
 ## Links
 
 [Live Site](https://heap-latest.onrender.com)
+<br/>
 [API Docs](https://github.com/bmj1988/heap/wiki/API-Documentation)
+<br/>
 [DB Schema](https://github.com/bmj1988/heap/wiki/DB-Schema)
 
 ## Docker Image
@@ -19,22 +21,37 @@ docker.io/bmj1988/heap:latest
 
 ## Tech
 Stuff I used for development:
-
+<br/>
 PostgresQL db
+<br/>
 psql CLI
+<br/>
 bcrypt
+<br/>
 CORS
+<br/>
 csurf
+<br/>
 Postbird
+<br/>
 Postman
+<br/>
 PGAdmin
+<br/>
 Express
+<br/>
 Sequelize
+<br/>
 AWS S3 image hosting
+<br/>
 JWT
+<br/>
 Multer
+<br/>
 React
+<br/>
 React-Icons
+<br/>
 Vite
 
 And Docker and Render for deployment.
